@@ -1,5 +1,6 @@
 
 <img src="https://a.storyblok.com/f/51376/x/19b4879a86/logo.svg" width="200" alt="Storyblok Logo">
+
 # Field-type Examples
 
 A collection of field-types for Storyblok created by the community.
@@ -8,11 +9,12 @@ A collection of field-types for Storyblok created by the community.
 <details>
 <summary>Click to expand</summary>
 
-- [Examples](#examples)
-- [Example Repositories](#example-repositories)
-- [Contributing](#contributing)
-  * [Adding example code in this repository](#adding-example-code-in-this-repository)
-  * [Adding an example in a different repository](#adding-an-example-in-a-different-repository)
+- [Field-type Examples](#field-type-examples)
+  - [Examples](#examples)
+  - [Example Repositories](#example-repositories)
+  - [Contributing](#contributing)
+    - [Adding example code in this repository](#adding-example-code-in-this-repository)
+    - [Adding an example in a different repository](#adding-an-example-in-a-different-repository)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
