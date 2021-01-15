@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "lint": "eslint .",
-        "docs": "node generate-readme.js",
+        "docs": "node generate-readme.js"
     },
     "keywords": [
         "storyblok"

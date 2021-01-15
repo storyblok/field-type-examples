@@ -9,10 +9,9 @@ A collection of field-types for Storyblok created by the community. Read more ab
 <details>
 <summary>Table of Content</summary>
 
-- [Field-type Examples](#field-type-examples)
-  - [Examples](#examples)
-  - [Example Repositories](#example-repositories)
-  - [Contributing](#contributing)
+- [Examples](#examples)
+- [Example Repositories](#example-repositories)
+- [Contributing](#contributing)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
