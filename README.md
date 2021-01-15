@@ -1,0 +1,88 @@
+
+# Field-type Examples
+
+A collection of field-types for Storyblok created by the community.
+
+<img src="https://a.storyblok.com/f/51376/x/19b4879a86/logo.svg" width="200" alt="Storyblok Logo">
+
+## Table of Contents
+<!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Click to expand) -->
+<details>
+<summary>Click to expand</summary>
+
+- [Field-type Examples](#field-type-examples)
+  - [Table of Contents](#table-of-contents)
+  - [Examples](#examples)
+  - [Example Repositories](#example-repositories)
+  - [Contributing](#contributing)
+    - [Adding example code in this repository](#adding-example-code-in-this-repository)
+    - [Adding an example in a different repository](#adding-an-example-in-a-different-repository)
+
+</details>
+<!-- AUTO-GENERATED-CONTENT:END -->
+
+## Examples
+
+Each example contains a `README.md` with an explanation about the field-type.
+
+**Have an example?** Submit a PR or [open an issue]() ⚡️
+
+<!-- AUTO-GENERATED-CONTENT:START (EXAMPLE_TABLE)  -->
+| Example  | Author |
+|:-------|:------:|
+| [Star Rating ](https://github.com/.../main/star-rating) <br/>  A field-type to display a star rating  |  [Lisi Linhart](https://github.com/lisilinhart/) |
+
+<!-- AUTO-GENERATED-CONTENT:END -->
+
+## Example Repositories
+
+<!-- AUTO-GENERATED-CONTENT:START (COMMUNITY_EXAMPLES_TABLE)-->
+| Example | Author |
+|:-------|:------:|
+| **[Storyblok Meta Image](https://github.com/maoberlehner/storyblok-meta-image)** <br/> A Storyblok field-type plugin which provides an image field with meta data | [maoberlehner](http://github.com/maoberlehner) |
+<!-- AUTO-GENERATED-CONTENT:END -->
+## Contributing
+
+We are happy to accept more examples from the community. 🎉
+
+### Adding example code in this repository
+
+1. Create a new folder for your field-type
+
+2. Add a `README.md` file in your example folder with a markdown table of the following format:
+
+Name | Description | Author
+------------ | ------------- | -------------
+Name of your field-type | Short description | [Your Github](https://github.com/lisilinhart/)
+
+3. Make sure your contribution matches the linting setup for this repo:
+
+  Run the linting via
+
+  ```bash
+  npm run lint
+  ```
+
+4. Regenerate the README.md with the following command
+
+  ```bash
+  npm run docs
+  ```
+
+5. Open a new pull request with your example. ⚡️
+
+
+### Adding an example in a different repository
+
+If you want to be listed in the [Example Repositories](#example-repositories), follow these steps:
+
+1. Create a new entry with a `name`, `description`, and `githubUrl` in the `community-examples.json` file.
+
+2. Regenerate the README.md with the following command
+
+  ```bash
+  npm run docs
+  ```
+
+3. Open a new pull request with your example. ⚡️
+
