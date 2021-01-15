@@ -1,22 +1,18 @@
 
+<img src="https://a.storyblok.com/f/51376/x/19b4879a86/logo.svg" width="200" alt="Storyblok Logo">
 # Field-type Examples
 
 A collection of field-types for Storyblok created by the community.
 
-<img src="https://a.storyblok.com/f/51376/x/19b4879a86/logo.svg" width="200" alt="Storyblok Logo">
-
-## Table of Contents
 <!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Click to expand) -->
 <details>
 <summary>Click to expand</summary>
 
-- [Field-type Examples](#field-type-examples)
-  - [Table of Contents](#table-of-contents)
-  - [Examples](#examples)
-  - [Example Repositories](#example-repositories)
-  - [Contributing](#contributing)
-    - [Adding example code in this repository](#adding-example-code-in-this-repository)
-    - [Adding an example in a different repository](#adding-an-example-in-a-different-repository)
+- [Examples](#examples)
+- [Example Repositories](#example-repositories)
+- [Contributing](#contributing)
+  * [Adding example code in this repository](#adding-example-code-in-this-repository)
+  * [Adding an example in a different repository](#adding-an-example-in-a-different-repository)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
@@ -24,8 +20,6 @@ A collection of field-types for Storyblok created by the community.
 ## Examples
 
 Each example contains a `README.md` with an explanation about the field-type.
-
-**Have an example?** Submit a PR or [open an issue]() ⚡️
 
 <!-- AUTO-GENERATED-CONTENT:START (EXAMPLE_TABLE)  -->
 | Example  | Author |
@@ -36,6 +30,8 @@ Each example contains a `README.md` with an explanation about the field-type.
 
 ## Example Repositories
 
+The following examples live in their own Github repository.
+
 <!-- AUTO-GENERATED-CONTENT:START (COMMUNITY_EXAMPLES_TABLE)-->
 | Example | Author |
 |:-------|:------:|
@@ -43,7 +39,8 @@ Each example contains a `README.md` with an explanation about the field-type.
 <!-- AUTO-GENERATED-CONTENT:END -->
 ## Contributing
 
-We are happy to accept more examples from the community. 🎉
+**Have an example?** Submit a PR or [open an issue]() 
+We are happy to accept more examples from the community.
 
 ### Adding example code in this repository
 
