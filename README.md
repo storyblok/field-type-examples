@@ -9,12 +9,11 @@ A collection of field-types for Storyblok created by the community.
 <details>
 <summary>Click to expand</summary>
 
-- [Field-type Examples](#field-type-examples)
-  - [Examples](#examples)
-  - [Example Repositories](#example-repositories)
-  - [Contributing](#contributing)
-    - [Adding example code in this repository](#adding-example-code-in-this-repository)
-    - [Adding an example in a different repository](#adding-an-example-in-a-different-repository)
+- [Examples](#examples)
+- [Example Repositories](#example-repositories)
+- [Contributing](#contributing)
+  * [Adding example code in this repository](#adding-example-code-in-this-repository)
+  * [Adding an example in a different repository](#adding-an-example-in-a-different-repository)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
@@ -26,7 +25,7 @@ Each example contains a `README.md` with an explanation about the field-type.
 <!-- AUTO-GENERATED-CONTENT:START (EXAMPLE_TABLE)  -->
 | Example  | Author |
 |:-------|:------:|
-| [Star Rating ](https://github.com/.../main/star-rating) <br/>  A field-type to display a star rating  |  [Lisi Linhart](https://github.com/lisilinhart/) |
+| **[Star Rating ](https://github.com/storyblok/field-type-examples/tree/main/star-rating)** <br/>  A field-type to display a star rating  |  [Lisi Linhart](https://github.com/lisilinhart/) |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
 
