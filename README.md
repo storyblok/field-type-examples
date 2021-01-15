@@ -9,10 +9,9 @@ A collection of field-types for Storyblok created by the community. Read more ab
 <details>
 <summary>Table of Content</summary>
 
-- [Field-type Examples](#field-type-examples)
-  - [Examples](#examples)
-  - [Example Repositories](#example-repositories)
-  - [Contributing](#contributing)
+- [Examples](#examples)
+- [Example Repositories](#example-repositories)
+- [Contributing](#contributing)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
@@ -24,6 +23,7 @@ Each example contains a `README.md` with an explanation about the field-type.
 <!-- AUTO-GENERATED-CONTENT:START (EXAMPLE_TABLE)  -->
 | Example  | Author |
 |:-------|:------:|
+| **[Material Icon Selector ](https://github.com/storyblok/field-type-examples/tree/main/material-icon-selector)** <br/>  Allows users to select any material icon  |  [Riley MacIsaac](https://github.com/rileymacisaac) |
 | **[Star Rating ](https://github.com/storyblok/field-type-examples/tree/main/star-rating)** <br/>  A field-type to display a star rating  |  [Lisi Linhart](https://github.com/lisilinhart/) |
 
 <!-- AUTO-GENERATED-CONTENT:END -->
