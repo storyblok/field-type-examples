@@ -5,15 +5,13 @@
 
 A collection of field-types for Storyblok created by the community.
 
-<!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Click to expand) -->
+<!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Table of Content) -->
 <details>
-<summary>Click to expand</summary>
+<summary>Table of Content</summary>
 
 - [Examples](#examples)
 - [Example Repositories](#example-repositories)
 - [Contributing](#contributing)
-  * [Adding example code in this repository](#adding-example-code-in-this-repository)
-  * [Adding an example in a different repository](#adding-an-example-in-a-different-repository)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
@@ -43,7 +41,8 @@ The following examples live in their own Github repository.
 **Have an example?** Submit a PR or [open an issue]() 
 We are happy to accept more examples from the community.
 
-### Adding example code in this repository
+<details>
+<summary>Adding an example in this repository</summary>
 
 1. Create a new folder for your field-type
 
@@ -68,9 +67,11 @@ Name of your field-type | Short description | [Your Github](https://github.com/l
   ```
 
 5. Open a new pull request with your example. ⚡️
+</details>
 
 
-### Adding an example in a different repository
+<details>
+<summary>Adding an example in a different repository</summary>
 
 If you want to be listed in the [Example Repositories](#example-repositories), follow these steps:
 
@@ -83,4 +84,7 @@ If you want to be listed in the [Example Repositories](#example-repositories), f
   ```
 
 3. Open a new pull request with your example. ⚡️
+
+
+</details>
 
