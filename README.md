@@ -9,9 +9,10 @@ A collection of field-types for Storyblok created by the community. Read more ab
 <details>
 <summary>Table of Content</summary>
 
-- [Examples](#examples)
-- [Example Repositories](#example-repositories)
-- [Contributing](#contributing)
+- [Field-type Examples](#field-type-examples)
+  - [Examples](#examples)
+  - [Example Repositories](#example-repositories)
+  - [Contributing](#contributing)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
@@ -38,8 +39,7 @@ The following examples live in their own Github repository.
 <!-- AUTO-GENERATED-CONTENT:END -->
 ## Contributing
 
-**Have an example?** Submit a PR or [open an issue]() 
-We are happy to accept more examples from the community.
+**Have an example?** Submit a PR or [open an issue]().We are happy to accept more examples from the community.
 
 <details>
 <summary>Adding an example in this repository</summary>
@@ -72,6 +72,7 @@ Name of your field-type | Short description | [Your Github](https://github.com/l
 
 <details>
 <summary>Adding an example in a different repository</summary>
+
 
 If you want to be listed in the [Example Repositories](#example-repositories), follow these steps:
 
