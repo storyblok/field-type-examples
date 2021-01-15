@@ -6,7 +6,6 @@
     "scripts": {
         "lint": "eslint .",
         "docs": "node generate-readme.js",
-        "validate": "node validate.js"
     },
     "keywords": [
         "storyblok"

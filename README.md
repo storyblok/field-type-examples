@@ -3,15 +3,16 @@
 
 # Field-type Examples
 
-A collection of field-types for Storyblok created by the community.
+A collection of field-types for Storyblok created by the community. Read more about creating field-types [here](https://www.storyblok.com/docs/plugins/field-type)
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Table of Content) -->
 <details>
 <summary>Table of Content</summary>
 
-- [Examples](#examples)
-- [Example Repositories](#example-repositories)
-- [Contributing](#contributing)
+- [Field-type Examples](#field-type-examples)
+  - [Examples](#examples)
+  - [Example Repositories](#example-repositories)
+  - [Contributing](#contributing)
 
 </details>
 <!-- AUTO-GENERATED-CONTENT:END -->
