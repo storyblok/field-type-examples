@@ -8,5 +8,10 @@
         "name": "Hotspot Editor",
         "description": "A Storyblok field-type to create hotspot images",
         "githubUrl": "https://github.com/cartok/storyblok-hotspot-editor"
+    },
+    {
+        "name": "Heroicons Icon Selector ",
+        "description": "Allows users to select an outline and solid heroicons",
+        "githubUrl": "https://github.com/jpkha/storyblok-fieldtype-heroicons"
     }
 ]

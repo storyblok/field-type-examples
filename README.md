@@ -36,6 +36,7 @@ The following examples live in their own Github repository.
 <!-- AUTO-GENERATED-CONTENT:START (COMMUNITY_EXAMPLES_TABLE)-->
 | Example | Author |
 |:-------|:------:|
+| **[Heroicons Icon Selector ](https://github.com/jpkha/storyblok-fieldtype-heroicons)** <br/> Allows users to select an outline and solid heroicons | [jpkha](http://github.com/jpkha) |
 | **[Hotspot Editor](https://github.com/cartok/storyblok-hotspot-editor)** <br/> A Storyblok field-type to create hotspot images | [cartok](http://github.com/cartok) |
 | **[Storyblok Meta Image](https://github.com/maoberlehner/storyblok-meta-image)** <br/> A Storyblok field-type plugin which provides an image field with meta data | [maoberlehner](http://github.com/maoberlehner) |
 <!-- AUTO-GENERATED-CONTENT:END -->
