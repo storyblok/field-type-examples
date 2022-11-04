@@ -7,6 +7,8 @@
 
 A custom field-type for Storyblok that allow users to select a color from a palette. 
 
+![demo.gif](docs/demo.gif)
+
 ## How to use
 
 To add this field type to a Storyblok space, you need to
