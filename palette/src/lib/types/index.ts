@@ -1,0 +1,6 @@
+export * from './StoryblokFieldType'
+export * from './WrapperPluginProps'
+export * from './RootComponentData'
+export * from './RootPluginComponentComputed'
+export * from './PluginComponentProps'
+export * from './RootPluginComponentMethods'
