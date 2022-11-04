@@ -6,9 +6,6 @@
 # ![icon.svg](docs/icon.svg) storyblok-palette
 
 A custom field-type for Storyblok that allow users to select a color from a palette. 
-![option-small.png](docs/option-small.png)
-![option-medium.png](docs/option-medium.png)
-![option-large.png](docs/option-large.png)
 
 ## How to use
 
@@ -48,3 +45,7 @@ These options are available
 ```
 * `defaultValue`: One of the values in `color`, without the quotes.
 * `size`: `small`, `medium`, or `large`
+
+![option-small.png](docs/option-small.png)
+![option-medium.png](docs/option-medium.png)
+![option-large.png](docs/option-large.png)
