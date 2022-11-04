@@ -9,10 +9,18 @@ export default {
     },
     setValue: {
       type: Function,
+      default: () => undefined,
     },
     value: {
       type: Object,
+      default: undefined,
     },
+  },
+  created() {
+    const defaultValue = this.options.defaultValue
+    if (!this.value?.value) {
+      this.setValue({ value: defaultValue })
+    }
   },
   render() {
     const defaultValue = this.options.defaultValue
