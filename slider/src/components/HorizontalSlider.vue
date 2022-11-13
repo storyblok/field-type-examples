@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../design-tokens';
+@import '../styles';
 
 .container {
   display: flex;

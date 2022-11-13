@@ -13,25 +13,25 @@
       <template>
         <div
           ref="tooltip"
-          class="vue-slide-bar-always vue-slide-bar-tooltip-container"
+          class="slider__cursor_container"
           @mousedown="moveStart"
           @touchstart="moveStart"
         >
           <span
             v-if="showTooltip"
-            class="vue-slide-bar-tooltip-top vue-slide-bar-tooltip-wrap"
+            class="slider__cursor"
           >
             <slot name="tooltip">
-              <div class="vue-slide-bar-tooltip__parent">
+              <div class="slider__tooltip">
                 <span
                   :style="tooltipStyles"
-                  class="vue-slide-bar-tooltip"
+                  class="slider__tooltip__label"
                 >
                   {{ val }}
                 </span>
-                <div class="vue-slide-bar-tooltip__arrow-down" />
+                <div class="slider__tooltip_arrow" />
               </div>
-              <div class="vue-slide-bar__knob" />
+              <div class="slider__knob" />
             </slot>
           </span>
         </div>
@@ -423,7 +423,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../design-tokens';
+@import '../styles';
 $arrowHeight: 5px;
 $barHeight: 10px;
 $knobRadius: 10px;
@@ -462,7 +462,7 @@ $knobRadius: 10px;
   border-radius: 15px 0 0 15px;
   height: 10px;
 }
-.vue-slide-bar-tooltip-container {
+.slider__cursor_container {
   position: absolute;
   transition: all 0s;
   will-change: transform;
@@ -472,21 +472,18 @@ $knobRadius: 10px;
   top: 0px;
   right: 0px;
 }
-.vue-slide-bar-tooltip-wrap {
-  /* display: none; */
-  position: absolute;
-  z-index: 9;
-}
-.vue-slide-bar-tooltip-wrap.vue-slide-bar-tooltip-top {
+.slider__cursor {
   top: 0px;
   left: 0px;
+  position: absolute;
+  z-index: 9;
   background-color: red;
-  //top: -$arrowHeight;
-  //transform: translate(0, -100%);
-  &::after {
-    //transform: translate(0, 50%);
+  &:hover .slider__tooltip {
+    opacity: 1;
   }
-  & .vue-slide-bar-tooltip__parent {
+  & .slider__tooltip {
+    opacity: 0;
+    @include transition(opacity);
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -495,7 +492,7 @@ $knobRadius: 10px;
     bottom: $knobRadius;
     transform: translate(-50%, 0);
     filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.08));
-    & .vue-slide-bar-tooltip__arrow-down {
+    & .slider__tooltip_arrow {
       width: 0;
       height: 0;
       border-left: $arrowHeight solid transparent;
@@ -504,7 +501,7 @@ $knobRadius: 10px;
       bottom: 0;
       left: 0;
     }
-    & .vue-slide-bar-tooltip {
+    & .slider__tooltip__label {
       font-size: 1.2rem;
       white-space: nowrap;
       padding: 5px 10px;
@@ -516,7 +513,7 @@ $knobRadius: 10px;
       word-break: break-word;
     }
   }
-  & .vue-slide-bar__knob {
+  & .slider__knob {
     position: absolute;
     border-radius: 50%;
     height: 20px;
