@@ -106,17 +106,9 @@ export default {
       type: Boolean,
       default: true,
     },
-    isDisabled: {
-      type: Boolean,
-      default: false,
-    },
     draggable: {
       type: Boolean,
       default: true,
-    },
-    paddingless: {
-      type: Boolean,
-      default: false,
     },
     tooltipStyles: Object,
     labelStyles: Object,
@@ -205,9 +197,7 @@ export default {
       return [this.minimum, this.maximum]
     },
     calculateHeight() {
-      return this.paddingless
-        ? {}
-        : { 'padding-top': '40px', 'min-height': this.range ? '100px' : null }
+      return {}
     },
   },
   watch: {
@@ -277,8 +267,7 @@ export default {
       return e.clientX - this.offset
     },
     wrapClick(e) {
-      if (this.isDisabled || (!this.draggable && e.target.id === this.id))
-        return false
+      if (!this.draggable && e.target.id === this.id) return false
       let pos = this.getPos(e)
       this.setValueOnPos(pos)
     },
@@ -505,6 +494,7 @@ $knobRadius: 10px;
     left: 0;
     bottom: $knobRadius;
     transform: translate(-50%, 0);
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.08));
     & .vue-slide-bar-tooltip__arrow-down {
       width: 0;
       height: 0;
@@ -513,7 +503,6 @@ $knobRadius: 10px;
       border-top: $arrowHeight solid;
       bottom: 0;
       left: 0;
-      box-shadow: 0 0 2px 1px rgb(0 0 0 / 8%);
     }
     & .vue-slide-bar-tooltip {
       font-size: 1.2rem;
@@ -523,25 +512,8 @@ $knobRadius: 10px;
       border-radius: 2px;
       color: #fff;
       background-color: $color-ink;
-      box-shadow: 0 0 2px 1px rgb(0 0 0 / 8%);
       line-height: 15px;
       word-break: break-word;
-      //top: -$arrowHeight;
-
-      //&::before {
-      //  // Tooltop "arrow"
-      //  content: '';
-      //  position: absolute;
-      //  //left: 50%;
-      //  width: 0;
-      //  height: 0;
-      //  right: $arrowHeight;
-      //  bottom: 0;
-      //  //bottom: -$arrowHeight;
-      //  border: 5px solid transparent;
-      //  border-top-color: inherit;
-      //  transform: translate(-50%, 0);
-      //}
     }
   }
   & .vue-slide-bar__knob {
@@ -550,14 +522,12 @@ $knobRadius: 10px;
     height: 20px;
     width: 20px;
     background: white;
-    box-shadow: 0 0 4px rgb(0 0 0 / 32%);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.08);
+    border: $border;
     cursor: move;
-    left: -$knobRadius;
-    top: -$knobRadius + $barHeight/2;
-    //bottom: -$arrowHeight - $barHeight / 2;
-    //right: 0;
-    //bottom: 0;
-    //right: 0;
+    left: 0;
+    top: $barHeight / 2;
+    transform: translate(-50%, -50%);
   }
 }
 .vue-slide-bar-range {
