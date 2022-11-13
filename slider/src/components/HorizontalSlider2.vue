@@ -2,7 +2,7 @@
   <div
     :id="id"
     ref="wrap"
-    class="vue-slide-bar-component vue-slide-bar-horizontal"
+    class="slider"
     :style="calculateHeight"
     @click="wrapClick"
   >
@@ -10,55 +10,32 @@
       ref="elem"
       class="vue-slide-bar"
     >
-      <template>
-        <div
-          ref="tooltip"
-          class="slider__cursor_container"
-          @mousedown="moveStart"
-          @touchstart="moveStart"
-        >
-          <span
-            v-if="showTooltip"
-            class="slider__cursor"
-          >
-            <slot name="tooltip">
-              <div class="slider__tooltip">
-                <span
-                  :style="tooltipStyles"
-                  class="slider__tooltip__label"
-                >
-                  {{ val }}
-                </span>
-                <div class="slider__tooltip_arrow" />
-              </div>
-              <div class="slider__knob" />
-            </slot>
-          </span>
-        </div>
-      </template>
       <div
-        ref="process"
-        :style="processStyle"
-        class="vue-slide-bar-process"
-      />
-    </div>
-    <div
-      v-if="range"
-      class="vue-slide-bar-range"
-    >
-      <div
-        v-for="(r, index) in range"
-        :key="index"
-        class="vue-slide-bar-separate"
-        :style="dataLabelStyles"
+        ref="tooltip"
+        class="slider__cursor__container"
+        @mousedown="moveStart"
+        @touchstart="moveStart"
       >
         <span
-          v-if="!r.isHide"
-          class="vue-slide-bar-separate-text"
+          v-if="showTooltip"
+          class="slider__cursor"
         >
-          {{ r.label }}
+          <div class="slider__tooltip">
+            <span
+              :style="tooltipStyles"
+              class="slider__tooltip__label"
+            >
+              {{ val }}
+            </span>
+            <div class="slider__tooltip_arrow" />
+          </div>
+          <div class="slider__knob" />
         </span>
       </div>
+      <div
+        ref="process"
+        class="slider__indicator"
+      />
     </div>
   </div>
 </template>
@@ -73,10 +50,6 @@ export default {
     id: {
       type: String,
       default: 'wrap',
-    },
-    range: {
-      type: Array,
-      default: null,
     },
     speed: {
       type: Number,
@@ -110,9 +83,6 @@ export default {
       type: Boolean,
       default: true,
     },
-    tooltipStyles: Object,
-    labelStyles: Object,
-    processStyle: Object,
   },
   data() {
     return {
@@ -428,7 +398,7 @@ $arrowHeight: 5px;
 $barHeight: 10px;
 $knobRadius: 10px;
 
-.vue-slide-bar-component {
+.slider {
   position: relative;
   box-sizing: border-box;
   user-select: none;
@@ -450,9 +420,9 @@ $knobRadius: 10px;
   height: 100%;
   z-index: 2;
 }
-.vue-slide-bar-process {
+.slider__indicator {
   position: absolute;
-  background-color: #1066fd;
+  background-color: $color-teal;
   transition: all 0s;
   z-index: 1;
   width: 0;
@@ -462,7 +432,7 @@ $knobRadius: 10px;
   border-radius: 15px 0 0 15px;
   height: 10px;
 }
-.slider__cursor_container {
+.slider__cursor__container {
   position: absolute;
   transition: all 0s;
   will-change: transform;
