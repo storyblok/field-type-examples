@@ -6,9 +6,12 @@
     :style="calculateHeight"
     @click="wrapClick"
   >
+    <div class="slider__range-label">
+      {{ min }}
+    </div>
     <div
       ref="elem"
-      class="vue-slide-bar"
+      class="slider-bar"
     >
       <div
         ref="tooltip"
@@ -34,8 +37,11 @@
       </div>
       <div
         ref="process"
-        class="slider__indicator"
+        class="slider__track"
       />
+    </div>
+    <div class="slider__range-label">
+      {{ max }}
     </div>
   </div>
 </template>
@@ -318,14 +324,10 @@ export default {
       }
       this.$nextTick(() => this.setPosition(speed))
     },
-    setPosition(speed) {
-      if (!this.flag)
-        this.setTransitionTime(speed === undefined ? this.speed : speed)
-      else this.setTransitionTime(0)
+    setPosition() {
       this.setTransform(this.position)
     },
     setTransform(val) {
-      console.log(val)
       // let value = val - (this.$refs.tooltip.scrollWidth - 2) / 2
       let translateValue = `translateX(${val}px)`
       this.slider.style.transform = translateValue
@@ -333,12 +335,6 @@ export default {
       this.slider.style.msTransform = translateValue
       this.$refs.process.style.width = `${val}px`
       this.$refs.process.style['left'] = 0
-    },
-    setTransitionTime(time) {
-      this.slider.style.transitionDuration = `${time}s`
-      this.slider.style.WebkitTransitionDuration = `${time}s`
-      this.$refs.process.style.transitionDuration = `${time}s`
-      this.$refs.process.style.WebkitTransitionDuration = `${time}s`
     },
     limitValue(val) {
       if (this.data) {
@@ -402,16 +398,26 @@ $knobRadius: 10px;
   position: relative;
   box-sizing: border-box;
   user-select: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
-.vue-slide-bar {
+
+.slider-bar {
   position: relative;
   display: block;
   border-radius: 15px;
   background-color: #d8d8d8;
   cursor: pointer;
   height: 10px !important;
+  flex: 1;
 }
-.vue-slide-bar::after {
+
+.slider__range-label {
+  padding: 10px;
+}
+
+.slider-bar::after {
   content: '';
   position: absolute;
   left: 0;
@@ -420,7 +426,7 @@ $knobRadius: 10px;
   height: 100%;
   z-index: 2;
 }
-.slider__indicator {
+.slider__track {
   position: absolute;
   background-color: $color-teal;
   transition: all 0s;
@@ -431,6 +437,7 @@ $knobRadius: 10px;
   will-change: width;
   border-radius: 15px 0 0 15px;
   height: 10px;
+  @include transition(width);
 }
 .slider__cursor__container {
   position: absolute;
@@ -441,6 +448,7 @@ $knobRadius: 10px;
   left: 0;
   top: 0px;
   right: 0px;
+  @include transition(transform);
 }
 .slider__cursor {
   top: 0px;
