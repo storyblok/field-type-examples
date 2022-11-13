@@ -6,15 +6,13 @@
     :style="calculateHeight"
     @click="wrapClick"
   >
-    <div class="slider__range-label">
-      {{ min }}
-    </div>
     <div
       ref="elem"
       class="slider-bar"
     >
       <div
         ref="tooltip"
+        :style="`left: ${position}px`"
         class="slider__cursor__container"
         @mousedown="moveStart"
         @touchstart="moveStart"
@@ -24,10 +22,7 @@
           class="slider__cursor"
         >
           <div class="slider__tooltip">
-            <span
-              :style="tooltipStyles"
-              class="slider__tooltip__label"
-            >
+            <span class="slider__tooltip__label">
               {{ val }}
             </span>
             <div class="slider__tooltip_arrow" />
@@ -37,11 +32,24 @@
       </div>
       <div
         ref="process"
+        :style="`width: ${position}px`"
         class="slider__track"
       />
+      <div class="slider__rail" />
     </div>
-    <div class="slider__range-label">
-      {{ max }}
+    <div class="slider__label-container">
+      <div class="slider__range-label slider__range-label__min">
+        {{ min }}
+      </div>
+      <div
+        class="slider__range-label slider__range-label__value"
+        :style="`left: ${position}px`"
+      >
+        {{ val }}
+      </div>
+      <div class="slider__range-label slider__range-label__max">
+        {{ max }}
+      </div>
     </div>
   </div>
 </template>
@@ -100,12 +108,6 @@ export default {
       interval: 1,
       lazy: false,
       realTime: false,
-      dataLabelStyles: {
-        color: '#4a4a4a',
-        'font-family': 'Arial, sans-serif',
-        'font-size': '12px',
-        ...this.$props.labelStyles,
-      },
     }
   },
   computed: {
@@ -129,9 +131,6 @@ export default {
     },
     currentIndex() {
       return (this.currentValue - this.minimum) / this.spacing
-    },
-    indexRange() {
-      return [0, this.currentIndex]
     },
     minimum() {
       return this.data ? 0 : this.min
@@ -270,24 +269,20 @@ export default {
         return false
       }
       this.flag = false
-      this.setPosition()
     },
     setValueOnPos(pos, isDrag) {
       let range = this.limit
       let valueRange = this.valueLimit
       if (pos >= range[0] && pos <= range[1]) {
-        this.setTransform(pos)
         let v =
           (Math.round(pos / this.gap) * (this.spacing * this.multiple) +
             this.minimum * this.multiple) /
           this.multiple
         this.setCurrentValue(v, isDrag)
       } else if (pos < range[0]) {
-        this.setTransform(range[0])
         this.setCurrentValue(valueRange[0])
         if (this.currentSlider === 1) this.currentSlider = 0
       } else {
-        this.setTransform(range[1])
         this.setCurrentValue(valueRange[1])
         if (this.currentSlider === 0) this.currentSlider = 1
       }
@@ -302,7 +297,7 @@ export default {
       }
       return a !== b
     },
-    setCurrentValue(val, bool) {
+    setCurrentValue(val) {
       if (val < this.minimum || val > this.maximum) return false
       if (this.isDiff(this.currentValue, val)) {
         this.currentValue = val
@@ -310,31 +305,13 @@ export default {
           this.syncValue()
         }
       }
-      bool || this.setPosition()
     },
-    setIndex(val) {
-      val = this.spacing * val + this.minimum
-      this.setCurrentValue(val)
-    },
-    setValue(val, speed) {
+    setValue(val) {
       if (this.isDiff(this.val, val)) {
         let resetVal = this.limitValue(val)
         this.val = resetVal
         this.syncValue()
       }
-      this.$nextTick(() => this.setPosition(speed))
-    },
-    setPosition() {
-      this.setTransform(this.position)
-    },
-    setTransform(val) {
-      // let value = val - (this.$refs.tooltip.scrollWidth - 2) / 2
-      let translateValue = `translateX(${val}px)`
-      this.slider.style.transform = translateValue
-      this.slider.style.WebkitTransform = translateValue
-      this.slider.style.msTransform = translateValue
-      this.$refs.process.style.width = `${val}px`
-      this.$refs.process.style['left'] = 0
     },
     limitValue(val) {
       if (this.data) {
@@ -363,12 +340,6 @@ export default {
       }
       this.$emit('input', val)
     },
-    getValue() {
-      return this.val
-    },
-    getIndex() {
-      return this.currentIndex
-    },
     getStaticData() {
       if (this.$refs.elem) {
         this.size = this.$refs.elem.offsetWidth
@@ -391,40 +362,62 @@ export default {
 <style scoped lang="scss">
 @import '../styles';
 $arrowHeight: 5px;
-$barHeight: 10px;
+$railHeight: 10px;
 $knobRadius: 10px;
+$padding-label: 5px 10px;
 
 .slider {
   position: relative;
   box-sizing: border-box;
   user-select: none;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
+  overflow: hidden;
+  padding: 0px 20px; //tmp
 }
 
 .slider-bar {
   position: relative;
   display: block;
   border-radius: 15px;
-  background-color: #d8d8d8;
   cursor: pointer;
   height: 10px !important;
-  flex: 1;
+}
+
+.slider__label-container {
+  height: 50px; // todo
+  position: relative;
+  margin-top: #{$knobRadius - $railHeight / 2};
 }
 
 .slider__range-label {
-  padding: 10px;
+  padding: $padding-label;
+  position: absolute;
+  opacity: 50%;
+
+  //border: 1px dashed black;
+
+  &__value {
+    transform: translate(-50%, 0);
+    @include transition(transform, left);
+  }
+  &__min {
+    transform: translate(-50%, 0);
+    left: 0;
+  }
+  &__max {
+    transform: translate(50%, 0);
+    right: 0;
+  }
 }
 
-.slider-bar::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
+.slider__rail {
   width: 100%;
   height: 100%;
-  z-index: 2;
+  z-index: 0;
+  background-color: $color-grey;
+  border-radius: #{$railHeight / 2};
 }
 .slider__track {
   position: absolute;
@@ -441,21 +434,18 @@ $knobRadius: 10px;
 }
 .slider__cursor__container {
   position: absolute;
-  transition: all 0s;
-  will-change: transform;
   cursor: pointer;
   z-index: 3;
   left: 0;
   top: 0px;
   right: 0px;
-  @include transition(transform);
+  @include transition(left);
 }
 .slider__cursor {
   top: 0px;
   left: 0px;
   position: absolute;
   z-index: 9;
-  background-color: red;
   &:hover .slider__tooltip {
     opacity: 1;
   }
@@ -482,7 +472,7 @@ $knobRadius: 10px;
     & .slider__tooltip__label {
       font-size: 1.2rem;
       white-space: nowrap;
-      padding: 5px 10px;
+      padding: $padding-label;
       text-align: center;
       border-radius: 2px;
       color: #fff;
@@ -501,7 +491,7 @@ $knobRadius: 10px;
     border: $border;
     cursor: move;
     left: 0;
-    top: $barHeight / 2;
+    top: $railHeight / 2;
     transform: translate(-50%, -50%);
   }
 }

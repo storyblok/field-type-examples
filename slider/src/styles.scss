@@ -1,10 +1,11 @@
 $color-ink: #1B243F;
 $color-teal: #00b3b0;
-$border: 1px solid #dfe3e8;
+$color-grey: #dfe3e8;
+$border: 1px solid $color-grey;
 
 @mixin transition($props...){
   transition-property: $props;
   will-change: $props;
-  transition-duration: 100ms;
+  transition-duration: 1000ms;
   transition-timing-function: ease-in-out;
 }
