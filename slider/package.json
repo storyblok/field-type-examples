@@ -1,0 +1,77 @@
+{
+  "description": "A Storyblok field-type that lets the user select a value from a range",
+  "private": true,
+  "license": "UNLICENSED",
+  "author": {
+    "name": "Johannes Lindgren",
+    "email": "johannes-lindgren@storyblok.com",
+    "url": "https://www.storyblok.com/"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "dev": "vue-cli-service serve --watch src/entries/main.ts",
+    "lint": "eslint .",
+    "proxy": "ngrok http 8080 --host-header=rewrite"
+  },
+  "dependencies": {
+    "babel-loader": "8.2.5",
+    "vue": "2.6.12",
+    "vue-round-slider": "1.0.1",
+    "vue-slide-bar": "1.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.25",
+    "@typescript-eslint/eslint-plugin": "4.33.0",
+    "@typescript-eslint/parser": "4.33.0",
+    "@vue/cli-plugin-babel": "4.5.6",
+    "@vue/cli-plugin-eslint": "4.5.6",
+    "@vue/cli-plugin-typescript": "4.5.17",
+    "@vue/cli-service": "4.5.19",
+    "@vue/eslint-config-typescript": "7.0.0",
+    "@vue/eslint-plugin": "4.2.0",
+    "babel-eslint": "10.1.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-prettier-vue": "4.2.0",
+    "eslint-plugin-standard": "4.1.0",
+    "eslint-plugin-storybook": "0.6.6",
+    "eslint-plugin-vue": "7.20.0",
+    "node-sass": "4.14.1",
+    "sass": "1.51.0",
+    "sass-loader": "10.0.0",
+    "ts-loader": "5.3.0",
+    "typescript": "4.4.4",
+    "vue-template-babel-compiler": "1.2.0",
+    "vue-template-compiler": "2.6.12",
+    "vue-tsc": "0.31.4",
+    "webpack": "4.43.0"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "contributors": [
+    {
+      "name": "Lisi Linhart",
+      "email": "ewl@storyblok.com",
+      "url": "https://www.storyblok.com/"
+    },
+    {
+      "name": "Johannes Lindgren",
+      "email": "johannes.lindgren@storyblok.com",
+      "url": "https://www.storyblok.com/"
+    }
+  ],
+  "keywords": [
+    "storyblok",
+    "big commerce"
+  ]
+}

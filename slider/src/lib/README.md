@@ -1,0 +1,1 @@
+This folder contains a module that will be extracted to a general-purpose library for Storyblok field types
