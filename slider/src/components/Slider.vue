@@ -86,8 +86,6 @@ export default {
 .arch-slide-bar {
   overflow: hidden;
   padding: 5px;
-  /* height = radius + line height (becuase the corners are rounded) */
-  /* height: calc(min(100px + 10px)) !important; */
 }
 
 ::v-deep .rs-tooltip-text {
@@ -97,27 +95,4 @@ export default {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
-
-/* Horizontal slider  */
-
-/*.container ::v-deep .vue-slide-bar-tooltip {*/
-/*  display: none;*/
-/*}*/
-
-/*.container ::v-deep .vue-slide-bar-tooltip::before {*/
-/*  transform: rotate(135deg);*/
-/*  bottom: -5px;*/
-/*  left: calc(40% - 5px);*/
-/*}*/
-
-/*.container ::v-deep .vue-slide-bar {*/
-/*  background-color: #eff1f3 !important;*/
-/*  margin-left: 16px;*/
-/*  margin-right: 16px;*/
-/*}*/
-
-/*.container ::v-deep .vue-slide-bar-tooltip-container,*/
-/*.container ::v-deep .vue-slide-bar-process {*/
-/*  transition: none;*/
-/*}*/
 </style>

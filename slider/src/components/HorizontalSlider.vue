@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <HorizaontalSlider2
-      v-if="!isArch"
       :value="value"
       :class="`slide-bar ${showLabel ? 'slide-bar--label' : ''}`"
       :min="minValue"
@@ -31,10 +30,6 @@ export default {
       type: Number,
       required: true,
     },
-    isArch: {
-      type: Boolean,
-      default: false,
-    },
     minValue: {
       type: Number,
       default: 0,
@@ -46,10 +41,6 @@ export default {
     showLabel: {
       type: Boolean,
       default: true,
-    },
-    archAngle: {
-      type: Number,
-      default: 180,
     },
   },
   methods: {
