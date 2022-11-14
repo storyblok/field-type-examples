@@ -12,23 +12,22 @@
     >
       <div
         ref="tooltip"
-        :style="`left: ${position}px`"
         class="slider__cursor__container"
         @mousedown="moveStart"
         @touchstart="moveStart"
       >
-        <span
-          v-if="showTooltip"
-          class="slider__cursor"
+        <ValueIndicator
+          class="slider__range-label__top"
+          :style="`left: ${position}px`"
         >
-          <div class="slider__tooltip">
-            <span class="slider__tooltip__label">
-              {{ val }}
-            </span>
-            <div class="slider__tooltip_arrow" />
-          </div>
+          {{ val }}
+        </ValueIndicator>
+        <div
+          class="slider__cursor"
+          :style="`left: ${position}px`"
+        >
           <div class="slider__knob" />
-        </span>
+        </div>
       </div>
       <div
         ref="process"
@@ -41,12 +40,18 @@
       <div class="slider__range-label slider__range-label__min">
         {{ min }}
       </div>
-      <div
+      <ValueIndicator
         class="slider__range-label slider__range-label__value"
         :style="`left: ${position}px`"
+        position="bottom"
+        >{{ val }}</ValueIndicator
       >
-        {{ val }}
-      </div>
+      <!--      <div-->
+      <!--        class="slider__range-label slider__range-label__value"-->
+      <!--        :style="`left: ${position}px`"-->
+      <!--      >-->
+      <!--        {{ val }}-->
+      <!--      </div>-->
       <div class="slider__range-label slider__range-label__max">
         {{ max }}
       </div>
@@ -54,8 +59,10 @@
   </div>
 </template>
 <script>
+import ValueIndicator from '@/components/ValueIndicator'
 export default {
   name: 'HorizaontalSlider2',
+  components: { ValueIndicator },
   props: {
     data: {
       type: Array,
@@ -177,8 +184,11 @@ export default {
   },
   watch: {
     value(val) {
-      if (this.flag) this.setValue(val)
-      else this.setValue(val, this.speed)
+      if (this.flag) {
+        this.setValue(val)
+      } else {
+        this.setValue(val, this.speed)
+      }
     },
     max(val) {
       if (val < this.min) {
@@ -391,10 +401,23 @@ $padding-label: 5px 10px;
   margin-top: #{$knobRadius - $railHeight / 2};
 }
 
+.slider__range-label__top {
+  position: absolute;
+  padding: $padding-label;
+  bottom: #{$knobRadius - $railHeight/2};
+  @include transition(transform, left, opacity);
+  opacity: 0;
+
+  &__value {
+    transform: translate(-50%, 0);
+    @include transition(transform, left);
+  }
+}
+
 .slider__range-label {
   padding: $padding-label;
   position: absolute;
-  opacity: 50%;
+  //opacity: 50%;
 
   //border: 1px dashed black;
 
@@ -440,47 +463,16 @@ $padding-label: 5px 10px;
   top: 0px;
   right: 0px;
   @include transition(left);
+  &:hover .slider__range-label__top {
+    opacity: 1;
+  }
 }
 .slider__cursor {
   top: 0px;
   left: 0px;
   position: absolute;
   z-index: 9;
-  &:hover .slider__tooltip {
-    opacity: 1;
-  }
-  & .slider__tooltip {
-    opacity: 0;
-    @include transition(opacity);
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    left: 0;
-    bottom: $knobRadius;
-    transform: translate(-50%, 0);
-    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.08));
-    & .slider__tooltip_arrow {
-      width: 0;
-      height: 0;
-      border-left: $arrowHeight solid transparent;
-      border-right: $arrowHeight solid transparent;
-      border-top: $arrowHeight solid;
-      bottom: 0;
-      left: 0;
-    }
-    & .slider__tooltip__label {
-      font-size: 1.2rem;
-      white-space: nowrap;
-      padding: $padding-label;
-      text-align: center;
-      border-radius: 2px;
-      color: #fff;
-      background-color: $color-ink;
-      line-height: 15px;
-      word-break: break-word;
-    }
-  }
+  @include transition(opacity, left);
   & .slider__knob {
     position: absolute;
     border-radius: 50%;

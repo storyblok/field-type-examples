@@ -76,6 +76,6 @@ export default {
 }
 
 .slide-bar--label {
-  padding-top: 35px;
+  padding-top: 50px;
 }
 </style>

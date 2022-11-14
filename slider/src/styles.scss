@@ -6,6 +6,7 @@ $border: 1px solid $color-grey;
 @mixin transition($props...){
   transition-property: $props;
   will-change: $props;
-  transition-duration: 1000ms;
+  //transition-duration: 1000ms;
+  transition-duration: 100ms;
   transition-timing-function: ease-in-out;
 }

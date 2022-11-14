@@ -1,0 +1,73 @@
+<template>
+  <div
+    :class="`value-indicator ${
+      position === 'top' ? 'value-indicator--top' : 'value-indicator--bottom'
+    }`"
+  >
+    <span class="value-indicator__label">
+      <slot />
+    </span>
+    <div class="value-indicator__arrow" />
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'ValueIndicator',
+  props: {
+    position: {
+      type: String,
+      default: 'top',
+      validate(value) {
+        return value === 'top' || value === 'bottom'
+      },
+    },
+  },
+}
+</script>
+
+<style scoped lang="scss">
+@import '../styles';
+
+$arrowHeight: 5px;
+$padding-label: 5px 10px;
+
+.value-indicator {
+  display: flex;
+  align-items: center;
+  left: 0;
+  transform: translate(-50%, 0);
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.08));
+  &--top {
+    flex-direction: column;
+    & .value-indicator__arrow {
+      border-top: $arrowHeight solid;
+    }
+  }
+  &--bottom {
+    flex-direction: column-reverse;
+    & .value-indicator__arrow {
+      border-bottom: $arrowHeight solid;
+    }
+  }
+  &__arrow {
+    width: 0;
+    height: 0;
+    border-left: $arrowHeight solid transparent;
+    border-right: $arrowHeight solid transparent;
+    bottom: 0;
+    left: 0;
+  }
+  &__label {
+    font-size: 1.2rem;
+    white-space: nowrap;
+    padding: $padding-label;
+    text-align: center;
+    border-radius: 2px;
+    color: #fff;
+    background-color: $color-ink;
+    line-height: 15px;
+    word-break: break-word;
+  }
+}
+</style>
