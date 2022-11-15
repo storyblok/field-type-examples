@@ -9,8 +9,8 @@
     <Track
       class="slider__label-track"
       :value="val"
-      :min="minValue"
-      :max="maxValue"
+      :min-value="minValue"
+      :max-value="maxValue"
     />
     <div
       ref="elem"

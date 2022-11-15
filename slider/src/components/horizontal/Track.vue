@@ -15,11 +15,11 @@ export default {
   name: 'Track',
   components: { ValueIndicator },
   props: {
-    min: {
+    minValue: {
       type: Number,
       required: true,
     },
-    max: {
+    maxValue: {
       type: Number,
       required: true,
     },
@@ -30,7 +30,9 @@ export default {
   },
   computed: {
     position() {
-      return `${(100 * (this.value - this.min)) / (this.max - this.min)}%`
+      return `${
+        (100 * (this.value - this.minValue)) / (this.maxValue - this.minValue)
+      }%`
     },
   },
 }
