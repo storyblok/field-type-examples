@@ -62,22 +62,6 @@ export default {
       type: String,
       default: 'wrap',
     },
-    speed: {
-      type: Number,
-      default: 0.5,
-    },
-    lineHeight: {
-      type: Number,
-      default: 5,
-    },
-    iconWidth: {
-      type: Number,
-      default: 20,
-    },
-    draggable: {
-      type: Boolean,
-      default: true,
-    },
     // Keep
     setValue: {
       type: Function,
@@ -175,11 +159,7 @@ export default {
   },
   watch: {
     value(val) {
-      if (this.flag) {
-        this.setVal(val)
-      } else {
-        this.setVal(val, this.speed)
-      }
+      this.setVal(val)
     },
     maxValue(val) {
       if (val < this.minValue) {

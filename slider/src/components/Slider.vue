@@ -12,12 +12,12 @@
     />
     <HorizontalSlider
       v-if="!isArch"
+      id="aaaaaa"
       :value="value"
       :set-value="setValue"
       :min-value="minValue"
       :max-value="maxValue"
       :show-label="showLabel"
-      :arch-angle="archAngle"
       @input="handleValueChange"
     />
   </div>
