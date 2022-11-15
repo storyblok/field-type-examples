@@ -7,6 +7,7 @@
     @click="wrapClick"
   >
     <Track
+      class="slider__label-track"
       :value="val"
       :min="min"
       :max="max"
@@ -386,6 +387,16 @@ $margin-top: 3px;
   align-items: stretch;
   overflow: hidden;
   padding: 0px 20px; //tmp
+
+  & .slider__label-track {
+    @include transition(opacity);
+  }
+  &:not(:hover) .slider__label-track {
+    opacity: 0;
+  }
+  &:hover .slider__label-track {
+    opacity: 1;
+  }
 }
 
 .slider-bar {
