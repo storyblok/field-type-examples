@@ -49,6 +49,7 @@
 <script>
 import Track from '@/components/horizontal/Track'
 import Thumb from '@/components/Thumb'
+
 export default {
   name: 'HorizontalSlider',
   components: { Thumb, Track },
@@ -242,21 +243,15 @@ export default {
       return e.clientX - this.offset
     },
     wrapClick(e) {
-      if (!this.draggable && e.target.id === this.id) {
-        return false
-      }
       let pos = this.getPos(e)
       this.setValueOnPos(pos)
     },
     moveStart() {
-      if (!this.draggable) {
-        return false
-      }
       this.flag = true
       this.$emit('dragStart', this)
     },
     moving(e) {
-      if (!this.flag || !this.draggable) {
+      if (!this.flag) {
         return false
       }
       e.preventDefault()
@@ -266,7 +261,7 @@ export default {
       this.setValueOnPos(this.getPos(e), true)
     },
     moveEnd() {
-      if (this.flag && this.draggable) {
+      if (this.flag) {
         this.$emit('dragEnd', this)
         if (this.lazy && this.isDiff(this.val, this.value)) {
           this.syncValue()
