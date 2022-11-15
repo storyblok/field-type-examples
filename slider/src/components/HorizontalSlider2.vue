@@ -252,7 +252,9 @@ export default {
       return e.clientX - this.offset
     },
     wrapClick(e) {
-      if (!this.draggable && e.target.id === this.id) return false
+      if (!this.draggable && e.target.id === this.id) {
+        return false
+      }
       let pos = this.getPos(e)
       this.setValueOnPos(pos)
     },
@@ -264,9 +266,13 @@ export default {
       this.$emit('dragStart', this)
     },
     moving(e) {
-      if (!this.flag || !this.draggable) return false
+      if (!this.flag || !this.draggable) {
+        return false
+      }
       e.preventDefault()
-      if (e.targetTouches && e.targetTouches[0]) e = e.targetTouches[0]
+      if (e.targetTouches && e.targetTouches[0]) {
+        e = e.targetTouches[0]
+      }
       this.setValueOnPos(this.getPos(e), true)
     },
     moveEnd() {
@@ -291,10 +297,14 @@ export default {
         this.setCurrentValue(v, isDrag)
       } else if (pos < range[0]) {
         this.setCurrentValue(valueRange[0])
-        if (this.currentSlider === 1) this.currentSlider = 0
+        if (this.currentSlider === 1) {
+          this.currentSlider = 0
+        }
       } else {
         this.setCurrentValue(valueRange[1])
-        if (this.currentSlider === 0) this.currentSlider = 1
+        if (this.currentSlider === 0) {
+          this.currentSlider = 1
+        }
       }
     },
     isDiff(a, b) {
@@ -308,7 +318,9 @@ export default {
       return a !== b
     },
     setCurrentValue(val) {
-      if (val < this.minimum || val > this.maximum) return false
+      if (val < this.minimum || val > this.maximum) {
+        return false
+      }
       if (this.isDiff(this.currentValue, val)) {
         this.currentValue = val
         if (!this.lazy || !this.flag) {

@@ -38,6 +38,7 @@ module.exports = {
     'prettier'
   ],
   rules: {
+    curly: 'error',
     'prettier-vue/prettier': ['warn', {
       bracketSpacing: true,
       printWidth: 80,
