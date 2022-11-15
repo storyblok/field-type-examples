@@ -409,20 +409,23 @@ $margin-top: 3px;
 }
 
 .slider__label-container {
-  height: 20px; // todo
+  height: 1em; // todo
+  line-height: 2em;
   position: relative;
 }
 
 .slider__range-label {
-  padding: $padding-label;
+  //padding: $padding-label;
   position: absolute;
+  color: $color-text-secondary;
+  top: 50%;
   @include typography-label;
   &__min {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%);
     left: 0;
   }
   &__max {
-    transform: translate(50%, 0);
+    transform: translate(50%, -50%);
     right: 0;
   }
 }

@@ -16,8 +16,16 @@ export default {
       default: undefined,
     },
   },
+  computed: {
+    defaultValue() {
+      return this.options.defaultValue
+        ? Number.parseFloat(this.options.defaultValue)
+        : 0
+    },
+  },
   created() {
-    const defaultValue = this.options.defaultValue
+    const defaultValue = parseFloat(this.defaultValue)
+    console.log('value', this.value.value)
     if (!this.value?.value) {
       this.setValue({ value: defaultValue })
     }
@@ -34,10 +42,7 @@ export default {
       ? Number.parseFloat(this.options.archAngle)
       : 180
     const isArch = typeof this.options.archAngle !== 'undefined'
-    const defaultValue = this.options.defaultValue
-      ? Number.parseFloat(this.options.defaultValue)
-      : 0
-    const value = this.value?.value ?? defaultValue
+    const value = this.value?.value ?? this.defaultValue
     return (
       <Slider
         value={value}
