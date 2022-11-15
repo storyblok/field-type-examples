@@ -30,7 +30,7 @@ export default {
 @import '../styles';
 
 $arrowHeight: 5px;
-$padding-label: 5px 10px;
+$padding-label: 8px 10px;
 
 .value-indicator {
   display: flex;
@@ -59,14 +59,13 @@ $padding-label: 5px 10px;
     left: 0;
   }
   &__label {
-    font-size: 1.2rem;
+    @include typography-label;
     white-space: nowrap;
-    padding: $padding-label;
     text-align: center;
-    border-radius: 2px;
+    padding: $padding-label;
+    border-radius: 5px;
     color: #fff;
     background-color: $color-ink;
-    line-height: 15px;
     word-break: break-word;
   }
 }

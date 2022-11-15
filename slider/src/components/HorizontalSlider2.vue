@@ -6,6 +6,11 @@
     :style="calculateHeight"
     @click="wrapClick"
   >
+    <Track
+      :value="val"
+      :min="min"
+      :max="max"
+    />
     <div
       ref="elem"
       class="slider-bar"
@@ -16,17 +21,11 @@
         @mousedown="moveStart"
         @touchstart="moveStart"
       >
-        <ValueIndicator
-          class="slider__range-label__top"
-          :style="`left: ${position}px`"
-        >
-          {{ val }}
-        </ValueIndicator>
         <div
           class="slider__cursor"
           :style="`left: ${position}px`"
         >
-          <div class="slider__knob" />
+          <Thumb class="slider__knob" />
         </div>
       </div>
       <div
@@ -40,18 +39,6 @@
       <div class="slider__range-label slider__range-label__min">
         {{ min }}
       </div>
-      <ValueIndicator
-        class="slider__range-label slider__range-label__value"
-        :style="`left: ${position}px`"
-        position="bottom"
-        >{{ val }}</ValueIndicator
-      >
-      <!--      <div-->
-      <!--        class="slider__range-label slider__range-label__value"-->
-      <!--        :style="`left: ${position}px`"-->
-      <!--      >-->
-      <!--        {{ val }}-->
-      <!--      </div>-->
       <div class="slider__range-label slider__range-label__max">
         {{ max }}
       </div>
@@ -59,10 +46,11 @@
   </div>
 </template>
 <script>
-import ValueIndicator from '@/components/ValueIndicator'
+import Track from '@/components/Track'
+import Thumb from '@/components/Thumb'
 export default {
   name: 'HorizaontalSlider2',
-  components: { ValueIndicator },
+  components: { Thumb, Track },
   props: {
     data: {
       type: Array,
@@ -384,9 +372,10 @@ export default {
 <style scoped lang="scss">
 @import '../styles';
 $arrowHeight: 5px;
-$railHeight: 10px;
-$knobRadius: 10px;
+$rail-height: 6px;
+$knob-radius: 13px;
 $padding-label: 5px 10px;
+$margin-top: 3px;
 
 .slider {
   position: relative;
@@ -404,39 +393,19 @@ $padding-label: 5px 10px;
   display: block;
   border-radius: 15px;
   cursor: pointer;
-  height: 10px !important;
+  height: $rail-height !important;
+  margin: #{$knob-radius - $rail-height/2 + $margin-top} 0px;
 }
 
 .slider__label-container {
-  height: 50px; // todo
+  height: 20px; // todo
   position: relative;
-  margin-top: #{$knobRadius - $railHeight / 2};
-}
-
-.slider__range-label__top {
-  position: absolute;
-  padding: $padding-label;
-  bottom: #{$knobRadius - $railHeight/2};
-  @include transition(transform, left, opacity);
-  opacity: 0;
-
-  &__value {
-    transform: translate(-50%, 0);
-    @include transition(transform, left);
-  }
 }
 
 .slider__range-label {
   padding: $padding-label;
   position: absolute;
-  //opacity: 50%;
-
-  //border: 1px dashed black;
-
-  &__value {
-    transform: translate(-50%, 0);
-    @include transition(transform, left);
-  }
+  @include typography-label;
   &__min {
     transform: translate(-50%, 0);
     left: 0;
@@ -452,7 +421,7 @@ $padding-label: 5px 10px;
   height: 100%;
   z-index: 0;
   background-color: $color-grey;
-  border-radius: #{$railHeight / 2};
+  border-radius: #{$rail-height / 2};
 }
 .slider__track {
   position: absolute;
@@ -464,7 +433,7 @@ $padding-label: 5px 10px;
   left: 0;
   will-change: width;
   border-radius: 15px 0 0 15px;
-  height: 10px;
+  height: $rail-height;
   @include transition(width);
 }
 .slider__cursor__container {
@@ -485,20 +454,11 @@ $padding-label: 5px 10px;
   position: absolute;
   z-index: 9;
   @include transition(opacity, left);
-  & .slider__knob {
-    position: absolute;
-    border-radius: 50%;
-    height: 20px;
-    width: 20px;
-    background: white;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.08);
-    border: $border;
-    cursor: move;
-    left: 0;
-    top: $railHeight / 2;
-    transform: translate(-50%, -50%);
-  }
 }
+
+.slider__knob {
+}
+
 .vue-slide-bar-range {
   display: flex;
   padding: 5px 0;
