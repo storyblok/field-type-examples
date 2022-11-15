@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ValueIndicator from '@/components/ValueIndicator'
+import ValueIndicator from '@/components/horizontal/ValueIndicator'
 export default {
   name: 'Track',
   components: { ValueIndicator },
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../styles.scss';
+@import '../../styles';
 
 .track {
 }

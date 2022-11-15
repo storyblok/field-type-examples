@@ -37,7 +37,6 @@ export default {
     const maxValue = this.options.maxValue
       ? Number.parseFloat(this.options.maxValue)
       : undefined
-    const showLabel = this.options.showLabel !== 'false'
     const archAngle = this.options.archAngle
       ? Number.parseFloat(this.options.archAngle)
       : 180
@@ -45,13 +44,12 @@ export default {
     const value = this.value?.value ?? this.defaultValue
     return (
       <Slider
+        archAngle={archAngle}
         value={value}
         setValue={(value) => this.setValue({ value })}
         isArch={isArch}
         minValue={minValue}
         maxValue={maxValue}
-        showLabel={showLabel}
-        archAngle={archAngle}
       />
     )
   },

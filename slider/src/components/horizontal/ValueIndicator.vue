@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../styles';
+@import '../../styles';
 
 $arrowHeight: 5px;
 $padding-label: 8px 10px;

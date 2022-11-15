@@ -25,13 +25,13 @@
 
 <script>
 import ArchSlider from '@/components/ArchSlider'
-import HorizontalSlider from '@/components/HorizontalSlider'
+import HorizontalSlider from './horizontal/HorizontalSlider'
 
 export default {
   name: 'Slider',
   components: {
     ArchSlider,
-    HorizontalSlider,
+    HorizontalSlider: HorizontalSlider,
   },
   props: {
     setValue: {

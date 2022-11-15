@@ -9,8 +9,8 @@
     <Track
       class="slider__label-track"
       :value="val"
-      :min="min"
-      :max="max"
+      :min="minValue"
+      :max="maxValue"
     />
     <div
       ref="elem"
@@ -38,19 +38,19 @@
     </div>
     <div class="slider__label-container">
       <div class="slider__range-label slider__range-label__min">
-        {{ min }}
+        {{ minValue }}
       </div>
       <div class="slider__range-label slider__range-label__max">
-        {{ max }}
+        {{ maxValue }}
       </div>
     </div>
   </div>
 </template>
 <script>
-import Track from '@/components/Track'
+import Track from '@/components/horizontal/Track'
 import Thumb from '@/components/Thumb'
 export default {
-  name: 'HorizaontalSlider2',
+  name: 'HorizontalSlider',
   components: { Thumb, Track },
   props: {
     data: {
@@ -73,25 +73,26 @@ export default {
       type: Number,
       default: 20,
     },
-    value: {
-      type: [String, Number],
-      default: 0,
-    },
-    min: {
-      type: Number,
-      default: 0,
-    },
-    max: {
-      type: Number,
-      default: 100,
-    },
-    showTooltip: {
-      type: Boolean,
-      default: true,
-    },
     draggable: {
       type: Boolean,
       default: true,
+    },
+    // Keep
+    setValue: {
+      type: Function,
+      default: () => {},
+    },
+    value: {
+      type: Number,
+      default: 0,
+    },
+    minValue: {
+      type: Number,
+      default: 0,
+    },
+    maxValue: {
+      type: Number,
+      default: 100,
     },
   },
   data() {
@@ -129,10 +130,10 @@ export default {
       return (this.currentValue - this.minimum) / this.spacing
     },
     minimum() {
-      return this.data ? 0 : this.min
+      return this.data ? 0 : this.minValue
     },
     maximum() {
-      return this.data ? this.data.length - 1 : this.max
+      return this.data ? this.data.length - 1 : this.maxValue
     },
     multiple() {
       let decimals = `${this.interval}`.split('.')[1]
@@ -174,29 +175,29 @@ export default {
   watch: {
     value(val) {
       if (this.flag) {
-        this.setValue(val)
+        this.setVal(val)
       } else {
-        this.setValue(val, this.speed)
+        this.setVal(val, this.speed)
       }
     },
-    max(val) {
-      if (val < this.min) {
+    maxValue(val) {
+      if (val < this.minValue) {
         return this.printError(
           '[VueSlideBar error]: The maximum value can not be less than the minimum value.',
         )
       }
       let resetVal = this.limitValue(this.val)
-      this.setValue(resetVal)
+      this.setVal(resetVal)
       this.refresh()
     },
-    min(val) {
-      if (val > this.max) {
+    minValue(val) {
+      if (val > this.maxValue) {
         return this.printError(
           '[VueSlideBar error]: The minimum value can not be greater than the maximum value.',
         )
       }
       let resetVal = this.limitValue(this.val)
-      this.setValue(resetVal)
+      this.setVal(resetVal)
       this.refresh()
     },
   },
@@ -210,7 +211,7 @@ export default {
     this.$nextTick(() => {
       if (this.isComponentExists) {
         this.getStaticData()
-        this.setValue(this.limitValue(this.value), 0)
+        this.setVal(this.limitValue(this.value), 0)
         this.bindEvents()
       }
     })
@@ -317,7 +318,7 @@ export default {
         }
       }
     },
-    setValue(val) {
+    setVal(val) {
       if (this.isDiff(this.val, val)) {
         let resetVal = this.limitValue(val)
         this.val = resetVal
@@ -329,16 +330,16 @@ export default {
         return val
       }
       const inRange = (v) => {
-        if (v < this.min) {
+        if (v < this.minValue) {
           this.printError(
-            `[VueSlideBar warn]: The value of the slider is ${val}, the minimum value is ${this.min}, the value of this slider can not be less than the minimum value`,
+            `[VueSlideBar warn]: The value of the slider is ${val}, the minimum value is ${this.minValue}, the value of this slider can not be less than the minimum value`,
           )
-          return this.min
-        } else if (v > this.max) {
+          return this.minValue
+        } else if (v > this.maxValue) {
           this.printError(
-            `[VueSlideBar warn]: The value of the slider is ${val}, the maximum value is ${this.max}, the value of this slider can not be greater than the maximum value`,
+            `[VueSlideBar warn]: The value of the slider is ${val}, the maximum value is ${this.maxValue}, the value of this slider can not be greater than the maximum value`,
           )
-          return this.max
+          return this.maxValue
         }
         return v
       }
@@ -349,7 +350,7 @@ export default {
       if (this.range) {
         this.$emit('callbackRange', this.range[this.currentIndex])
       }
-      this.$emit('input', val)
+      this.setValue(val)
     },
     getStaticData() {
       if (this.$refs.elem) {
@@ -371,7 +372,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../styles';
+@import '../../styles';
 $arrowHeight: 5px;
 $rail-height: 6px;
 $knob-radius: 13px;
