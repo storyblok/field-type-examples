@@ -25,7 +25,6 @@ export default {
   },
   created() {
     const defaultValue = parseFloat(this.defaultValue)
-    console.log('value', this.value.value)
     if (!this.value?.value) {
       this.setValue({ value: defaultValue })
     }
