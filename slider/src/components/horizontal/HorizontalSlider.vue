@@ -18,16 +18,12 @@
     >
       <div
         ref="tooltip"
-        class="slider__cursor__container"
+        class="slider__thumb__container"
+        :style="`left: ${position}px`"
         @mousedown="moveStart"
         @touchstart="moveStart"
       >
-        <div
-          class="slider__cursor"
-          :style="`left: ${position}px`"
-        >
-          <Thumb class="slider__knob" />
-        </div>
+        <Thumb class="slider__thumb" />
       </div>
       <div
         ref="process"
@@ -93,9 +89,6 @@ export default {
     }
   },
   computed: {
-    slider() {
-      return this.$refs.tooltip
-    },
     val: {
       get() {
         return this.data ? this.data[this.currentValue] : this.currentValue
@@ -350,7 +343,7 @@ export default {
 @import '../../styles';
 $arrowHeight: 5px;
 $rail-height: 6px;
-$knob-radius: 13px;
+$thumb-radius: 13px;
 $padding-label: 5px 10px;
 $margin-top: 3px;
 
@@ -380,8 +373,46 @@ $margin-top: 3px;
   display: block;
   border-radius: 15px;
   cursor: pointer;
-  height: $rail-height !important;
-  margin: #{$knob-radius - $rail-height/2 + $margin-top} 0px;
+  height: #{2 * $thumb-radius};
+  margin: $margin-top 0px;
+}
+
+.slider__rail {
+  position: absolute;
+  width: 100%;
+  height: $rail-height;
+  z-index: 0;
+  background-color: $color-grey;
+  border-radius: #{$rail-height / 2};
+  @include centerY;
+}
+.slider__track {
+  position: absolute;
+  background-color: $color-teal;
+  transition: all 0s;
+  z-index: 1;
+  width: 0;
+  left: 0;
+  will-change: width;
+  border-radius: 15px 0 0 15px;
+  height: $rail-height;
+  @include transition(width);
+  @include centerY;
+}
+
+.slider__thumb__container {
+  position: absolute;
+  cursor: pointer;
+  z-index: 3;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  @include transition(left);
+  &:hover .slider__range-label__top {
+    opacity: 1;
+  }
+}
+.slider__thumb {
 }
 
 .slider__label-container {
@@ -405,50 +436,6 @@ $margin-top: 3px;
     right: 0;
   }
 }
-
-.slider__rail {
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  background-color: $color-grey;
-  border-radius: #{$rail-height / 2};
-}
-.slider__track {
-  position: absolute;
-  background-color: $color-teal;
-  transition: all 0s;
-  z-index: 1;
-  width: 0;
-  top: 0;
-  left: 0;
-  will-change: width;
-  border-radius: 15px 0 0 15px;
-  height: $rail-height;
-  @include transition(width);
-}
-.slider__cursor__container {
-  position: absolute;
-  cursor: pointer;
-  z-index: 3;
-  left: 0;
-  top: 0px;
-  right: 0px;
-  @include transition(left);
-  &:hover .slider__range-label__top {
-    opacity: 1;
-  }
-}
-.slider__cursor {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  z-index: 9;
-  @include transition(opacity, left);
-}
-
-.slider__knob {
-}
-
 .vue-slide-bar-range {
   display: flex;
   padding: 5px 0;
