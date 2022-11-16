@@ -436,23 +436,4 @@ $margin-top: 3px;
     right: 0;
   }
 }
-.vue-slide-bar-range {
-  display: flex;
-  padding: 5px 0;
-  justify-content: space-between;
-}
-.vue-slide-bar-separate {
-  position: relative;
-  width: 2px;
-  background-color: #9e9e9e;
-  height: 5px;
-  cursor: pointer;
-}
-.vue-slide-bar-separate-text {
-  text-align: center;
-  position: absolute;
-  white-space: nowrap;
-  transform: translate(-50%, 0);
-  top: 6px;
-}
 </style>
