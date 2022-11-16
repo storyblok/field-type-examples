@@ -1,5 +1,9 @@
 <template>
-  <div class="knob">
+  <div
+    class="knob"
+    @mousedown="onMouseDown"
+    @touchstart="onTouchStart"
+  >
     <Drag class="knob__drag" />
   </div>
 </template>
@@ -9,6 +13,16 @@ import Drag from '@/components/icons/Drag'
 export default {
   name: 'Thumb',
   components: { Drag },
+  props: {
+    onMouseDown: {
+      type: Function,
+      default: () => undefined,
+    },
+    onTouchStart: {
+      type: Function,
+      default: () => undefined,
+    },
+  },
 }
 </script>
 

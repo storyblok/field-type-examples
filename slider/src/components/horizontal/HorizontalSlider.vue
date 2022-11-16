@@ -16,15 +16,12 @@
       ref="elem"
       class="slider-bar"
     >
-      <div
-        ref="tooltip"
-        class="slider__thumb__container"
+      <Thumb
+        class="slider__thumb"
         :style="`left: ${position}px`"
-        @mousedown="moveStart"
-        @touchstart="moveStart"
-      >
-        <Thumb class="slider__thumb" />
-      </div>
+        :on-mouse-down="moveStart"
+        :on-touch-start="moveStart"
+      />
       <div
         ref="process"
         :style="`width: ${position}px`"
@@ -413,6 +410,16 @@ $margin-top: 3px;
   }
 }
 .slider__thumb {
+  position: absolute;
+  cursor: pointer;
+  z-index: 3;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  @include transition(left);
+  &:hover .slider__range-label__top {
+    opacity: 1;
+  }
 }
 
 .slider__label-container {
