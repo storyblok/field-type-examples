@@ -11,24 +11,35 @@
       :value="val"
       :min-value="minValue"
       :max-value="maxValue"
-    />
-    <div
-      ref="elem"
-      class="slider-bar"
+    >
+      <Tooltip class="track__value-indicator">
+        {{ value }}
+      </Tooltip>
+    </Track>
+    <Track
+      class="track_tmp"
+      :value="val"
+      :min-value="minValue"
+      :max-value="maxValue"
     >
       <Thumb
-        class="slider__thumb"
-        :style="`left: ${position}px`"
         :on-mouse-down="moveStart"
         :on-touch-start="moveStart"
       />
-      <div
-        ref="process"
-        :style="`width: ${position}px`"
-        class="slider__track"
-      />
-      <div class="slider__rail" />
-    </div>
+      <template #background>
+        <div
+          ref="process"
+          :style="`width: ${position}px`"
+          class="slider__track"
+        />
+        <div class="slider__rail" />
+      </template>
+    </Track>
+    <div
+      ref="elem"
+      class="slider-bar"
+      style="background-color: red"
+    ></div>
     <div class="slider__label-container">
       <div class="slider__range-label slider__range-label__min">
         {{ minValue }}
@@ -42,10 +53,11 @@
 <script>
 import Track from '@/components/horizontal/Track'
 import Thumb from '@/components/Thumb'
+import Tooltip from '@/components/horizontal/Tooltip'
 
 export default {
   name: 'HorizontalSlider',
-  components: { Thumb, Track },
+  components: { Thumb, Track, Tooltip },
   props: {
     data: {
       type: Array,
@@ -365,10 +377,12 @@ $margin-top: 3px;
   }
 }
 
+.track_tmp {
+  cursor: pointer;
+}
+
 .slider-bar {
   position: relative;
-  display: block;
-  border-radius: 15px;
   cursor: pointer;
   height: #{2 * $thumb-radius};
   margin: $margin-top 0px;
@@ -378,16 +392,16 @@ $margin-top: 3px;
   position: absolute;
   width: 100%;
   height: $rail-height;
-  z-index: 0;
+  z-index: -2;
   background-color: $color-grey;
-  border-radius: #{$rail-height / 2};
+  border-radius: calc($rail-height / 2);
   @include centerY;
 }
 .slider__track {
   position: absolute;
   background-color: $color-teal;
   transition: all 0s;
-  z-index: 1;
+  z-index: -1;
   width: 0;
   left: 0;
   will-change: width;

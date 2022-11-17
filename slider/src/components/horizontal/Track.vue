@@ -1,19 +1,23 @@
 <template>
   <div class="track">
-    <ValueIndicator
-      class="track_value-indicator"
+    <div
+      class="track__value-indicator"
       :style="`margin-left: ${position};`"
     >
-      {{ value }}
-    </ValueIndicator>
+      <div class="track__value-indicator__translate-x">
+        <slot />
+      </div>
+    </div>
+    <slot
+      name="background"
+      class="track__background"
+    />
   </div>
 </template>
 
 <script>
-import ValueIndicator from '@/components/horizontal/ValueIndicator'
 export default {
   name: 'Track',
-  components: { ValueIndicator },
   props: {
     minValue: {
       type: Number,
@@ -41,10 +45,18 @@ export default {
 <style scoped lang="scss">
 @import '../../styles';
 
-.track {
+.track__background {
 }
 
-.track_value-indicator {
+.track {
+  position: relative;
+}
+
+.track__value-indicator__translate-x {
+  transform: translate(-50%, 0);
+}
+
+.track__value-indicator {
   float: left;
   @include transition(margin-left);
 }

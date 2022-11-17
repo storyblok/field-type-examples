@@ -1,19 +1,19 @@
 <template>
   <div
-    :class="`value-indicator ${
-      position === 'top' ? 'value-indicator--top' : 'value-indicator--bottom'
+    :class="`tooltip ${
+      position === 'top' ? 'tooltip--top' : 'tooltip--bottom'
     }`"
   >
-    <span class="value-indicator__label">
+    <span class="tooltip__label">
       <slot />
     </span>
-    <div class="value-indicator__arrow" />
+    <div class="tooltip__arrow" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ValueIndicator',
+  name: 'Tooltip',
   props: {
     position: {
       type: String,
@@ -32,21 +32,19 @@ export default {
 $arrowHeight: 5px;
 $padding-label: 8px 10px;
 
-.value-indicator {
+.tooltip {
   display: flex;
   align-items: center;
-  left: 0;
-  transform: translate(-50%, 0);
   filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.08));
   &--top {
     flex-direction: column;
-    & .value-indicator__arrow {
+    & .tooltip__arrow {
       border-top: $arrowHeight solid;
     }
   }
   &--bottom {
     flex-direction: column-reverse;
-    & .value-indicator__arrow {
+    & .tooltip__arrow {
       border-bottom: $arrowHeight solid;
     }
   }
