@@ -1,11 +1,13 @@
 <template>
-  <div class="slider__container">
-    {{ value }}
+  <div
+    class="slider__container"
+    @mousedown.prevent="handleClickTrack"
+  >
     <div class="tooltip__container">
       <Tooltip
         class="tooltip"
         :style="`
-          margin-left: ${thumbPosition};
+          margin-left: ${stopPosition(value)};
           ${isMoving ? 'transition-duration: 0ms' : ''}
           `"
       >
@@ -15,14 +17,12 @@
     <div
       ref="track"
       class="slider"
-      @mousedown.prevent="handleClickTrack"
-      @resize="log"
     >
       <Thumb
         ref="thumb"
         class="slider__thumb"
         :style="`
-          margin-left: ${thumbPosition};
+          margin-left: ${stopPosition(value)};
           ${isMoving ? 'transition-duration: 0ms' : ''}
         `"
         :on-click="handleClickThumb"
@@ -38,7 +38,7 @@
         </div>
         <div
           :style="`
-          width: ${thumbPosition};
+          width: ${stopPosition(value)};
           ${isMoving ? 'transition-duration: 0ms' : ''}
           `"
           class="slider__track"
@@ -128,16 +128,6 @@ export default {
       refs: {},
     }
   },
-  computed: {
-    thumbPosition() {
-      return `${coordinateFromValue(
-        this.value,
-        this.getTrackWidth(),
-        this.minValue,
-        this.maxValue,
-      )}px`
-    },
-  },
   created() {
     // End touch/click
     document.addEventListener('mouseup', this.handleReleaseThumb)
@@ -160,11 +150,7 @@ export default {
     getTrackWidth() {
       return this.$refs.track?.getBoundingClientRect()?.width ?? 300
     },
-    log() {
-      // console.log(e)
-    },
     handleClickThumb(e) {
-      console.log(this.$refs.thumb.$el)
       const thumbRect = this.$refs.thumb.$el.getBoundingClientRect()
       this.offsetX = e.pageX - thumbRect.x - thumbRect.width / 2
       this.isMoving = true
@@ -199,12 +185,14 @@ export default {
       this.setValue(value)
     },
     stopPosition(stop) {
-      return `${coordinateFromValue(
-        stop,
-        this.getTrackWidth(),
-        this.minValue,
-        this.maxValue,
-      )}px`
+      const relativeX =
+        coordinateFromValue(
+          stop,
+          this.getTrackWidth(),
+          this.minValue,
+          this.maxValue,
+        ) / this.getTrackWidth()
+      return `${100 * relativeX}%`
     },
   },
 }
