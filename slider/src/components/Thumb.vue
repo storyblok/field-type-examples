@@ -1,10 +1,11 @@
 <template>
   <div
-    class="knob"
-    @mousedown="onMouseDown"
-    @touchstart="onTouchStart"
+    ref="thumb"
+    class="thumb"
+    @mousedown.stop="onClick"
+    @touchstart.stop="onClick"
   >
-    <Drag class="knob__drag" />
+    <Drag class="thumb__icon" />
   </div>
 </template>
 
@@ -14,11 +15,7 @@ export default {
   name: 'Thumb',
   components: { Drag },
   props: {
-    onMouseDown: {
-      type: Function,
-      default: () => undefined,
-    },
-    onTouchStart: {
+    onClick: {
       type: Function,
       default: () => undefined,
     },
@@ -30,7 +27,7 @@ export default {
 @import '../styles';
 $knob-radius: 13px;
 
-.knob {
+.thumb {
   position: relative;
   border-radius: 50%;
   height: #{($knob-radius - 1px) * 2};
@@ -48,7 +45,7 @@ $knob-radius: 13px;
   }
 }
 
-.knob__drag {
+.thumb__icon {
   //transform: rotate(90deg);
   position: absolute;
   top: 50%;

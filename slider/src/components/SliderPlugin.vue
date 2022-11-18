@@ -1,5 +1,6 @@
 <script>
-import Slider from './Slider'
+// import Slider from './Slider'
+import Experiment from '@/components/Experiment'
 
 export default {
   props: {
@@ -36,14 +37,14 @@ export default {
     const maxValue = this.options.maxValue
       ? Number.parseFloat(this.options.maxValue)
       : undefined
-    const archAngle = this.options.archAngle
-      ? Number.parseFloat(this.options.archAngle)
-      : 180
+    // const archAngle = this.options.archAngle
+    //   ? Number.parseFloat(this.options.archAngle)
+    //   : 180
     const isArch = typeof this.options.archAngle !== 'undefined'
     const value = this.value?.value ?? this.defaultValue
     return (
-      <Slider
-        archAngle={archAngle}
+      <Experiment
+        // archAngle={archAngle}
         value={value}
         setValue={(value) => this.setValue({ value })}
         isArch={isArch}

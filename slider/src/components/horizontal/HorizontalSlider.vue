@@ -2,7 +2,7 @@
   <div
     :id="id"
     ref="wrap"
-    class="slider"
+    class="slider__track"
     :style="calculateHeight"
     @click="wrapClick"
   >
@@ -356,7 +356,7 @@ $thumb-radius: 13px;
 $padding-label: 5px 10px;
 $margin-top: 3px;
 
-.slider {
+.slider__track {
   position: relative;
   box-sizing: border-box;
   user-select: none;
