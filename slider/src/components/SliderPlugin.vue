@@ -1,6 +1,5 @@
 <script>
-// import Slider from './Slider'
-import Experiment from '@/components/CustomSlider'
+import Experiment from '@/components/horizontal/HorizontalSlider'
 
 export default {
   props: {

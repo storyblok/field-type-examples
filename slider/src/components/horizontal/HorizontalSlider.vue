@@ -1,68 +1,113 @@
 <template>
   <div
-    :id="id"
-    ref="wrap"
-    class="slider"
-    :style="calculateHeight"
-    @click="wrapClick"
+    :class="`slider__container ${focused ? 'slider__container--focused' : ''}`"
+    @mousedown.prevent="handleClickTrack"
   >
-    <Track
-      class="slider__label-track"
-      :value="val"
-      :min-value="minValue"
-      :max-value="maxValue"
-    >
-      <Tooltip class="track__value-indicator">
+    <div class="tooltip__container">
+      <Tooltip
+        class="tooltip"
+        :style="`
+          margin-left: ${stopPosition(value)};
+          ${isMoving ? 'transition-duration: 0ms' : ''}
+          `"
+      >
         {{ value }}
       </Tooltip>
-    </Track>
-    <Track
-      class="track_tmp"
-      :value="val"
-      :min-value="minValue"
-      :max-value="maxValue"
+    </div>
+    <div
+      ref="track"
+      class="slider"
     >
       <Thumb
-        :on-mouse-down="moveStart"
-        :on-touch-start="moveStart"
-      />
-      <template #background>
-        <div
-          ref="process"
-          :style="`width: ${position}px`"
-          class="slider"
+        ref="thumb"
+        class="slider__thumb"
+        :style="`
+          margin-left: ${stopPosition(value)};
+          ${isMoving ? 'transition-duration: 0ms' : ''}
+        `"
+        :on-click="handleClickThumb"
+        :focused="focused"
+      >
+        <input
+          class="track__input"
+          data-index="0"
+          aria-label="slider"
+          :aria-valuenow="`${value}`"
+          :aria-valuemin="`${minValue}`"
+          :aria-valuemax="`${maxValue}`"
+          :value="`${value}`"
+          :min="`${minValue}`"
+          :max="`${maxValue}`"
+          aria-orientation="horizontal"
+          type="range"
+          :step="stepSize"
+          @input="handleInput"
+          @focusin="setFocused"
+          @focusout="setUnfocused"
         />
-        <div class="slider__rail" />
-      </template>
-    </Track>
-    <div
-      ref="elem"
-      class="slider-bar"
-      style="background-color: red"
-    ></div>
-    <div class="slider__label-container">
-      <div class="slider__range-label slider__range-label__min">
+      </Thumb>
+      <div class="slider__rail">
+        <div class="slider__stop-circle__container">
+          <div
+            v-for="stop in stops"
+            :key="stop"
+            class="slider__stop-circle"
+            :style="`left: ${stopPosition(stop)};`"
+          />
+        </div>
+        <div
+          :style="`
+          width: ${stopPosition(value)};
+          ${isMoving ? 'transition-duration: 0ms' : ''}
+          `"
+          class="slider__track"
+        />
+      </div>
+    </div>
+    <div class="slider__stop-label__container">
+      <div
+        class="slider_stop-label"
+        :style="`left: ${stopPosition(minValue)};`"
+      >
         {{ minValue }}
       </div>
-      <div class="slider__range-label slider__range-label__max">
+      <div
+        v-for="stop in stops"
+        :key="stop"
+        class="slider_stop-label"
+        :style="`left: ${stopPosition(stop)};`"
+      >
+        {{ stop }}
+      </div>
+      <div
+        class="slider_stop-label"
+        :style="`left: ${stopPosition(maxValue)};`"
+      >
         {{ maxValue }}
       </div>
     </div>
   </div>
 </template>
+
 <script>
-import Track from '@/components/horizontal/Track'
 import Thumb from '@/components/Thumb'
+import { roundToNearest } from '@/utils/roundToNearest'
 import Tooltip from '@/components/horizontal/Tooltip'
 
+const valueFromCoordinate = (x, width, minValue, maxValue) => {
+  return (x * (maxValue - minValue)) / width + minValue
+}
+const coordinateFromValue = (value, width, minValue, maxValue) => {
+  return ((value - minValue) * width) / (maxValue - minValue)
+}
+// const numericValueFromString = (stringValue) => Number(stringValue)
+// const stringValueFromNumeric = (numericValue, precision) =>
+//   numericValue.toPrecision(precision)
+
 export default {
-  name: 'HorizontalSlider',
-  components: { Thumb, Track, Tooltip },
+  name: 'Experiment',
+  components: { Tooltip, Thumb },
   props: {
-    data: {
-      type: Array,
-      default: null,
-    },
     id: {
       type: String,
       default: 'wrap',
@@ -84,265 +129,99 @@ export default {
       type: Number,
       default: 100,
     },
+    stepSize: {
+      type: Number,
+      default: 1,
+    },
+    stops: {
+      type: Array,
+      default() {
+        return [-5, 0, 5]
+      },
+    },
   },
   data() {
     return {
-      flag: false,
-      size: 0,
-      currentValue: 0,
-      currentSlider: 0,
-      isComponentExists: true,
-      interval: 1,
-      lazy: false,
-      realTime: false,
+      isMoving: false,
+      xOffset: 0,
+      refs: {},
+      focused: false,
     }
   },
-  computed: {
-    val: {
-      get() {
-        return this.data ? this.data[this.currentValue] : this.currentValue
-      },
-      set(val) {
-        if (this.data) {
-          let index = this.data.indexOf(val)
-          if (index > -1) {
-            this.currentValue = index
-          }
-        } else {
-          this.currentValue = val
-        }
-      },
-    },
-    currentIndex() {
-      return (this.currentValue - this.minimum) / this.spacing
-    },
-    minimum() {
-      return this.data ? 0 : this.minValue
-    },
-    maximum() {
-      return this.data ? this.data.length - 1 : this.maxValue
-    },
-    multiple() {
-      let decimals = `${this.interval}`.split('.')[1]
-      return decimals ? Math.pow(10, decimals.length) : 1
-    },
-    spacing() {
-      return this.data ? 1 : this.interval
-    },
-    total() {
-      if (this.data) {
-        return this.data.length - 1
-      } else if (
-        Math.floor((this.maximum - this.minimum) * this.multiple) %
-          (this.interval * this.multiple) !==
-        0
-      ) {
-        this.printError(
-          '[VueSlideBar error]: Prop[interval] is illegal, Please make sure that the interval can be divisible',
-        )
-      }
-      return (this.maximum - this.minimum) / this.interval
-    },
-    gap() {
-      return this.size / this.total
-    },
-    position() {
-      return ((this.currentValue - this.minimum) / this.spacing) * this.gap
-    },
-    limit() {
-      return [0, this.size]
-    },
-    valueLimit() {
-      return [this.minimum, this.maximum]
-    },
-    calculateHeight() {
-      return {}
-    },
+  created() {
+    // End touch/click
+    document.addEventListener('mouseup', this.handleReleaseThumb)
+    document.addEventListener('mouseleave', this.handleReleaseThumb)
+    document.addEventListener('touchend', this.handleReleaseThumb)
+    // Move
+    document.addEventListener('mousemove', this.handleMove)
+    document.addEventListener('touchmove', this.handleMove)
   },
-  watch: {
-    value(val) {
-      this.setVal(val)
-    },
-    maxValue(val) {
-      if (val < this.minValue) {
-        return this.printError(
-          '[VueSlideBar error]: The maximum value can not be less than the minimum value.',
-        )
-      }
-      let resetVal = this.limitValue(this.val)
-      this.setVal(resetVal)
-      this.refresh()
-    },
-    minValue(val) {
-      if (val > this.maxValue) {
-        return this.printError(
-          '[VueSlideBar error]: The minimum value can not be greater than the maximum value.',
-        )
-      }
-      let resetVal = this.limitValue(this.val)
-      this.setVal(resetVal)
-      this.refresh()
-    },
-  },
-  mounted() {
-    this.isComponentExists = true
-    if (typeof window === 'undefined' || typeof document === 'undefined') {
-      return this.printError(
-        '[VueSlideBar error]: window or document is undefined, can not be initialization.',
-      )
-    }
-    this.$nextTick(() => {
-      if (this.isComponentExists) {
-        this.getStaticData()
-        this.setVal(this.limitValue(this.value), 0)
-        this.bindEvents()
-      }
-    })
-  },
-  beforeDestroy() {
-    this.isComponentExists = false
-    this.unbindEvents()
+  destroyed() {
+    // End touch/click
+    document.removeEventListener('mouseup', this.handleReleaseThumb)
+    document.removeEventListener('mouseleave', this.handleReleaseThumb)
+    document.removeEventListener('touchend', this.handleReleaseThumb)
+    // Move
+    document.removeEventListener('mousemove', this.handleMove)
+    document.removeEventListener('touchmove', this.handleMove)
   },
   methods: {
-    bindEvents() {
-      document.addEventListener('touchmove', this.moving, { passive: false })
-      document.addEventListener('touchend', this.moveEnd, { passive: false })
-      document.addEventListener('mousemove', this.moving)
-      document.addEventListener('mouseup', this.moveEnd)
-      document.addEventListener('mouseleave', this.moveEnd)
-      window.addEventListener('resize', this.refresh)
+    handleInput(e) {
+      this.setValue(Number(e.target.value))
     },
-    unbindEvents() {
-      window.removeEventListener('resize', this.refresh)
-      document.removeEventListener('touchmove', this.moving)
-      document.removeEventListener('touchend', this.moveEnd)
-      document.removeEventListener('mousemove', this.moving)
-      document.removeEventListener('mouseup', this.moveEnd)
-      document.removeEventListener('mouseleave', this.moveEnd)
+    getTrackWidth() {
+      return this.$refs.track?.getBoundingClientRect()?.width ?? 300
     },
-    getPos(e) {
-      this.realTime && this.getStaticData()
-      return e.clientX - this.offset
+    handleClickThumb(e) {
+      const thumbRect = this.$refs.thumb.$el.getBoundingClientRect()
+      this.offsetX = e.pageX - thumbRect.x - thumbRect.width / 2
+      this.isMoving = true
     },
-    wrapClick(e) {
-      let pos = this.getPos(e)
-      this.setValueOnPos(pos)
+    handleReleaseThumb() {
+      this.isMoving = false
     },
-    moveStart() {
-      this.flag = true
-      this.$emit('dragStart', this)
-    },
-    moving(e) {
-      if (!this.flag) {
-        return false
+    handleMove(e) {
+      if (!this.isMoving) {
+        return
       }
-      e.preventDefault()
-      if (e.targetTouches && e.targetTouches[0]) {
-        e = e.targetTouches[0]
-      }
-      this.setValueOnPos(this.getPos(e), true)
+      const x =
+        e.pageX - this.$refs.track.getBoundingClientRect().x - this.offsetX
+      this.setCoordinate(x)
     },
-    moveEnd() {
-      if (this.flag) {
-        this.$emit('dragEnd', this)
-        if (this.lazy && this.isDiff(this.val, this.value)) {
-          this.syncValue()
-        }
-      } else {
-        return false
-      }
-      this.flag = false
+    handleClickTrack(e) {
+      this.setCoordinate(e.offsetX)
     },
-    setValueOnPos(pos, isDrag) {
-      let range = this.limit
-      let valueRange = this.valueLimit
-      if (pos >= range[0] && pos <= range[1]) {
-        let v =
-          (Math.round(pos / this.gap) * (this.spacing * this.multiple) +
-            this.minimum * this.multiple) /
-          this.multiple
-        this.setCurrentValue(v, isDrag)
-      } else if (pos < range[0]) {
-        this.setCurrentValue(valueRange[0])
-        if (this.currentSlider === 1) {
-          this.currentSlider = 0
-        }
-      } else {
-        this.setCurrentValue(valueRange[1])
-        if (this.currentSlider === 0) {
-          this.currentSlider = 1
-        }
-      }
+    setCoordinate(x) {
+      const unboundValue = valueFromCoordinate(
+        x,
+        this.getTrackWidth(),
+        this.minValue,
+        this.maxValue,
+      )
+      // Min-max
+      const boundValue = Math.min(
+        this.maxValue,
+        Math.max(unboundValue, this.minValue),
+      )
+      const value = roundToNearest(boundValue, this.stepSize)
+      this.setValue(value)
     },
-    isDiff(a, b) {
-      if (
-        Object.prototype.toString.call(a) !== Object.prototype.toString.call(b)
-      ) {
-        return true
-      } else if (Array.isArray(a) && a.length === b.length) {
-        return a.some((v, i) => v !== b[i])
-      }
-      return a !== b
+    stopPosition(stop) {
+      const relativeX =
+        coordinateFromValue(
+          stop,
+          this.getTrackWidth(),
+          this.minValue,
+          this.maxValue,
+        ) / this.getTrackWidth()
+      return `${100 * relativeX}%`
     },
-    setCurrentValue(val) {
-      if (val < this.minimum || val > this.maximum) {
-        return false
-      }
-      if (this.isDiff(this.currentValue, val)) {
-        this.currentValue = val
-        if (!this.lazy || !this.flag) {
-          this.syncValue()
-        }
-      }
+    setFocused() {
+      this.focused = true
     },
-    setVal(val) {
-      if (this.isDiff(this.val, val)) {
-        let resetVal = this.limitValue(val)
-        this.val = resetVal
-        this.syncValue()
-      }
-    },
-    limitValue(val) {
-      if (this.data) {
-        return val
-      }
-      const inRange = (v) => {
-        if (v < this.minValue) {
-          this.printError(
-            `[VueSlideBar warn]: The value of the slider is ${val}, the minimum value is ${this.minValue}, the value of this slider can not be less than the minimum value`,
-          )
-          return this.minValue
-        } else if (v > this.maxValue) {
-          this.printError(
-            `[VueSlideBar warn]: The value of the slider is ${val}, the maximum value is ${this.maxValue}, the value of this slider can not be greater than the maximum value`,
-          )
-          return this.maxValue
-        }
-        return v
-      }
-      return inRange(val)
-    },
-    syncValue() {
-      let val = this.val
-      if (this.range) {
-        this.$emit('callbackRange', this.range[this.currentIndex])
-      }
-      this.setValue(val)
-    },
-    getStaticData() {
-      if (this.$refs.elem) {
-        this.size = this.$refs.elem.offsetWidth
-        this.offset = this.$refs.elem.getBoundingClientRect().left
-      }
-    },
-    refresh() {
-      if (this.$refs.elem) {
-        this.getStaticData()
-        this.setPosition()
-      }
-    },
-    printError(msg) {
-      console.error(msg)
+    setUnfocused() {
+      this.focused = false
     },
   },
 }
@@ -350,111 +229,123 @@ export default {
 
 <style scoped lang="scss">
 @import '../../styles';
-$arrowHeight: 5px;
-$rail-height: 6px;
-$thumb-radius: 13px;
-$padding-label: 5px 10px;
-$margin-top: 3px;
+//$arrowHeight: 5px;
+//$padding-label: 5px 10px;
+$gap: 3px;
+$z-index-rail: 0;
+$z-index-thumb: 1;
 
-.slider {
-  position: relative;
-  box-sizing: border-box;
-  user-select: none;
+$rail-height: 6px;
+$stop-height: 4px;
+
+.slider__container {
+  padding: 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  gap: $gap;
   overflow: hidden;
-  padding: 0px 20px; //tmp
+  cursor: pointer;
+  user-select: none;
 
-  & .slider__label-track {
-    @include transition(opacity);
-  }
-  &:not(:hover) .slider__label-track {
-    opacity: 0;
-  }
-  &:hover .slider__label-track {
+  &:hover .tooltip,
+  &.slider__container--focused .tooltip {
     opacity: 1;
   }
 }
 
-.track_tmp {
+// Tooltip
+
+.tooltip__container {
+  display: flex;
+  width: 100%;
+}
+
+.tooltip {
+  padding: 0;
+  opacity: 0;
+  border: none;
+  transform: translateX(-50%);
+  @include transition(opacity, margin-left);
+}
+
+//Slider
+
+.slider {
+  padding: 0;
+  border: none;
+  position: relative;
+}
+
+.slider__thumb {
+  transform: translateX(-50%);
+  @include transition(margin-left);
+  z-index: $z-index-thumb;
   cursor: pointer;
 }
 
-.slider-bar {
-  position: relative;
-  cursor: pointer;
-  height: #{2 * $thumb-radius};
-  margin: $margin-top 0px;
+.track__input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 100%;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 100%;
+  direction: ltr;
 }
+
+// Rail
 
 .slider__rail {
-  position: absolute;
-  width: 100%;
   height: $rail-height;
-  z-index: -2;
   background-color: $color-grey;
-  border-radius: calc($rail-height / 2);
-  @include centerY;
-}
-.slider {
+  border-radius: $rail-height;
   position: absolute;
+  top: 50%;
+  left: 0px;
+  width: 100%;
+  transform: translateY(-50%);
+  z-index: $z-index-rail;
+  cursor: pointer;
+}
+
+.slider__track {
   background-color: $color-teal;
-  transition: all 0s;
-  z-index: -1;
-  width: 0;
-  left: 0;
-  will-change: width;
-  border-radius: 15px 0 0 15px;
-  height: $rail-height;
+  height: 100%;
+  border-radius: $rail-height;
   @include transition(width);
-  @include centerY;
 }
 
-.slider__thumb__container {
-  position: absolute;
-  cursor: pointer;
-  z-index: 3;
-  left: 0;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  @include transition(left);
-  &:hover .slider__range-label__top {
-    opacity: 1;
-  }
-}
-.slider__thumb {
-  position: absolute;
-  cursor: pointer;
-  z-index: 3;
-  left: 0;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  @include transition(left);
-  &:hover .slider__range-label__top {
-    opacity: 1;
-  }
+// Stop circle
+
+.slider__stop-circle__container {
 }
 
-.slider__label-container {
-  height: 1em; // todo
-  line-height: 2em;
+.slider__stop-circle {
+  position: absolute;
+  height: $stop-height;
+  width: $stop-height;
+  border-radius: 50%;
+  background-color: $color-white;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; // Click through
+}
+
+// Stop label
+
+.slider__stop-label__container {
   position: relative;
 }
 
-.slider__range-label {
-  //padding: $padding-label;
+.slider_stop-label {
   position: absolute;
-  color: $color-text-secondary;
-  top: 50%;
+  border-radius: 50%;
+  transform: translateX(-50%);
   @include typography-label;
-  &__min {
-    transform: translate(-50%, -50%);
-    left: 0;
-  }
-  &__max {
-    transform: translate(50%, -50%);
-    right: 0;
-  }
+  color: $color-text-secondary;
 }
 </style>

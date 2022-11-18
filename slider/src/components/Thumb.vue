@@ -57,7 +57,7 @@ $knob-radius: 13px;
 }
 
 .thumb--focused {
-  outline: 3px solid #d9f4f3;
+  box-shadow: 0 0 0 3px #d9f4f3;
 }
 
 .thumb__icon {
