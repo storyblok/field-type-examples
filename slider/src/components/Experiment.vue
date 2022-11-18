@@ -1,6 +1,17 @@
 <template>
   <div class="slider__container">
     {{ value }}
+    <div class="tooltip__container">
+      <Tooltip
+        class="tooltip"
+        :style="`
+          margin-left: ${thumbPosition};
+          transition-duration: ${isMoving ? '0ms' : '100ms'};
+          `"
+      >
+        {{ value }}
+      </Tooltip>
+    </div>
     <div
       ref="track"
       class="slider"
@@ -17,6 +28,14 @@
         :on-click="handleClickThumb"
       />
       <div class="slider__rail">
+        <div class="slider__stops">
+          <div
+            v-for="stop in stops"
+            :key="stop"
+            class="slider__stop"
+            :style="`left: ${stopPosition(stop)};`"
+          />
+        </div>
         <div
           :style="`
           width: ${thumbPosition};
@@ -32,6 +51,7 @@
 <script>
 import Thumb from '@/components/Thumb'
 import { roundToNearest } from '@/utils/roundToNearest'
+import Tooltip from '@/components/horizontal/Tooltip'
 
 const valueFromCoordinate = (x, width, minValue, maxValue) => {
   return (x * (maxValue - minValue)) / width + minValue
@@ -45,7 +65,7 @@ const coordinateFromValue = (value, width, minValue, maxValue) => {
 
 export default {
   name: 'Experiment',
-  components: { Thumb },
+  components: { Tooltip, Thumb },
   props: {
     id: {
       type: String,
@@ -71,6 +91,12 @@ export default {
     stepSize: {
       type: Number,
       default: 1,
+    },
+    stops: {
+      type: Array,
+      default() {
+        return [-5, 0, 5]
+      },
     },
   },
   data() {
@@ -150,6 +176,14 @@ export default {
       const value = roundToNearest(boundValue, this.stepSize)
       this.setValue(value)
     },
+    stopPosition(stop) {
+      return `${coordinateFromValue(
+        stop,
+        this.getTrackWidth(),
+        this.minValue,
+        this.maxValue,
+      )}px`
+    },
   },
 }
 </script>
@@ -157,19 +191,40 @@ export default {
 <style scoped lang="scss">
 @import '../styles';
 //$arrowHeight: 5px;
-$rail-height: 6px;
 //$padding-label: 5px 10px;
-//$margin-top: 3px;
+$gap: 3px;
 $z-index-rail: 0;
 $z-index-thumb: 1;
 
+$rail-height: 6px;
+$stop-height: 4px;
+
 .slider__container {
   padding: 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: $gap;
 }
+
+// Tooltip
+
+.tooltip__container {
+  display: flex;
+  width: 100%;
+}
+
+.tooltip {
+  padding: 0;
+  border: none;
+  transform: translateX(-50%);
+}
+
+//Slider
+
 .slider {
   padding: 0;
   border: none;
-  color: #fff;
   position: relative;
 }
 
@@ -178,6 +233,8 @@ $z-index-thumb: 1;
   @include transition(margin-left);
   z-index: $z-index-thumb;
 }
+
+// Rail
 
 .slider__rail {
   height: $rail-height;
@@ -196,5 +253,20 @@ $z-index-thumb: 1;
   height: 100%;
   border-radius: $rail-height;
   @include transition(width);
+}
+
+// Stops
+
+.slider__stops {
+}
+
+.slider__stop {
+  position: absolute;
+  height: $stop-height;
+  width: $stop-height;
+  border-radius: 50%;
+  background-color: $color-white;
+  top: 50%;
+  transform: translateY(-50%);
 }
 </style>
