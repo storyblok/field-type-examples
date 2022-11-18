@@ -1,6 +1,6 @@
 <template>
   <div class="slider">
-    {{ isMoving }}
+    {{ value }}
     <div
       ref="track"
       class="slider__track"
@@ -22,6 +22,7 @@
 
 <script>
 import Thumb from '@/components/Thumb'
+import { roundToNearest } from '@/utils/roundToNearest'
 
 const valueFromCoordinate = (x, width, minValue, maxValue) => {
   return (x * (maxValue - minValue)) / width + minValue
@@ -29,6 +30,9 @@ const valueFromCoordinate = (x, width, minValue, maxValue) => {
 const coordinateFromValue = (value, width, minValue, maxValue) => {
   return ((value - minValue) * width) / (maxValue - minValue)
 }
+// const numericValueFromString = (stringValue) => Number(stringValue)
+// const stringValueFromNumeric = (numericValue, precision) =>
+//   numericValue.toPrecision(precision)
 
 export default {
   name: 'Experiment',
@@ -54,6 +58,10 @@ export default {
     maxValue: {
       type: Number,
       default: 100,
+    },
+    stepSize: {
+      type: Number,
+      default: 1,
     },
   },
   data() {
@@ -125,10 +133,12 @@ export default {
         this.minValue,
         this.maxValue,
       )
-      const value = Math.min(
+      // Min-max
+      const boundValue = Math.min(
         this.maxValue,
         Math.max(unboundValue, this.minValue),
       )
+      const value = roundToNearest(boundValue, this.stepSize)
       this.setValue(value)
     },
   },
