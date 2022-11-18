@@ -1,6 +1,6 @@
 <template>
   <div
-    class="slider__container"
+    :class="`slider__container ${focused ? 'slider__container--focused' : ''}`"
     @mousedown.prevent="handleClickTrack"
   >
     <div class="tooltip__container">
@@ -26,6 +26,7 @@
           ${isMoving ? 'transition-duration: 0ms' : ''}
         `"
         :on-click="handleClickThumb"
+        :focused="focused"
       >
         <input
           class="track__input"
@@ -41,6 +42,8 @@
           type="range"
           :step="stepSize"
           @input="handleInput"
+          @focusin="setFocused"
+          @focusout="setUnfocused"
         />
       </Thumb>
       <div class="slider__rail">
@@ -142,6 +145,7 @@ export default {
       isMoving: false,
       xOffset: 0,
       refs: {},
+      focused: false,
     }
   },
   created() {
@@ -213,6 +217,12 @@ export default {
         ) / this.getTrackWidth()
       return `${100 * relativeX}%`
     },
+    setFocused() {
+      this.focused = true
+    },
+    setUnfocused() {
+      this.focused = false
+    },
   },
 }
 </script>
@@ -237,6 +247,14 @@ $stop-height: 4px;
   overflow: hidden;
   cursor: pointer;
   user-select: none;
+
+  &:hover .tooltip,
+  &.slider__container--focused .tooltip {
+    opacity: 1;
+  }
+  & .tooltip {
+    opacity: 0;
+  }
 }
 
 // Tooltip
@@ -270,7 +288,7 @@ $stop-height: 4px;
 
 .track__input {
   border: 0;
-  //clip: rect(0 0 0 0);
+  clip: rect(0 0 0 0);
   height: 100%;
   margin: -1px;
   overflow: hidden;

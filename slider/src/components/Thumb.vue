@@ -1,7 +1,7 @@
 <template>
   <div
     ref="thumb"
-    class="thumb"
+    :class="`thumb ${focused ? 'thumb--focused' : ''}`"
     @mousedown.stop="onClick"
     @touchstart.stop="onClick"
   >
@@ -19,6 +19,10 @@ export default {
     onClick: {
       type: Function,
       default: () => undefined,
+    },
+    focused: {
+      type: Boolean,
+      default: false,
     },
   },
 }
@@ -39,7 +43,8 @@ $knob-radius: 13px;
   background: #ffffff;
   @include transition(color, background-color, border-color);
   &:hover,
-  &:active {
+  &:active,
+  &.thumb--focused {
     color: $color-white;
     background-color: $color-teal;
     border-color: $color-white;
@@ -49,6 +54,10 @@ $knob-radius: 13px;
     //background-color: red;
     //outline: 3px solid #d9f4f3;
   }
+}
+
+.thumb--focused {
+  outline: 3px solid #d9f4f3;
 }
 
 .thumb__icon {
