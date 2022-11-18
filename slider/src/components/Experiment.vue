@@ -6,7 +6,7 @@
         class="tooltip"
         :style="`
           margin-left: ${thumbPosition};
-          transition-duration: ${isMoving ? '0ms' : '100ms'};
+          ${isMoving ? 'transition-duration: 0ms' : ''}
           `"
       >
         {{ value }}
@@ -23,7 +23,7 @@
         class="slider__thumb"
         :style="`
           margin-left: ${thumbPosition};
-          transition-duration: ${isMoving ? '0ms' : '100ms'};
+          ${isMoving ? 'transition-duration: 0ms' : ''}
         `"
         :on-click="handleClickThumb"
       />
@@ -39,7 +39,7 @@
         <div
           :style="`
           width: ${thumbPosition};
-          transition-duration: ${isMoving ? '0ms' : '100ms'};
+          ${isMoving ? 'transition-duration: 0ms' : ''}
           `"
           class="slider__track"
         />
@@ -241,6 +241,7 @@ $stop-height: 4px;
   padding: 0;
   border: none;
   transform: translateX(-50%);
+  @include transition(margin-left);
 }
 
 //Slider
