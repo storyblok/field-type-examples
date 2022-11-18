@@ -29,7 +29,7 @@
       >
         <input
           class="track__input"
-          data-index="1"
+          data-index="0"
           aria-label="slider"
           :aria-valuenow="`${value}`"
           :aria-valuemin="`${minValue}`"
@@ -40,6 +40,7 @@
           aria-orientation="horizontal"
           type="range"
           :step="stepSize"
+          @input="handleInput"
         />
       </Thumb>
       <div class="slider__rail">
@@ -162,6 +163,9 @@ export default {
     document.removeEventListener('touchmove', this.handleMove)
   },
   methods: {
+    handleInput(e) {
+      this.setValue(Number(e.target.value))
+    },
     getTrackWidth() {
       return this.$refs.track?.getBoundingClientRect()?.width ?? 300
     },
@@ -266,7 +270,7 @@ $stop-height: 4px;
 
 .track__input {
   border: 0;
-  clip: rect(0 0 0 0);
+  //clip: rect(0 0 0 0);
   height: 100%;
   margin: -1px;
   overflow: hidden;

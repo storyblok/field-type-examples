@@ -44,6 +44,11 @@ $knob-radius: 13px;
     background-color: $color-teal;
     border-color: $color-white;
   }
+
+  &:focus {
+    //background-color: red;
+    //outline: 3px solid #d9f4f3;
+  }
 }
 
 .thumb__icon {
