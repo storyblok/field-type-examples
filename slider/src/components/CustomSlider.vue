@@ -232,6 +232,7 @@ $stop-height: 4px;
   gap: $gap;
   overflow: hidden;
   cursor: pointer;
+  user-select: none;
 }
 
 // Tooltip
