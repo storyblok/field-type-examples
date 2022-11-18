@@ -28,11 +28,11 @@
         :on-click="handleClickThumb"
       />
       <div class="slider__rail">
-        <div class="slider__stops">
+        <div class="slider__stop-circle__container">
           <div
             v-for="stop in stops"
             :key="stop"
-            class="slider__stop"
+            class="slider__stop-circle"
             :style="`left: ${stopPosition(stop)};`"
           />
         </div>
@@ -43,6 +43,28 @@
           `"
           class="slider__track"
         />
+      </div>
+    </div>
+    <div class="slider__stop-label__container">
+      <div
+        class="slider_stop-label"
+        :style="`left: ${stopPosition(minValue)};`"
+      >
+        {{ minValue }}
+      </div>
+      <div
+        v-for="stop in stops"
+        :key="stop"
+        class="slider_stop-label"
+        :style="`left: ${stopPosition(stop)};`"
+      >
+        {{ stop }}
+      </div>
+      <div
+        class="slider_stop-label"
+        :style="`left: ${stopPosition(maxValue)};`"
+      >
+        {{ maxValue }}
       </div>
     </div>
   </div>
@@ -205,6 +227,7 @@ $stop-height: 4px;
   flex-direction: column;
   align-items: stretch;
   gap: $gap;
+  overflow: hidden;
 }
 
 // Tooltip
@@ -255,18 +278,32 @@ $stop-height: 4px;
   @include transition(width);
 }
 
-// Stops
+// Stop circle
 
-.slider__stops {
+.slider__stop-circle__container {
 }
 
-.slider__stop {
+.slider__stop-circle {
   position: absolute;
   height: $stop-height;
   width: $stop-height;
   border-radius: 50%;
   background-color: $color-white;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
+}
+
+// Stop label
+
+.slider__stop-label__container {
+  position: relative;
+}
+
+.slider_stop-label {
+  position: absolute;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  @include typography-label;
+  color: $color-text-secondary;
 }
 </style>
