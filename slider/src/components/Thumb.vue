@@ -5,6 +5,7 @@
     @mousedown.stop="onClick"
     @touchstart.stop="onClick"
   >
+    <slot />
     <Drag class="thumb__icon" />
   </div>
 </template>

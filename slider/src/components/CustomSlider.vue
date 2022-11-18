@@ -26,7 +26,22 @@
           ${isMoving ? 'transition-duration: 0ms' : ''}
         `"
         :on-click="handleClickThumb"
-      />
+      >
+        <input
+          class="track__input"
+          data-index="1"
+          aria-label="slider"
+          :aria-valuenow="`${value}`"
+          :aria-valuemin="`${minValue}`"
+          :aria-valuemax="`${maxValue}`"
+          :value="`${value}`"
+          :min="`${minValue}`"
+          :max="`${maxValue}`"
+          aria-orientation="horizontal"
+          type="range"
+          :step="stepSize"
+        />
+      </Thumb>
       <div class="slider__rail">
         <div class="slider__stop-circle__container">
           <div
@@ -216,6 +231,7 @@ $stop-height: 4px;
   align-items: stretch;
   gap: $gap;
   overflow: hidden;
+  cursor: pointer;
 }
 
 // Tooltip
@@ -244,6 +260,20 @@ $stop-height: 4px;
   transform: translateX(-50%);
   @include transition(margin-left);
   z-index: $z-index-thumb;
+  cursor: pointer;
+}
+
+.track__input {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 100%;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 100%;
+  direction: ltr;
 }
 
 // Rail
@@ -258,6 +288,7 @@ $stop-height: 4px;
   width: 100%;
   transform: translateY(-50%);
   z-index: $z-index-rail;
+  cursor: pointer;
 }
 
 .slider__track {
