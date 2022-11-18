@@ -1,9 +1,9 @@
 <template>
-  <div class="slider">
+  <div class="slider__container">
     {{ value }}
     <div
       ref="track"
-      class="slider__track"
+      class="slider"
       @mousedown.prevent="handleClickTrack"
       @resize="log"
     >
@@ -16,6 +16,15 @@
         `"
         :on-click="handleClickThumb"
       />
+      <div class="slider__rail">
+        <div
+          :style="`
+          width: ${thumbPosition};
+          transition-duration: ${isMoving ? '0ms' : '100ms'};
+          `"
+          class="slider__track"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -147,24 +156,45 @@ export default {
 
 <style scoped lang="scss">
 @import '../styles';
+//$arrowHeight: 5px;
+$rail-height: 6px;
+//$padding-label: 5px 10px;
+//$margin-top: 3px;
+$z-index-rail: 0;
+$z-index-thumb: 1;
 
-.slider {
-  border: 10px solid black;
+.slider__container {
   padding: 20px 20px;
-  background: blue;
-  color: white;
 }
-
-.slider__track {
+.slider {
   padding: 0;
   border: none;
-  background: red;
   color: #fff;
+  position: relative;
 }
+
 .slider__thumb {
   transform: translateX(-50%);
   @include transition(margin-left);
-  //background: greenyellow;
-  //border-radius: 0;
+  z-index: $z-index-thumb;
+}
+
+.slider__rail {
+  height: $rail-height;
+  background-color: $color-grey;
+  border-radius: $rail-height;
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  width: 100%;
+  transform: translateY(-50%);
+  z-index: $z-index-rail;
+}
+
+.slider__track {
+  background-color: $color-teal;
+  height: 100%;
+  border-radius: $rail-height;
+  @include transition(width);
 }
 </style>

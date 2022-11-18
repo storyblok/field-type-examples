@@ -1,5 +1,5 @@
 <template>
-  <div class="slider__track">
+  <div class="slider">
     <div
       class="track__value-indicator"
       :style="`margin-left: ${position};`"
@@ -48,7 +48,7 @@ export default {
 .track__background {
 }
 
-.slider__track {
+.slider {
   position: relative;
 }
 

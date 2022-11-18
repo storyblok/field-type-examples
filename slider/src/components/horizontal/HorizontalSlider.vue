@@ -2,7 +2,7 @@
   <div
     :id="id"
     ref="wrap"
-    class="slider__track"
+    class="slider"
     :style="calculateHeight"
     @click="wrapClick"
   >
@@ -30,7 +30,7 @@
         <div
           ref="process"
           :style="`width: ${position}px`"
-          class="slider__track"
+          class="slider"
         />
         <div class="slider__rail" />
       </template>
@@ -356,7 +356,7 @@ $thumb-radius: 13px;
 $padding-label: 5px 10px;
 $margin-top: 3px;
 
-.slider__track {
+.slider {
   position: relative;
   box-sizing: border-box;
   user-select: none;
@@ -397,7 +397,7 @@ $margin-top: 3px;
   border-radius: calc($rail-height / 2);
   @include centerY;
 }
-.slider__track {
+.slider {
   position: absolute;
   background-color: $color-teal;
   transition: all 0s;
