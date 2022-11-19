@@ -136,7 +136,7 @@ export default {
     stops: {
       type: Array,
       default() {
-        return [-5, 0, 5]
+        return [-5, 0, 4, 5]
       },
     },
   },
