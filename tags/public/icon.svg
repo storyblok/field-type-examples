@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#1b243f" class="bi bi-palette" viewBox="0 0 16 16">
+  <path d="M 12.433 10.07 C 14.133 10.585 16 11.15 16 8 C 16 1.842 9.333 -2.007 4 1.072 C -1.333 4.151 -1.333 11.849 4 14.928 C 5.216 15.63 6.596 16 8 16 C 9.996 16 9.826 14.496 9.649 12.92 C 9.525 11.819 9.397 10.683 10 10 C 10.465 9.473 11.42 9.763 12.433 10.07 Z"></path>
+  <ellipse fill="#395ece" cx="5.5" cy="11.5" rx="1.5" ry="1.5"></ellipse>
+  <ellipse fill="#2db47d" cx="3.5" cy="6.5" rx="1.5" ry="1.5"></ellipse>
+  <ellipse fill="#fbce41" cx="8" cy="3.5" rx="1.5" ry="1.5"></ellipse>
+  <ellipse fill="#ff6159" cx="12.5" cy="6.5" rx="1.5" ry="1.5"></ellipse>
+<!--  <ellipse fill="#395ece" cx="5.5" cy="11.5" rx="1.5" ry="1.5"></ellipse>-->
+<!--  <ellipse fill="#fbce41" cx="3.5" cy="6.5" rx="1.5" ry="1.5"></ellipse>-->
+<!--  <ellipse fill="#2db47d" cx="8" cy="3.5" rx="1.5" ry="1.5"></ellipse>-->
+<!--  <ellipse fill="#ff6159" cx="12.5" cy="6.5" rx="1.5" ry="1.5"></ellipse>-->
+</svg>
