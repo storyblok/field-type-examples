@@ -10,7 +10,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "lint": "eslint .",
     "dev": "vue-cli-service serve --watch src/main.ts",
     "mac-build": "vue-cli-service build && pbcopy < ./dist/export.js && echo 'Copied code to clipboard'"
   },
@@ -29,8 +29,12 @@
     "@vue/cli-service": "^4.5.6",
     "@vue/eslint-config-typescript": "^7.0.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.9.0",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-prettier-vue": "4.2.0",
+    "eslint-plugin-standard": "^4.1.0",
+    "eslint-plugin-vue": "7.20.0",
     "node-sass": "^4.14.1",
     "sass": "^1.51.0",
     "sass-loader": "^10.0.0",
@@ -39,7 +43,8 @@
     "vue-template-babel-compiler": "^1.2.0",
     "vue-template-compiler": "^2.6.12",
     "vue-tsc": "^0.31.4",
-    "webpack": "4.43.0"
+    "webpack": "4.43.0",
+    "webpack-bundle-analyzer": "^4.7.0"
   },
   "postcss": {
     "plugins": {
