@@ -1,18 +1,21 @@
 <template>
   <div class="tags-container">
     <vue-tags-input
-        :value="inputValue"
-        @input="handleInputValueChange"
-        :tags="tags"
-        @tags-changed="handleValueChange"
-        :placeholder="options.placeholder || ''"
+      :value="inputValue"
+      :tags="tags"
+      :placeholder="options.placeholder || ''"
+      @input="handleInputValueChange"
+      @tags-changed="handleValueChange"
     />
   </div>
 </template>
 <script>
-import VueTagsInput from '@johmun/vue-tags-input';
+import VueTagsInput from '@johmun/vue-tags-input'
 
 export default {
+  components: {
+    VueTagsInput,
+  },
   props: {
     options: {
       type: Object,
@@ -22,16 +25,18 @@ export default {
       type: Function,
     },
     value: {
-      type: Object
+      type: Object,
     },
   },
   data() {
     return {
       inputValue: '',
-    };
+    }
   },
-  components: {
-    VueTagsInput,
+  computed: {
+    tags() {
+      return this.value.value?.map((text) => ({ text }))
+    },
   },
   methods: {
     handleInputValueChange(inputValue) {
@@ -41,20 +46,15 @@ export default {
     },
     handleValueChange(tags) {
       console.log('new value', tags)
-      this.setValue({value: tags.map(tag => tag.text)})
-    }
-  },
-  computed: {
-    tags() {
-      return this.value.value?.map(text => ({text}))
-    }
+      this.setValue({ value: tags.map((tag) => tag.text) })
+    },
   },
 }
 </script>
 
 <style>
 html {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 62.5%;
 }
 
@@ -79,9 +79,9 @@ html {
   color: #1b243f;
   font-size: 1.4rem;
   border-radius: 5px;
-  transition: all .1s ease-in-out;
+  transition: all 0.1s ease-in-out;
   padding: 13.5px 17px;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .vue-tags-input .ti-tag.ti-tag.ti-deletion-mark {
