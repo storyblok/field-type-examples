@@ -6,7 +6,38 @@
       :placeholder="options.placeholder || ''"
       @input="handleInputValueChange"
       @tags-changed="handleValueChange"
-    />
+    >
+      <div slot="tag-actions" slot-scope="props">
+        <i @click="props.performDelete">
+          <svg
+            width="8"
+            height="8"
+            viewBox="0 0 8 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="0.0857849"
+              y="1.5"
+              width="2"
+              height="9"
+              rx="1"
+              transform="rotate(-45 0.0857849 1.5)"
+              fill="#1B243F"
+            />
+            <rect
+              x="6.44975"
+              y="0.0858307"
+              width="2"
+              height="9"
+              rx="1"
+              transform="rotate(45 6.44975 0.0858307)"
+              fill="#1B243F"
+            />
+          </svg>
+        </i>
+      </div>
+    </vue-tags-input>
   </div>
 </template>
 <script>
@@ -40,12 +71,9 @@ export default {
   },
   methods: {
     handleInputValueChange(inputValue) {
-      console.log('input', inputValue)
-      console.log('tags', this.value.value)
       this.inputValue = inputValue
     },
     handleValueChange(tags) {
-      console.log('new value', tags)
       this.setValue({ value: tags.map((tag) => tag.text) })
     },
   },
@@ -77,19 +105,19 @@ html {
   border: 1px solid #dfe3e8;
   width: 100%;
   color: #1b243f;
-  font-size: 1.4rem;
+  font-size: 12px;
   border-radius: 5px;
   transition: all 0.1s ease-in-out;
-  padding: 13.5px 17px;
+  padding: 10px 12px;
   font-family: 'Roboto', sans-serif;
 }
 
 .vue-tags-input .ti-tag.ti-tag.ti-deletion-mark {
-  background-color: #ff6159;
+  background-color: #bfc2c5;
 }
 
 .vue-tags-input .ti-tag {
-  background-color: #00b3b0;
+  background-color: #dfe3e8;
   padding: 3px 10px;
   position: relative;
   display: inline-flex;
@@ -100,5 +128,15 @@ html {
   font-size: 1.3rem;
   font-weight: 500;
   border-radius: 5px;
+  margin: 0 8px 4px 0;
+  color: #1b243f;
+}
+
+.vue-tags-input .ti-tag .ti-actions {
+  margin-left: 10px;
+}
+
+.vue-tags-input .ti-tag .ti-icon-close:before {
+  content: url('data:image/svg+xml; utf8, <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="0.0857849" y="1.5" width="2" height="9" rx="1" transform="rotate(-45 0.0857849 1.5)" fill="#1B243F"/><rect x="6.44975" y="0.0858307" width="2" height="9" rx="1" transform="rotate(45 6.44975 0.0858307)" fill="#1B243F"/></svg>');
 }
 </style>
