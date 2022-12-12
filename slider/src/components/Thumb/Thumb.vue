@@ -6,15 +6,16 @@
     @touchstart.stop="onClick"
   >
     <slot />
-    <Drag class="thumb__icon" />
+    <div class="thumb_drag">
+      <div class="thumb_bar" />
+      <div class="thumb_bar" />
+    </div>
   </div>
 </template>
 
 <script>
-import Drag from '@/components/icons/Drag'
 export default {
   name: 'Thumb',
-  components: { Drag },
   props: {
     onClick: {
       type: Function,
@@ -29,7 +30,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../styles';
+@import '../../styles';
 $knob-radius: 13px;
 
 .thumb {
@@ -40,7 +41,7 @@ $knob-radius: 13px;
   box-shadow: $box-shadow;
   border: $border;
   color: $color-grey;
-  background: #ffffff;
+  background-color: #ffffff;
   @include transition(color, background-color, border-color);
   &:hover,
   &:active,
@@ -49,10 +50,8 @@ $knob-radius: 13px;
     background-color: $color-teal;
     border-color: $color-white;
   }
-
-  &:focus {
-    //background-color: red;
-    //outline: 3px solid #d9f4f3;
+  &:active {
+    box-shadow: 0px 2px 17px 3px transparent;
   }
 }
 
@@ -60,12 +59,20 @@ $knob-radius: 13px;
   box-shadow: 0 0 0 3px #d9f4f3;
 }
 
-.thumb__icon {
-  //transform: rotate(90deg);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(90deg);
+.thumb_drag {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  gap: 4px;
+}
+
+.thumb_bar {
+  $bar-width: 1px;
+  width: $bar-width;
+  border-radius: $bar-width;
   height: 10px;
+  background-color: currentColor;
 }
 </style>

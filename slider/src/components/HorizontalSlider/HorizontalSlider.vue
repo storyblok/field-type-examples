@@ -90,19 +90,11 @@
 </template>
 
 <script>
-import Thumb from '@/components/Thumb'
+import { Thumb } from '@/components/Thumb'
 import { roundToNearest } from '@/utils/roundToNearest'
-import Tooltip from '@/components/horizontal/Tooltip'
-
-const valueFromCoordinate = (x, width, minValue, maxValue) => {
-  return (x * (maxValue - minValue)) / width + minValue
-}
-const coordinateFromValue = (value, width, minValue, maxValue) => {
-  return ((value - minValue) * width) / (maxValue - minValue)
-}
-// const numericValueFromString = (stringValue) => Number(stringValue)
-// const stringValueFromNumeric = (numericValue, precision) =>
-//   numericValue.toPrecision(precision)
+import { Tooltip } from '@/components/Tooltip'
+import { valueFromCoordinate } from '@/components/HorizontalSlider/valueFromCoordinate'
+import { xCoordinateFromValue } from '@/components/HorizontalSlider/xCoordinateFromValue'
 
 export default {
   name: 'Experiment',
@@ -136,7 +128,7 @@ export default {
     stops: {
       type: Array,
       default() {
-        return [-5, 0, 4, 5]
+        return []
       },
     },
   },
@@ -187,12 +179,12 @@ export default {
       }
       const x =
         e.pageX - this.$refs.track.getBoundingClientRect().x - this.offsetX
-      this.setCoordinate(x)
+      this.setXCoordinate(x)
     },
     handleClickTrack(e) {
-      this.setCoordinate(e.offsetX)
+      this.setXCoordinate(e.offsetX)
     },
-    setCoordinate(x) {
+    setXCoordinate(x) {
       const unboundValue = valueFromCoordinate(
         x,
         this.getTrackWidth(),
@@ -209,7 +201,7 @@ export default {
     },
     stopPosition(stop) {
       const relativeX =
-        coordinateFromValue(
+        xCoordinateFromValue(
           stop,
           this.getTrackWidth(),
           this.minValue,
@@ -229,8 +221,6 @@ export default {
 
 <style scoped lang="scss">
 @import '../../styles';
-//$arrowHeight: 5px;
-//$padding-label: 5px 10px;
 $gap: 3px;
 $z-index-rail: 0;
 $z-index-thumb: 1;
@@ -239,7 +229,7 @@ $rail-height: 6px;
 $stop-height: 4px;
 
 .slider__container {
-  padding: 20px 20px;
+  padding: 0px 20px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -339,6 +329,8 @@ $stop-height: 4px;
 
 .slider__stop-label__container {
   position: relative;
+  height: 1em;
+  padding: 0px 0px;
 }
 
 .slider_stop-label {

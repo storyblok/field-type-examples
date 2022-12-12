@@ -17,7 +17,7 @@ const pages = process.env.NODE_ENV === 'production' ? (
   entry
 ) : undefined
 
-const publicUrl = process.env.PUBLIC_URL
+const publicUrl = 'http://localhost:8080'
 
 if (typeof publicUrl === 'undefined') {
     console.warn('WARNING',

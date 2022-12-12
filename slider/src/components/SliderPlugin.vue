@@ -1,5 +1,5 @@
 <script>
-import Experiment from '@/components/horizontal/HorizontalSlider'
+import { HorizontalSlider } from '@/components/HorizontalSlider'
 
 export default {
   props: {
@@ -36,19 +36,19 @@ export default {
     const maxValue = this.options.maxValue
       ? Number.parseFloat(this.options.maxValue)
       : undefined
-    // const archAngle = this.options.archAngle
-    //   ? Number.parseFloat(this.options.archAngle)
-    //   : 180
-    const isArch = typeof this.options.archAngle !== 'undefined'
     const value = this.value?.value ?? this.defaultValue
+    const stops =
+      typeof this.options.stops === 'undefined'
+        ? undefined
+        : JSON.parse(this.options.stops)
     return (
-      <Experiment
+      <HorizontalSlider
         // archAngle={archAngle}
         value={value}
         setValue={(value) => this.setValue({ value })}
-        isArch={isArch}
         minValue={minValue}
         maxValue={maxValue}
+        stops={stops}
       />
     )
   },
