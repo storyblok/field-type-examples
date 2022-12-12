@@ -17,15 +17,7 @@ const pages = process.env.NODE_ENV === 'production' ? (
   entry
 ) : undefined
 
-const publicUrl = process.env.PUBLIC_URL
-
-if (typeof publicUrl === 'undefined') {
-    console.warn('WARNING',
-      `To enable Hot Module Replacement (HMR), please specify the environmental variable PUBLIC_URL in .env.local.
-     You can use a local HTTPS proxy server or a secure tunnel, for example ngrok.`
-    )
-}
-const useLocalSslProxy = publicUrl?.startsWith('https://localhost')
+const publicUrl = 'http://localhost:8080'
 
 module.exports = {
     pages,
@@ -57,12 +49,6 @@ module.exports = {
         extract: false
     },
     devServer: {
-        // Using a local https server
-        https: useLocalSslProxy ? {
-            key: fs.readFileSync('./certificates/localhost-key.pem'),
-            cert: fs.readFileSync('./certificates/localhost.pem'),
-        } : undefined,
-
         // Using secure tunnel
         public: publicUrl,
         disableHostCheck: true,
