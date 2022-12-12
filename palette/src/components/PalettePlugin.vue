@@ -24,12 +24,16 @@ export default {
   },
   render() {
     const defaultValue = this.options.defaultValue
+    const colors =
+      typeof this.options.colors === 'undefined'
+        ? undefined
+        : JSON.parse(this.options.colors)
     return (
       <Palette
         setValue={(value) => this.setValue({ value })}
         value={this.value?.value ?? defaultValue}
         size={this.options.size}
-        colors={JSON.parse(this.options.colors)}
+        colors={colors}
       />
     )
   },
