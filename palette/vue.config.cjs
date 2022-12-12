@@ -23,11 +23,6 @@ module.exports = {
     pages,
     configureWebpack: {
         entry: entry,
-        // output: {
-        //     path: __dirname + './features/communityDirectory',
-        //     publicPath: '/',
-        //     filename: 'bundle.[name].js'
-        // },
         output: {
             filename: '[name].js'
         },
