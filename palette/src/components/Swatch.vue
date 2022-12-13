@@ -36,9 +36,9 @@ export default {
         <div
           class="plugin-swatch__button"
           style={`background-color: ${color}`}
-          onClick={() => {
-            setValue(color)
-          }}
+          onClick={() =>
+            this.selected ? setValue(undefined) : setValue(color)
+          }
         >
           {selected && <Checkmark class="plugin-swatch__checkmark" />}
         </div>

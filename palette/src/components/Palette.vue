@@ -60,13 +60,6 @@ export default {
       default: defaultColors,
     },
   },
-  methods: {
-    handleClick(color) {
-      const oldValue = this.value
-      const newValue = !this.required && color === oldValue ? undefined : color
-      this.$emit('input', newValue)
-    },
-  },
   render() {
     const { columns, colors, size, value, setValue } = this
 
