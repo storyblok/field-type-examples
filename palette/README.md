@@ -3,7 +3,10 @@
  <img width=150px src="https://a.storyblok.com/f/51376/3856x824/fea44d52a9/colored-full.png" alt="Storyblok" style="display:inline-block;margin:20px;"></a>
 </p>
 
-# ![icon.svg](docs/icon.svg) storyblok-palette
+<h1>
+<img src="assets/icon.svg" height="26px">
+Palette Field Type
+</h1>
 
 A custom field-type for Storyblok that allow users to select a color from a palette. 
 
