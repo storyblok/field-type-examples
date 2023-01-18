@@ -1,0 +1,33 @@
+$color-ink: #1B243F;
+$color-teal: #00b3b0;
+$color-white: #ffffff;
+$color-grey: #dfe3e8;
+$color-text-primary: $color-ink;
+$color-text-secondary: #8D919C;
+$border: 1px solid $color-grey;
+$box-shadow: 0px 2px 17px 3px rgba(34, 42, 69, 0.07);
+
+@mixin transition($props...){
+  transition-property: $props;
+  will-change: $props;
+  //transition-duration: 1000ms;
+  transition-duration: 100ms;
+  transition-timing-function: ease-in-out;
+}
+
+@mixin typography-label {
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 11px;
+}
+
+@mixin centerX {
+  left: 0;
+  transform: translateX(50%);
+}
+
+@mixin centerY {
+  top: 50%;
+  transform: translateY(-50%);
+}
