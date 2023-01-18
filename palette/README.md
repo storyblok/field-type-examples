@@ -12,8 +12,6 @@ A custom field-type for Storyblok that allow users to select a color from a pale
 
 ![demo.gif](docs/demo.gif)
 
-This app is also available on [Storyblok's App Directory](https://www.storyblok.com/apps/palette).
-
 ## How to use
 
 To add this field type to a Storyblok space, you need to
@@ -33,14 +31,6 @@ yarn build
 4. Copy the contents of `dist/main.js` into the field type editor.
 5. Save
 6. Publish
-
-### Import plugin into Storyblok
-
-Ensure that the `pluginName` property in `src/config.ts` equals that of your plugin name in the storyblok application. 
-
-Copy the contents of the `dist/export.js` file into the [plugin section](https://app.storyblok.com/#!/me/plugins) of Storyblok.
-
-> **TIP**: On MacOs, run `yarn mac-build`. This will copy the text content of the `export.js` to your clipboard. 
 
 ### Options
 
