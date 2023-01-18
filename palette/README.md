@@ -12,6 +12,8 @@ A custom field-type for Storyblok that allow users to select a color from a pale
 
 ![demo.gif](docs/demo.gif)
 
+This app is also available on [Storyblok's App Directory](https://www.storyblok.com/apps/palette).
+
 ## How to use
 
 To add this field type to a Storyblok space, you need to
