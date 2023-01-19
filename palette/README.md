@@ -32,14 +32,6 @@ yarn build
 5. Save
 6. Publish
 
-### Import plugin into Storyblok
-
-Ensure that the `pluginName` property in `src/config.ts` equals that of your plugin name in the storyblok application. 
-
-Copy the contents of the `dist/export.js` file into the [plugin section](https://app.storyblok.com/#!/me/plugins) of Storyblok.
-
-> **TIP**: On MacOs, run `yarn mac-build`. This will copy the text content of the `export.js` to your clipboard. 
-
 ### Options
 
 These options are available
