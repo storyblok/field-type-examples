@@ -8,7 +8,7 @@
 Slider Field Plugin
 </h1>
 
-A custom field for Storyblok that allow users to select a number value from a range.
+A field plugin for Storyblok that allow users to select a number value from a range.
 
 ![demo.gif](assets/screenshot.png)
 
@@ -16,9 +16,9 @@ A custom field for Storyblok that allow users to select a number value from a ra
 
 ## How to use
 
-To add this field type to a Storyblok space, you need to
+To add this field plugin to a Storyblok space, you need to
 
-1. Create a new field type in the Storyblok app.
+1. Create a new field plugin in the Storyblok app.
 2. Open `src/entries/main.ts` and change the `pluginName` argument from `'storyblok-slider'` to the name of your plugin.
 3. Run
 
@@ -30,7 +30,7 @@ yarn install
 yarn build
 ```
 
-4. Copy the contents of `dist/main.js` into the field type editor.
+4. Copy the contents of `dist/main.js` into the field plugin editor.
 5. Save
 6. Publish
 
