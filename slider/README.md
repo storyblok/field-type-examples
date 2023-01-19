@@ -10,9 +10,9 @@ Slider Field Plugin
 
 A custom field for Storyblok that allow users to select a number value from a range.
 
-![demo.gif](docs/demo.gif)
+![demo.gif](assets/screenshot.png)
 
-![demo.gif](docs/screenshot.png)
+![demo.gif](docs/demo.gif)
 
 ## How to use
 
