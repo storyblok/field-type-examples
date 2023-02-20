@@ -4,7 +4,7 @@
     :set-value="(val) => setValue({ value: val })"
     :min-value="minValue"
     :max-value="maxValue"
-    :marks="filteredMarks"
+    :marks="boundedMarks"
   />
 </template>
 
@@ -32,56 +32,48 @@ export default {
 
   computed: {
     minValue() {
-      return this.getMinValue()
+      return this.options.minValue
+        ? Number.parseFloat(this.options.minValue)
+        : 0
     },
     maxValue() {
-      return this.getMaxValue()
+      return this.options.maxValue
+        ? Number.parseFloat(this.options.maxValue)
+        : 100
     },
-    filteredMarks() {
-      const marks = this.getMarks()
-      return this.filterInvalidMarks(marks)
+    boundedMarks() {
+      // Only those marks that are within the range
+      return this.marks?.filter(
+        (mark) => mark > this.minValue && mark < this.maxValue,
+      )
     },
     selectedValue() {
       return this.value?.value ?? this.defaultValue
     },
     defaultValue() {
-      return this.getDefaultValue()
+      return this.options.defaultValue
+        ? Number.parseFloat(this.options.defaultValue)
+        : this.minValue
+    },
+    marks() {
+      try {
+        const marks = JSON.parse(this.options.marks)
+        if (!Array.isArray(marks)) {
+          return undefined
+        }
+        if (!marks.every((it) => typeof it === 'number')) {
+          return undefined
+        }
+        return marks
+      } catch (e) {
+        return undefined
+      }
     },
   },
   created() {
     if (!this.value?.value) {
       this.setValue({ value: this.defaultValue })
     }
-  },
-  methods: {
-    getMinValue() {
-      return this.options.minValue
-        ? Number.parseFloat(this.options.minValue)
-        : 0
-    },
-    getMaxValue() {
-      return this.options.maxValue
-        ? Number.parseFloat(this.options.maxValue)
-        : 100
-    },
-    getMarks() {
-      return typeof this.options.marks === 'undefined'
-        ? undefined
-        : JSON.parse(this.options.marks)
-    },
-    getDefaultValue() {
-      return this.options.defaultValue
-        ? Number.parseFloat(this.options.defaultValue)
-        : this.getMinValue()
-    },
-    filterInvalidMarks(marks) {
-      if (!Array.isArray(marks)) {
-        return marks
-      }
-      return marks.filter(
-        (mark) => mark > this.minValue && mark < this.maxValue,
-      )
-    },
   },
 }
 </script>
