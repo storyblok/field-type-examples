@@ -42,15 +42,12 @@ export default {
       return this.filterInvalidMarks(marks)
     },
     selectedValue() {
-      return this.value?.value ?? this.defaultValue()
+      return this.value?.value ?? this.defaultValue
     },
     defaultValue() {
-      return this.options.defaultValue
-        ? Number.parseFloat(this.options.defaultValue)
-        : this.minValue
+      return this.getDefaultValue()
     },
   },
-
   created() {
     if (!this.value?.value) {
       this.setValue({ value: this.defaultValue })
@@ -71,6 +68,11 @@ export default {
       return typeof this.options.marks === 'undefined'
         ? undefined
         : JSON.parse(this.options.marks)
+    },
+    getDefaultValue() {
+      return this.options.defaultValue
+        ? Number.parseFloat(this.options.defaultValue)
+        : this.getMinValue()
     },
     filterInvalidMarks(marks) {
       if (!Array.isArray(marks)) {
