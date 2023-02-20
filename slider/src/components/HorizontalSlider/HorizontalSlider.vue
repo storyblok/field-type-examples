@@ -7,7 +7,7 @@
       <Tooltip
         class="tooltip"
         :style="`
-          margin-left: ${stopPosition(value)};
+          margin-left: ${markPosition(value)};
           ${isMoving ? 'transition-duration: 0ms' : ''}
           `"
       >
@@ -22,7 +22,7 @@
         ref="thumb"
         class="slider__thumb"
         :style="`
-          margin-left: ${stopPosition(value)};
+          margin-left: ${markPosition(value)};
           ${isMoving ? 'transition-duration: 0ms' : ''}
         `"
         :on-click="handleClickThumb"
@@ -47,41 +47,41 @@
         />
       </Thumb>
       <div class="slider__rail">
-        <div class="slider__stop-circle__container">
+        <div class="slider__mark-circle__container">
           <div
-            v-for="stop in stops"
-            :key="stop"
-            class="slider__stop-circle"
-            :style="`left: ${stopPosition(stop)};`"
+            v-for="mark in marks"
+            :key="mark"
+            class="slider__mark-circle"
+            :style="`left: ${markPosition(mark)};`"
           />
         </div>
         <div
           :style="`
-          width: ${stopPosition(value)};
+          width: ${markPosition(value)};
           ${isMoving ? 'transition-duration: 0ms' : ''}
           `"
           class="slider__track"
         />
       </div>
     </div>
-    <div class="slider__stop-label__container">
+    <div class="slider__mark-label__container">
       <div
-        class="slider_stop-label"
-        :style="`left: ${stopPosition(minValue)};`"
+        class="slider_mark-label"
+        :style="`left: ${markPosition(minValue)};`"
       >
         {{ minValue }}
       </div>
       <div
-        v-for="stop in stops"
-        :key="stop"
-        class="slider_stop-label"
-        :style="`left: ${stopPosition(stop)};`"
+        v-for="mark in marks"
+        :key="mark"
+        class="slider_mark-label"
+        :style="`left: ${markPosition(mark)};`"
       >
-        {{ stop }}
+        {{ mark }}
       </div>
       <div
-        class="slider_stop-label"
-        :style="`left: ${stopPosition(maxValue)};`"
+        class="slider_mark-label"
+        :style="`left: ${markPosition(maxValue)};`"
       >
         {{ maxValue }}
       </div>
@@ -125,7 +125,7 @@ export default {
       type: Number,
       default: 1,
     },
-    stops: {
+    marks: {
       type: Array,
       default() {
         return []
@@ -199,10 +199,10 @@ export default {
       const value = roundToNearest(boundValue, this.stepSize)
       this.setValue(value)
     },
-    stopPosition(stop) {
+    markPosition(mark) {
       const relativeX =
         xCoordinateFromValue(
-          stop,
+          mark,
           this.getTrackWidth(),
           this.minValue,
           this.maxValue,
@@ -226,7 +226,7 @@ $z-index-rail: 0;
 $z-index-thumb: 1;
 
 $rail-height: 6px;
-$stop-height: 4px;
+$mark-height: 4px;
 
 .slider__container {
   padding: 0px 20px;
@@ -309,15 +309,15 @@ $stop-height: 4px;
   @include transition(width);
 }
 
-// Stop circle
+// Mark circle
 
-.slider__stop-circle__container {
+.slider__mark-circle__container {
 }
 
-.slider__stop-circle {
+.slider__mark-circle {
   position: absolute;
-  height: $stop-height;
-  width: $stop-height;
+  height: $mark-height;
+  width: $mark-height;
   border-radius: 50%;
   background-color: $color-white;
   top: 50%;
@@ -325,15 +325,15 @@ $stop-height: 4px;
   pointer-events: none; // Click through
 }
 
-// Stop label
+// Mark label
 
-.slider__stop-label__container {
+.slider__mark-label__container {
   position: relative;
   height: 1em;
   padding: 0px 0px;
 }
 
-.slider_stop-label {
+.slider_mark-label {
   position: absolute;
   border-radius: 50%;
   transform: translateX(-50%);

@@ -36,11 +36,12 @@ export default {
     const maxValue = this.options.maxValue
       ? Number.parseFloat(this.options.maxValue)
       : undefined
-    const value = this.value?.value ?? this.defaultValue
-    const stops =
-      typeof this.options.stops === 'undefined'
+    // TODO: if default is not present take minValue
+    const value = this.value?.value || this.options.defaultValue
+    const marks =
+      typeof this.options.marks === 'undefined'
         ? undefined
-        : JSON.parse(this.options.stops)
+        : JSON.parse(this.options.marks)
     return (
       <HorizontalSlider
         // archAngle={archAngle}
@@ -48,7 +49,7 @@ export default {
         setValue={(value) => this.setValue({ value })}
         minValue={minValue}
         maxValue={maxValue}
-        stops={stops}
+        marks={marks}
       />
     )
   },
