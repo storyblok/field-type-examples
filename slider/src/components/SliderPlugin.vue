@@ -1,7 +1,20 @@
+<template>
+  <HorizontalSlider
+    :value="selectedValue"
+    :set-value="(val) => setValue({ value: val })"
+    :min-value="minValue"
+    :max-value="maxValue"
+    :marks="boundedMarks"
+  />
+</template>
+
 <script>
 import { HorizontalSlider } from '@/components/HorizontalSlider'
 
 export default {
+  components: {
+    HorizontalSlider,
+  },
   props: {
     options: {
       type: Object,
@@ -16,44 +29,51 @@ export default {
       default: undefined,
     },
   },
+
   computed: {
-    defaultValue() {
-      return this.options.defaultValue
-        ? Number.parseFloat(this.options.defaultValue)
-        : this.minValue
-    },
     minValue() {
       return this.options.minValue
         ? Number.parseFloat(this.options.minValue)
         : 0
     },
+    maxValue() {
+      return this.options.maxValue
+        ? Number.parseFloat(this.options.maxValue)
+        : 100
+    },
+    boundedMarks() {
+      // Only those marks that are within the range
+      return this.marks?.filter(
+        (mark) => mark > this.minValue && mark < this.maxValue,
+      )
+    },
+    selectedValue() {
+      return this.value?.value ?? this.defaultValue
+    },
+    defaultValue() {
+      return this.options.defaultValue
+        ? Number.parseFloat(this.options.defaultValue)
+        : this.minValue
+    },
+    marks() {
+      try {
+        const marks = JSON.parse(this.options.marks)
+        if (!Array.isArray(marks)) {
+          return undefined
+        }
+        if (!marks.every((it) => typeof it === 'number')) {
+          return undefined
+        }
+        return marks
+      } catch (e) {
+        return undefined
+      }
+    },
   },
   created() {
-    const defaultValue = parseFloat(this.defaultValue)
     if (!this.value?.value) {
-      this.setValue({ value: defaultValue })
+      this.setValue({ value: this.defaultValue })
     }
-  },
-  render() {
-    const minValue = this.minValue
-    const maxValue = this.options.maxValue
-      ? Number.parseFloat(this.options.maxValue)
-      : 100
-    const value = this.value?.value || this.defaultValue
-    const marks =
-      typeof this.options.marks === 'undefined'
-        ? undefined
-        : JSON.parse(this.options.marks)
-    return (
-      <HorizontalSlider
-        // archAngle={archAngle}
-        value={value}
-        setValue={(value) => this.setValue({ value })}
-        minValue={minValue}
-        maxValue={maxValue}
-        marks={marks}
-      />
-    )
   },
 }
 </script>
