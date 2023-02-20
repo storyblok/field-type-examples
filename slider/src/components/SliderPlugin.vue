@@ -37,7 +37,7 @@ export default {
       ? Number.parseFloat(this.options.maxValue)
       : undefined
     // TODO: if default is not present take minValue
-    const value = this.value?.value || this.options.defaultValue
+    const value = this.value?.value || this.defaultValue
     const marks =
       typeof this.options.marks === 'undefined'
         ? undefined
