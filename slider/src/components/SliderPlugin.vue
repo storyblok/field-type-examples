@@ -25,7 +25,7 @@ export default {
     minValue() {
       return this.options.minValue
         ? Number.parseFloat(this.options.minValue)
-        : undefined
+        : 0
     },
   },
   created() {
@@ -38,7 +38,7 @@ export default {
     const minValue = this.minValue
     const maxValue = this.options.maxValue
       ? Number.parseFloat(this.options.maxValue)
-      : undefined
+      : 100
     const value = this.value?.value || this.defaultValue
     const marks =
       typeof this.options.marks === 'undefined'
