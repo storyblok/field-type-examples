@@ -7,21 +7,24 @@ const ink = '#1b243f'
 const divider = '#DFE3E8'
 const transparent = 'transparent'
 
-const shouldUseDarkColor = (hexColor) => {
-  const blackSRGB = { r: 0, g: 0, b: 0 }
-  const contrast = contrastRatio(
+const contrastThresholdBorder = 17
+const contrastThresholdText = 11
+
+const blackSRGB = { r: 0, g: 0, b: 0 }
+
+const hexColorContrast = (hexColor) =>
+  contrastRatio(
     relativeLuminance(hexToSRGB(hexColor) ?? blackSRGB),
     relativeLuminance(blackSRGB),
   )
-  console.log(contrast)
-  return contrast > 11
-}
 
 const contrastTextColor = (hexColor) => {
-  return shouldUseDarkColor(hexColor) ? ink : white
+  return hexColorContrast(hexColor) > contrastThresholdText ? ink : white
 }
 const contrastBorderColor = (hexColor) => {
-  return shouldUseDarkColor(hexColor) ? divider : transparent
+  return hexColorContrast(hexColor) > contrastThresholdBorder
+    ? divider
+    : transparent
 }
 
 export default {
