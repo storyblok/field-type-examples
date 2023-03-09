@@ -19,6 +19,11 @@ module.exports = {
       "eslint:recommended",
       '@vue/typescript'],
     "rules": {} // Override rules as well for TS files. Basically any config option can be modified here
+  }, {
+    files: "*.test.ts",
+    env: {
+      jest: true,
+    }
   }],
 
   extends: [
