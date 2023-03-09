@@ -1,5 +1,28 @@
 <script>
 import Checkmark from '@/components/Checkmark'
+import { contrastRatio, hexToSRGB, relativeLuminance } from '@/utils'
+
+const white = '#FFFFFF'
+const ink = '#1b243f'
+const divider = '#DFE3E8'
+const transparent = 'transparent'
+
+const shouldUseDarkColor = (hexColor) => {
+  const blackSRGB = { r: 0, g: 0, b: 0 }
+  const contrast = contrastRatio(
+    relativeLuminance(hexToSRGB(hexColor) ?? blackSRGB),
+    relativeLuminance(blackSRGB),
+  )
+  console.log(contrast)
+  return contrast > 11
+}
+
+const contrastTextColor = (hexColor) => {
+  return shouldUseDarkColor(hexColor) ? ink : white
+}
+const contrastBorderColor = (hexColor) => {
+  return shouldUseDarkColor(hexColor) ? divider : transparent
+}
 
 export default {
   name: 'Swatch',
@@ -35,7 +58,11 @@ export default {
       >
         <div
           class="plugin-swatch__button"
-          style={`background-color: ${color}`}
+          style={{
+            backgroundColor: color,
+            color: contrastTextColor(this.color),
+            borderColor: contrastBorderColor(this.color),
+          }}
           onClick={() =>
             this.selected ? setValue(undefined) : setValue(color)
           }
@@ -98,6 +125,8 @@ $small-size: 20px;
 }
 
 .plugin-swatch__button {
+  color: #ffffff;
+  border: 1px solid transparent;
   height: 10px;
   width: 10px;
   cursor: pointer;
@@ -108,7 +137,6 @@ $small-size: 20px;
 }
 
 .plugin-swatch__checkmark {
-  color: #ffffff;
   height: $small-size;
 }
 </style>
