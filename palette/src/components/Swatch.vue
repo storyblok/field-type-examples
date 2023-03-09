@@ -1,23 +1,27 @@
 <script>
 import Checkmark from '@/components/Checkmark'
-import { colorContrast, hexToRgb } from '@/utils'
+import { contrastRatio, hexToSRGB, relativeLuminance } from '@/utils'
 
 const white = '#FFFFFF'
 const ink = '#1b243f'
 const divider = '#DFE3E8'
 const transparent = 'transparent'
 
-const darkColor = (hexColor) => {
-  const blackRgb = { r: 0, g: 0, b: 0 }
-  const contrast = colorContrast(hexToRgb(hexColor) ?? blackRgb, blackRgb)
-  return contrast < 0.1
+const shouldUseDarkColor = (hexColor) => {
+  const blackSRGB = { r: 0, g: 0, b: 0 }
+  const contrast = contrastRatio(
+    relativeLuminance(hexToSRGB(hexColor) ?? blackSRGB),
+    relativeLuminance(blackSRGB),
+  )
+  console.log(contrast)
+  return contrast > 11
 }
 
-const contrastText = (hexColor) => {
-  return darkColor(hexColor) ? ink : white
+const contrastTextColor = (hexColor) => {
+  return shouldUseDarkColor(hexColor) ? ink : white
 }
-const contrastBorder = (hexColor) => {
-  return darkColor(hexColor) ? divider : transparent
+const contrastBorderColor = (hexColor) => {
+  return shouldUseDarkColor(hexColor) ? divider : transparent
 }
 
 export default {
@@ -56,8 +60,8 @@ export default {
           class="plugin-swatch__button"
           style={{
             backgroundColor: color,
-            color: contrastText(this.color),
-            borderColor: contrastBorder(this.color),
+            color: contrastTextColor(this.color),
+            borderColor: contrastBorderColor(this.color),
           }}
           onClick={() =>
             this.selected ? setValue(undefined) : setValue(color)
