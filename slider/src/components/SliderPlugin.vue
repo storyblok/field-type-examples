@@ -5,6 +5,7 @@
     :min-value="minValue"
     :max-value="maxValue"
     :marks="boundedMarks"
+    :step-size="1"
   />
 </template>
 
