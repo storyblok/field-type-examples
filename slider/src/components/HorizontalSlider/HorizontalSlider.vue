@@ -11,7 +11,7 @@
           ${isMoving ? 'transition-duration: 0ms' : ''}
           `"
       >
-        {{ value }}
+        {{ formatValue(value) }}
       </Tooltip>
     </div>
     <div
@@ -69,21 +69,21 @@
         class="slider_mark-label"
         :style="`left: ${markPosition(minValue)};`"
       >
-        {{ minValue }}
+        {{ formatValue(minValue) }}
       </div>
       <div
-        v-for="mark in marks"
-        :key="mark"
+        v-for="markValue in marks"
+        :key="markValue"
         class="slider_mark-label"
-        :style="`left: ${markPosition(mark)};`"
+        :style="`left: ${markPosition(markValue)};`"
       >
-        {{ mark }}
+        {{ formatValue(markValue) }}
       </div>
       <div
         class="slider_mark-label"
         :style="`left: ${markPosition(maxValue)};`"
       >
-        {{ maxValue }}
+        {{ formatValue(maxValue) }}
       </div>
     </div>
   </div>
@@ -131,6 +131,12 @@ export default {
         return []
       },
     },
+    formatter: {
+      type: Object,
+      default() {
+        return new Intl.NumberFormat(undefined, {})
+      },
+    },
   },
   data() {
     return {
@@ -159,6 +165,9 @@ export default {
     document.removeEventListener('touchmove', this.handleMove)
   },
   methods: {
+    formatValue(value) {
+      return this.formatter.format(value)
+    },
     handleInput(e) {
       this.setValue(Number(e.target.value))
     },
