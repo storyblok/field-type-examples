@@ -196,7 +196,9 @@ export default {
         this.maxValue,
         Math.max(unboundValue, this.minValue),
       )
-      const value = roundToNearest(boundValue, this.stepSize)
+      const value = this.stepSize
+        ? roundToNearest(boundValue, this.stepSize)
+        : boundValue
       this.setValue(value)
     },
     markPosition(mark) {
