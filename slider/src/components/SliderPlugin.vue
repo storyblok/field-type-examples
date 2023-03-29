@@ -5,6 +5,7 @@
     :min-value="minValue"
     :max-value="maxValue"
     :marks="boundedMarks"
+    :step-size="stepSize"
   />
 </template>
 
@@ -31,6 +32,11 @@ export default {
   },
 
   computed: {
+    stepSize() {
+      return this.options.stepSize
+        ? Number.parseFloat(this.options.stepSize)
+        : 1
+    },
     minValue() {
       return this.options.minValue
         ? Number.parseFloat(this.options.minValue)
