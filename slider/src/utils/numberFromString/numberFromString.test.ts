@@ -22,7 +22,30 @@ describe('numberFromString', () => {
     const googolStr = `-1${new Array(1000).fill(0).join('')}`
     expect(numberFromString(googolStr)).toBeUndefined()
   })
+  it('parses hexadecimal values', () => {
+    expect(numberFromString('0xFF')).toBe(255)
+    expect(numberFromString('0x00')).toBe(0)
+    expect(numberFromString('0x0')).toBe(0)
+    expect(numberFromString('0x80')).toBe(128)
+  })
+  test('empty strings', () => {
+    expect(numberFromString('')).toBeUndefined()
+  })
   describe('malformatted numbers', () => {
+    test('string with whitespace', () => {
+      expect(numberFromString(' ')).toBeUndefined()
+      expect(numberFromString('\r')).toBeUndefined()
+      expect(numberFromString('\n')).toBeUndefined()
+      expect(numberFromString('\n\r ')).toBeUndefined()
+    })
+    test('string with number and whitespace', () => {
+      expect(numberFromString('1 ')).toBeUndefined()
+      expect(numberFromString(' 1')).toBeUndefined()
+      expect(numberFromString(' 1 ')).toBeUndefined()
+      expect(numberFromString('\r 1')).toBeUndefined()
+      expect(numberFromString('\n 1')).toBeUndefined()
+      expect(numberFromString('\n\r 1')).toBeUndefined()
+    })
     test('fractions', () => {
       expect(numberFromString('1/2')).toBeUndefined()
     })
