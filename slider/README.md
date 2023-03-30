@@ -36,9 +36,103 @@ yarn build
 
 ### Options
 
-These options are available
+Configure the options:
 
-* `minValue`: The minimum value of the slider's range.
-* `maxValue`: The maximum value of the slider's range.
-* `defaultValue`: The starting position of the slider. The number must be within the range.
-* `stops`: A JSON array of numbers. The numbers must be within the range. For each value in this array, a mark will be shown, together with a label for the value. For example, for the range `[-10, 10]`, you can use the the stops `[-5, 0, 5]`.
+* `minValue`: (optional) The minimum value of the slider's range. Defaults to `0`.
+* `maxValue`: (optional) The maximum value of the slider's range. Defaults to `100`.
+* `defaultValue`: (optional) The starting position of the slider. This number must be within the range. Defaults to `minValue`.
+* `marks`: (optional) A JSON array of numbers. The numbers must be within the range. For each value in this array, a mark will be shown, together with a label for the value. For example, for the range `[-10, 10]`, you can use the the marks `[-5, 0, 5]`.
+* `stepSize`: (optional) The minimum distance between points on the scale. To disable, set the stepSize to `0`. Defaults to `1`.
+
+The options for label formatting affects how the field is rendered, but does not change the output. These options are passed as properties to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#syntax). If any of the formatting options are invalid, the formatting will be disabled. 
+
+* `minimumSignificantDigits`: (optional) The minimum number of significant digits to use. Possible values are from 1 to 21; the default is 1.
+* `maximumSignificantDigits`: (optional) The maximum number of significant digits to use. Possible values are from 1 to 21; the default is 21.
+* `style`: (optional) The formatting style to use. If the `style` is `unit`, the `unit` _property_ must be provided. The default is `decimal`.  The following values are allowed:
+  * `decimal`
+  * `percent`
+  * `unit` 
+* `unit`: (optional) [core unit identifiers](https://unicode.org/reports/tr35/tr35-general.html#Unit_Elements) to use in unit formatting. Pairs of units can be concatenated with `-per-` to make a compound unit, for example `kilobit-per-second`. The following values are allowed:
+  * `acre`
+  * `bit`
+  * `byte`
+  * `celsius`
+  * `centimeter`
+  * `day`
+  * `degree`
+  * `fahrenheit`
+  * `fluid-ounce`
+  * `foot`
+  * `gallon`
+  * `gigabit`
+  * `gigabyte`
+  * `gram`
+  * `hectare`
+  * `hour`
+  * `inch`
+  * `kilobit`
+  * `kilobyte`
+  * `kilogram`
+  * `kilometer`
+  * `liter`
+  * `megabit`
+  * `megabyte`
+  * `meter`
+  * `mile`
+  * `mile-scandinavian`
+  * `milliliter`
+  * `millimeter`
+  * `millisecond`
+  * `minute`
+  * `month`
+  * `ounce`
+  * `percent`
+  * `petabyte`
+  * `pound`
+  * `second`
+  * `stone`
+  * `terabit`
+  * `terabyte`
+  * `week`
+  * `yard`
+  * `year`
+
+### Examples
+
+Rotation with default value, discrete steps, marks, and custom formatting:
+
+```
+minValue: -180
+maxValue: 180
+stepSize: 5
+marks: [-90, 0, 90]
+style: unit
+unit: degree
+```
+![rotation.gif](docs%2Frotation.gif)
+
+
+Format a value between 0 and 1 as percentage:
+
+```
+minValue: 0
+maxValue: 1
+stepSize: 0.01
+style: percent
+```
+![percent.gif](docs%2Fpercent.gif)
+
+
+Format with unit and custom significant digits:
+
+```
+minValue: 0
+maxValue: 1000
+stepSize: 0
+minimumSignificantDigits: 2
+maximumSignificantDigits: 2
+style: unit
+unit: gigabit-per-second
+```
+
+![gigabit-per-second.gif](docs%2Fgigabit-per-second.gif)
