@@ -43,8 +43,8 @@ export default {
           maximumSignificantDigits: numberFromString(
             this.options.maximumSignificantDigits,
           ),
-          unit: this.options.unit,
-          style: this.options.style,
+          unit: this.options.unit || undefined,
+          style: this.options.style || undefined,
         })
       } catch (e) {
         console.error(e)
