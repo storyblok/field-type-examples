@@ -43,6 +43,7 @@ export default {
           maximumSignificantDigits: numberFromString(
             this.options.maximumSignificantDigits,
           ),
+          // Use || to let empty strings default to undefined.
           unit: this.options.unit || undefined,
           style: this.options.style || undefined,
         })
