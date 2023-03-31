@@ -11,6 +11,7 @@
 
 <script>
 import { HorizontalSlider } from '@/components/HorizontalSlider'
+import { numberFromString } from '@/utils'
 
 export default {
   components: {
@@ -33,19 +34,13 @@ export default {
 
   computed: {
     stepSize() {
-      return this.options.stepSize
-        ? Number.parseFloat(this.options.stepSize)
-        : 1
+      return numberFromString(this.options.stepSize) ?? 1
     },
     minValue() {
-      return this.options.minValue
-        ? Number.parseFloat(this.options.minValue)
-        : 0
+      return numberFromString(this.options.minValue) ?? 0
     },
     maxValue() {
-      return this.options.maxValue
-        ? Number.parseFloat(this.options.maxValue)
-        : 100
+      return numberFromString(this.options.maxValue) ?? 100
     },
     boundedMarks() {
       // Only those marks that are within the range
@@ -57,9 +52,7 @@ export default {
       return this.value?.value ?? this.defaultValue
     },
     defaultValue() {
-      return this.options.defaultValue
-        ? Number.parseFloat(this.options.defaultValue)
-        : this.minValue
+      return numberFromString(this.options.defaultValue) ?? this.minValue
     },
     marks() {
       try {
