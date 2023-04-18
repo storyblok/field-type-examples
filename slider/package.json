@@ -11,7 +11,7 @@
     "test": "jest",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "dev": "vue-cli-service serve --watch src/entries/main.ts",
+    "dev": "vue-cli-service serve --watch src/entries/storyblok-slider.ts",
     "lint": "eslint .",
     "proxy": "ngrok http 8080 --host-header=rewrite"
   },
@@ -20,6 +20,7 @@
     "vue": "2.6.12"
   },
   "devDependencies": {
+    "@storyblok/field-plugin-cli": "0.0.1-alpha.8",
     "@types/jest": "29.0.3",
     "@types/node": "16.11.25",
     "@typescript-eslint/eslint-plugin": "4.33.0",
