@@ -6,6 +6,7 @@
     :max-value="maxValue"
     :marks="boundedMarks"
     :step-size="stepSize"
+    :formatter="formatter"
   />
 </template>
 
@@ -33,6 +34,24 @@ export default {
   },
 
   computed: {
+    formatter() {
+      try {
+        return new Intl.NumberFormat(undefined, {
+          minimumSignificantDigits: numberFromString(
+            this.options.minimumSignificantDigits,
+          ),
+          maximumSignificantDigits: numberFromString(
+            this.options.maximumSignificantDigits,
+          ),
+          // Use || to let empty strings default to undefined.
+          unit: this.options.unit || undefined,
+          style: this.options.style || undefined,
+        })
+      } catch (e) {
+        console.error(e)
+        return new Intl.NumberFormat(undefined, {})
+      }
+    },
     stepSize() {
       return numberFromString(this.options.stepSize) ?? 1
     },

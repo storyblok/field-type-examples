@@ -132,7 +132,7 @@ export default {
       },
     },
     formatter: {
-      type: Object,
+      type: Intl.NumberFormat,
       default() {
         return new Intl.NumberFormat(undefined, {})
       },
@@ -240,7 +240,7 @@ $rail-height: 6px;
 $mark-height: 4px;
 
 .slider__container {
-  padding: 0px 20px;
+  padding: 10px 20px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
