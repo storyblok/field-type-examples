@@ -4,7 +4,7 @@ import SliderPlugin from '@/components/SliderPlugin.vue'
 loadPlugin(
   'storyblok-slider',
   {
-    value: 0,
+    value: undefined,
   },
   SliderPlugin,
 )
