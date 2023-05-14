@@ -28,7 +28,7 @@ export type OnRenderLine = (
  * Controlled Code Mirror component where the event handlers can change after the initial render.
  * react-codemirror2's controlled codemirror component only binds the event listener that are initially attached to codemirror.
  */
-export const SyncedCodeMirror: FunctionComponent<{
+export const ControlledCodeMirror: FunctionComponent<{
   className?: string
   options?: CodeMirror.EditorConfiguration
   value: string
