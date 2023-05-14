@@ -1,11 +1,8 @@
 import { FunctionComponent } from 'react'
-import {
-  OnBeforeChange,
-  SyncedCodeMirror,
-} from '../SyncedCodeMirror'
 
 import styles from './CodeEditor.module.scss'
 import './storyblok-theme.scss'
+import {ControlledCodeMirror, OnBeforeChange} from "../ControlledCodeMirror";
 
 export const CodeEditor: FunctionComponent<{
   content: string
@@ -16,7 +13,7 @@ export const CodeEditor: FunctionComponent<{
   const onBeforeChange: OnBeforeChange = (editor, data, value) => setContent(value)
 
   return (
-    <SyncedCodeMirror
+    <ControlledCodeMirror
       className={styles.codeEditor}
       options={{
         theme: 'storyblok',
