@@ -1,0 +1,153 @@
+/**
+ * A generic codemirror theme
+ */
+@use './theme';
+
+$background: theme.$sb_dark_blue;
+$gutter: theme.$sb_dark_blue_75;
+$cursor: theme.$orange;
+$select: theme.$sb_dark_blue_75;
+$text: theme.$sb_dark_blue_25;
+
+// TODO use storyblok design tokens for all colors, spacings, borders, and transitions
+
+.cm-s-storyblok.CodeMirror {
+  padding: theme.spacing(2);
+  border-radius: theme.radius(1);
+  background-color: $background;
+  color: $text;
+}
+
+.cm-s-storyblok .CodeMirror-gutters {
+  background: initial;
+  color: $gutter;
+  border: none;
+}
+
+.cm-s-storyblok .CodeMirror-guttermarker,
+.cm-s-storyblok .CodeMirror-guttermarker-subtle,
+.cm-s-storyblok .CodeMirror-linenumber {
+  color: $gutter;
+  padding: 0;
+}
+
+.cm-s-storyblok .CodeMirror-cursor {
+  border-left: 2px solid $cursor;
+}
+.cm-s-storyblok.cm-fat-cursor .CodeMirror-cursor {
+  background-color: #5d6d5c80 !important;
+}
+.cm-s-storyblok .cm-animate-fat-cursor {
+  background-color: #5d6d5c80 !important;
+}
+
+.cm-s-storyblok div.CodeMirror-selected {
+  background: $select;
+}
+
+.cm-s-storyblok.CodeMirror-focused div.CodeMirror-selected {
+  background: $select;
+}
+
+.cm-s-storyblok .CodeMirror-line::selection,
+.cm-s-storyblok .CodeMirror-line>span::selection,
+.cm-s-storyblok .CodeMirror-line>span>span::selection {
+  background: $select;
+}
+
+.cm-s-storyblok .CodeMirror-line::-moz-selection,
+.cm-s-storyblok .CodeMirror-line>span::-moz-selection,
+.cm-s-storyblok .CodeMirror-line>span>span::-moz-selection {
+  background: $select;
+}
+
+// Only applicable if a language is selected
+
+.cm-s-storyblok .CodeMirror-activeline-background {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cm-s-storyblok .cm-keyword {
+  color: #C792EA;
+}
+
+.cm-s-storyblok .cm-operator {
+  color: #89DDFF;
+}
+
+.cm-s-storyblok .cm-variable-2 {
+  color: #EEFFFF;
+}
+
+.cm-s-storyblok .cm-variable-3,
+.cm-s-storyblok .cm-type {
+  color: #f07178;
+}
+
+.cm-s-storyblok .cm-builtin {
+  color: #FFCB6B;
+}
+
+.cm-s-storyblok .cm-atom {
+  color: #F78C6C;
+}
+
+.cm-s-storyblok .cm-number {
+  color: #FF5370;
+}
+
+.cm-s-storyblok .cm-def {
+  color: #82AAFF;
+}
+
+.cm-s-storyblok .cm-string {
+  color: #C3E88D;
+}
+
+.cm-s-storyblok .cm-string-2 {
+  color: #f07178;
+}
+
+.cm-s-storyblok .cm-comment {
+  color: #546E7A;
+}
+
+.cm-s-storyblok .cm-variable {
+  color: #f07178;
+}
+
+.cm-s-storyblok .cm-tag {
+  color: #FF5370;
+}
+
+.cm-s-storyblok .cm-meta {
+  color: #FFCB6B;
+}
+
+.cm-s-storyblok .cm-attribute {
+  color: #C792EA;
+}
+
+.cm-s-storyblok .cm-property {
+  color: #C792EA;
+}
+
+.cm-s-storyblok .cm-qualifier {
+  color: #DECB6B;
+}
+
+.cm-s-storyblok .cm-variable-3,
+.cm-s-storyblok .cm-type {
+  color: #DECB6B;
+}
+
+
+.cm-s-storyblok .cm-error {
+  color: rgba(255, 255, 255, 1.0);
+  background-color: #FF5370;
+}
+
+.cm-s-storyblok .CodeMirror-matchingbracket {
+  text-decoration: underline;
+  color: white !important;
+}
