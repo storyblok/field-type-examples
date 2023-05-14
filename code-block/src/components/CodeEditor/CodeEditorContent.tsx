@@ -11,23 +11,15 @@ const CodeEditorContentSchema = z.object({
 export type CodeEditorContent = z.infer<typeof CodeEditorContentSchema>
 
 export const parseCodeEditorState = (data: unknown): CodeEditorContent => {
-  if(data !== ""){
-    return data
+  const content = CodeEditorContentSchema.safeParse(data)
+  if (content.success) {
+    return content.data
   } else {
     return {
       code: '',
       highlightedLines: [],
     }
   }
-  // const content = CodeEditorContentSchema.safeParse(data)
-  // if (content.success) {
-  //   return content.data
-  // } else {
-  //   return {
-  //     code: '',
-  //     highlightedLines: [],
-  //   }
-  // }
 }
 
 export type LineState = CodeEditorContent['highlightedLines'][number]

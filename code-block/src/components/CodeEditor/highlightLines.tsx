@@ -1,6 +1,6 @@
 import {LineState} from "./CodeEditorContent";
 
-const lineClasses: Record<LineState, string> = {
+const stateToClassName: Record<LineState, string> = {
   default: 'lineStyle-default',
   neutral: 'lineStyle-neutral',
   add: 'lineStyle-add',
@@ -14,7 +14,7 @@ export const highlightLines = (
   highlightedLines: LineState[],
 ) => {
   highlightedLines.forEach((lineState, line) => {
-    Object.entries(lineClasses).forEach(([state, className]) => {
+    Object.entries(stateToClassName).forEach(([state, className]) => {
       if(state === lineState){
         editor.addLineClass(line, lineSelector, className)
       } else {
