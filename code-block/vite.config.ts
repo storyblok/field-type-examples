@@ -18,6 +18,7 @@ export default defineConfig({
     },
   },
   define: {
+    // Needed by react-codemirror2
     global: 'window',
   },
   server: {

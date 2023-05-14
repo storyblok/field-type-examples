@@ -1,9 +1,9 @@
 import { FunctionComponent } from 'react'
 import { useFieldPlugin } from '../useFieldPlugin'
-import {CodeEditor} from "./CodeEditor";
-import {parseCodeEditorState} from "./CodeEditor/CodeEditorContent";
+import { CodeEditor } from './CodeEditor'
+import { parseCodeEditorState } from './CodeEditor/CodeEditorContent'
 
-export const App: FunctionComponent = () => {
+export const App2: FunctionComponent = () => {
   const { type, data, actions, error } = useFieldPlugin()
 
   if (type === 'loading') {
