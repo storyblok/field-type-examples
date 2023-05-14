@@ -3,30 +3,92 @@
  */
 @use './theme';
 
+$gutter-width: theme.spacing(6);
+$gutter-hover: theme.$sb_dark_blue_75;
+$gutter-highlight: theme.$sb_dark_blue;
+
 .codeEditor :global {
   .CodeMirror {
     height: auto;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 
-  // Make the line number clickable
-  .CodeMirror-linenumber {
-     cursor: pointer !important;
-     @include theme.transition(color);
+  .CodeMirror-scroll {
+    min-height: 100px;
+  }
 
-     &:hover {
-       color: theme.$white !important;
-     }
-   }
-  // Colors to line numbers
+  .CodeMirror-sizer {
+  }
+
+  .CodeMirror-gutter-wrapper {
+    height: 100%;
+  }
+
+  .CodeMirror-gutter {
+    width: $gutter-width !important;
+  }
+
+  .CodeMirror-linenumber {
+    cursor: pointer !important;
+    @include theme.transition(color, background-color);
+    height: 100%;
+
+    &:hover {
+      color: theme.$white !important;
+    }
+  }
+
+  .CodeMirror-line {
+    @include theme.transition(color, background-color);
+    padding-left: theme.spacing(4) !important;
+    &::before {
+      display: none;
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      line-height: 1em;
+      margin: 0 theme.spacing(1);
+    }
+  }
+
   .lineStyle-default {
   }
   .lineStyle-neutral {
-    background-color: mix(theme.$yellow, theme.$sb_dark_blue, 30%);
+    .CodeMirror-line {
+      background-color: transparentize(theme.$yellow, 0.75);
+    }
+    .CodeMirror-linenumber {
+      background-color: transparentize(theme.$yellow, 0.5);
+      color: $gutter-highlight;
+    }
+    .CodeMirror-line::before {
+      content: '>';
+    }
   }
   .lineStyle-add {
-    background-color: mix(theme.$green, theme.$sb_dark_blue, 30%);
+    .CodeMirror-line {
+      background-color: transparentize(theme.$green, 0.75);
+    }
+    .CodeMirror-linenumber {
+      background-color: transparentize(theme.$green, 0.5);
+      color: $gutter-highlight;
+    }
+    .CodeMirror-line::before {
+      content: '+';
+    }
   }
   .lineStyle-remove {
-    background-color: mix(theme.$red, theme.$sb_dark_blue, 30%);
+    .CodeMirror-line {
+      background-color: transparentize(theme.$red, 0.75);
+    }
+    .CodeMirror-linenumber {
+      background-color: transparentize(theme.$red, 0.5);
+      color: $gutter-highlight;
+    }
+    .CodeMirror-line::before {
+      content: '-';
+    }
   }
 }
