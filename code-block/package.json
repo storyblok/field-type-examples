@@ -1,0 +1,35 @@
+{
+  "name": "code-block",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "check:types": "tsc --noEmit",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@storyblok/field-plugin": "0.0.1-alpha.4",
+    "codemirror": "5.65.12",
+    "react": "^18.2.0",
+    "react-codemirror2": "^7.2.1",
+    "react-dom": "^18.2.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/codemirror": "^5.60.7",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "5.55.0",
+    "@vitejs/plugin-react": "^3.1.0",
+    "eslint": "latest",
+    "eslint-plugin-react": "7.30.0",
+    "rollup-plugin-visualizer": "^5.9.0",
+    "sass": "^1.62.1",
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0",
+    "vite-plugin-css-injected-by-js": "3.1.0"
+  }
+}
