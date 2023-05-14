@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 import { useFieldPlugin } from '../useFieldPlugin'
-import { SyncedCodeMirror } from './SyncedCodeMirror'
+import { ControlledCodeMirror } from './ControlledCodeMirror'
 
 export const App: FunctionComponent = () => {
   const { type, data, actions, error } = useFieldPlugin()
@@ -17,7 +17,7 @@ export const App: FunctionComponent = () => {
   const content = typeof data.content === 'string' ? data.content : ''
 
   return (
-    <SyncedCodeMirror
+    <ControlledCodeMirror
       value={content}
       onBeforeChange={(editor, data, value) => actions.setContent(value)}
       options={{
