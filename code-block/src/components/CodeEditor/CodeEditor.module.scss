@@ -18,15 +18,8 @@ $gutter-highlight: theme.$sb_dark_blue;
     min-height: 100px;
   }
 
-  .CodeMirror-sizer {
-  }
-
   .CodeMirror-gutter-wrapper {
     height: 100%;
-  }
-
-  .CodeMirror-gutter {
-    width: $gutter-width !important;
   }
 
   .CodeMirror-linenumber {
@@ -42,15 +35,6 @@ $gutter-highlight: theme.$sb_dark_blue;
   .CodeMirror-line {
     @include theme.transition(color, background-color);
     padding-left: theme.spacing(4) !important;
-    &::before {
-      display: none;
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      line-height: 1em;
-      margin: 0 theme.spacing(1);
-    }
   }
 
   .lineStyle-default {
@@ -63,9 +47,6 @@ $gutter-highlight: theme.$sb_dark_blue;
       background-color: transparentize(theme.$yellow, 0.5);
       color: $gutter-highlight;
     }
-    .CodeMirror-line::before {
-      content: '>';
-    }
   }
   .lineStyle-add {
     .CodeMirror-line {
@@ -75,9 +56,6 @@ $gutter-highlight: theme.$sb_dark_blue;
       background-color: transparentize(theme.$green, 0.5);
       color: $gutter-highlight;
     }
-    .CodeMirror-line::before {
-      content: '+';
-    }
   }
   .lineStyle-remove {
     .CodeMirror-line {
@@ -86,9 +64,6 @@ $gutter-highlight: theme.$sb_dark_blue;
     .CodeMirror-linenumber {
       background-color: transparentize(theme.$red, 0.5);
       color: $gutter-highlight;
-    }
-    .CodeMirror-line::before {
-      content: '-';
     }
   }
 }

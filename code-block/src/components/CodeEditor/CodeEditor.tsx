@@ -1,27 +1,11 @@
-import {FunctionComponent, useEffect, useRef} from 'react'
-import {
-  EditorDidConfigure,
-  OnBeforeChange, OnGutterClick,
-  SyncedCodeMirror,
-} from '../SyncedCodeMirror'
-
+import {FunctionComponent, useCallback, useEffect, useRef} from 'react'
+import {EditorDidConfigure, OnBeforeChange, OnGutterClick, ControlledCodeMirror,} from '../ControlledCodeMirror'
 import styles from './CodeEditor.module.scss'
 import './storyblok-theme.scss'
-import {CodeEditorContent, LineState, lineState} from "./CodeEditorContent";
-import {zeros} from "../../utils";
-import {toggleLineState} from "./toggleLineState";
-
-
-const lineSelector = 'CodeMirror-line'
-
-const lineClasses: Record<LineState, string> = {
-  default: 'lineStyle-default',
-  neutral: 'lineStyle-neutral',
-  add: 'lineStyle-add',
-  remove: 'lineStyle-remove',
-}
-
-const allClasses = Object.values(lineClasses)
+import {CodeEditorContent} from "./CodeEditorContent";
+import {withLength} from "./withLength";
+import {highlightLines} from "./highlightLines";
+import {toggleLine} from "./toggleLine";
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -37,50 +21,45 @@ export const CodeEditor: FunctionComponent<{
   const { content, setContent } = props
   const { code, highlightedLines } = content
 
-  const setCode = (value: CodeEditorContent['code']) =>
+  const setCode = useCallback((value: CodeEditorContent['code']) =>
     setContent({
       ...content,
       code: value,
-    })
-  const setHighlightedLines = (value: CodeEditorContent['highlightedLines']) =>
+    }), [setContent, content])
+
+  const setHighlightedLines = useCallback((value: CodeEditorContent['highlightedLines']) =>
     setContent({
       ...content,
       highlightedLines: value,
-    })
+    }), [setContent, content])
 
-  const onBeforeChange: OnBeforeChange = (editor, data, value) => setCode(value)
-  const onGutterClick: OnGutterClick = (editor, lineNumber) => {
-    setHighlightedLines(
-      zeros(editor.lineCount()).map((_, line) =>
-        line === lineNumber
-          ? toggleLineState(lineState(highlightedLines[line]))
-          : lineState(highlightedLines[line]),
-      ),
-    )
+
+  const onBeforeChange: OnBeforeChange = (
+    editor,
+    data,
+    value,
+  ) => setCode( value)
+
+  const onGutterClick: OnGutterClick = (editor, line) => {
+    setHighlightedLines(toggleLine(highlightedLines, line))
   }
+
   const editorDidConfigure: EditorDidConfigure = (e) => {
     editor.current = e
   }
+
   useEffect(() => {
-    if (!editor.current) {
-      return
-    }
-    zeros(editor.current.lineCount()).forEach((_, line) => {
-      // Clear all styles
-      allClasses.forEach((className) => {
-        editor.current?.removeLineClass(line, lineSelector, className)
-      })
-      // Set the styles for the row
-      editor.current?.addLineClass(
-        line,
-        lineSelector,
-        lineClasses[lineState(highlightedLines[line])],
-      )
-    })
+    // Sync props.highlightedLines with editor
+    // editor.current && highlightLines(editor.current, highlightedLines)
+
+    // Sync props.highlightedLines.length with the editor
+    setHighlightedLines(
+      withLength(highlightedLines, editor.current?.lineCount() ?? 0),
+    )
   }, [highlightedLines, code])
 
   return (
-    <SyncedCodeMirror
+    <ControlledCodeMirror
       className={styles.codeEditor}
       options={{
         theme: 'storyblok',
