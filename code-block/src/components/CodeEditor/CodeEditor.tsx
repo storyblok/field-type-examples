@@ -49,14 +49,15 @@ export const CodeEditor: FunctionComponent<{
   }
 
   useEffect(() => {
-    // Sync props.highlightedLines with editor
-    // editor.current && highlightLines(editor.current, highlightedLines)
-
-    // Sync props.highlightedLines.length with the editor
+    // Sync props.highlightedLines.length with the number of lines in the code
     setHighlightedLines(
       withLength(highlightedLines, editor.current?.lineCount() ?? 0),
     )
-  }, [highlightedLines, code])
+  }, [code])
+  useEffect(() => {
+    // Sync props.highlightedLines with editor
+    editor.current && highlightLines(editor.current, highlightedLines)
+  }, [highlightedLines])
 
   return (
     <ControlledCodeMirror
