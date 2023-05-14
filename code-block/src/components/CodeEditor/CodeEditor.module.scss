@@ -1,0 +1,10 @@
+/**
+ * Styles that are specific to the CodeEditor component
+ */
+@use './theme';
+
+.codeEditor :global {
+  .CodeMirror {
+    height: auto;
+  }
+}
