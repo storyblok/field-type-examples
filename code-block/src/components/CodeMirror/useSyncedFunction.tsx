@@ -8,7 +8,7 @@ import { useCallback, useEffect, useRef } from 'react'
  * @param callback
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const useFunction = <C extends undefined | Function>(
+export const useSyncedFunction = <C extends undefined | Function>(
   callback: C,
 ): NonNullable<C> => {
   const callbackRef = useRef(callback)
