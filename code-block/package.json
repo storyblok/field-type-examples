@@ -12,9 +12,8 @@
   },
   "dependencies": {
     "@storyblok/field-plugin": "0.0.1-alpha.4",
-    "codemirror": "5.65.12",
+    "codemirror": "6.0.1",
     "react": "^18.2.0",
-    "react-codemirror2": "^7.2.1",
     "react-dom": "^18.2.0",
     "zod": "^3.21.4"
   },
