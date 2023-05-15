@@ -1,28 +1,68 @@
-import { FunctionComponent } from 'react'
-import { Controlled as CodeMirror } from 'react-codemirror2'
-import 'codemirror/lib/codemirror.css'
+import { FunctionComponent, useEffect, useRef } from 'react'
+import { EditorView, ViewPlugin, lineNumbers } from '@codemirror/view'
+import { syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language'
 import { useFunction } from './useFunction'
+import { sb_dark_blue, sb_green, white, yellow } from '../CodeEditor/theme'
 
-export type OnBeforeChange = (
-  editor: CodeMirror.Editor,
-  data: CodeMirror.EditorChange,
-  value: string,
-) => void
+/**
+ * A Code Mirror extension that lets you subscribe to state changes.
+ * @param onCodeChange
+ */
+const stateChangePlugin = (
+  onCodeChange: (code: string, lineCount: number) => void,
+) =>
+  ViewPlugin.define(() => ({
+    update: (update) => {
+      if (update.docChanged) {
+        const doc = update.state.doc
+        onCodeChange(doc.toString(), doc.lines)
+      }
+    },
+  }))
 
-export type OnGutterClick = (
-  editor: CodeMirror.Editor,
-  lineNumber: number,
-  gutter: string,
-  event: Event,
-) => void
-
-export type EditorDidConfigure = (editor: CodeMirror.Editor) => void
-
-export type OnRenderLine = (
-  editor: CodeMirror.Editor,
-  line: CodeMirror.LineHandle,
-  element: HTMLElement,
-) => void
+/**
+ * A Code Mirror theme extension for Storyblok
+ */
+const theme = EditorView.theme(
+  {
+    '&': {
+      // padding: '15px',
+      borderRadius: '5px',
+      overflow: 'hidden',
+      color: 'white',
+      backgroundColor: sb_dark_blue,
+      minHeight: '100px',
+    },
+    '.cm-content': {
+      caretColor: yellow,
+      paddingTop: '15px',
+      paddingBottom: '15px',
+    },
+    '.cm-line': {
+      paddingLeft: '15px',
+    },
+    '&.cm-focused .cm-cursor': {
+      borderLeftColor: yellow,
+    },
+    '&.cm-focused .cm-selectionBackground, ::selection': {
+      backgroundColor: sb_green,
+    },
+    '.cm-gutters': {
+      backgroundColor: sb_dark_blue,
+      color: '#4c5776',
+      border: 'none',
+    },
+    '& .cm-lineNumbers .cm-gutterElement': {
+      paddingLeft: '15px',
+      transition: `color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms`,
+      cursor: 'pointer',
+      '&:hover': {
+        color: white,
+      },
+    },
+  },
+  { dark: true },
+)
 
 /**
  * Controlled Code Mirror component where the event handlers can change after the initial render.
@@ -30,27 +70,51 @@ export type OnRenderLine = (
  */
 export const ControlledCodeMirror: FunctionComponent<{
   className?: string
-  options?: CodeMirror.EditorConfiguration
-  value: string
-  onBeforeChange?: OnBeforeChange
-  onGutterClick?: OnGutterClick
-  editorDidConfigure?: EditorDidConfigure
-  onRenderLine?: OnRenderLine
+  initialValue: string
+  onChange: (value: string, lineCount: number) => void
+  onLineNumberClick: (lineNumber: number) => void
 }> = (props) => {
-  const editorDidConfigure = useFunction(props.editorDidConfigure)
-  const onBeforeChange = useFunction(props.onBeforeChange)
-  const onGutterClick = useFunction(props.onGutterClick)
-  const onRenderLine = useFunction(props.onRenderLine)
+  const { initialValue } = props
+  const parentRef = useRef<HTMLDivElement>(null)
+  const viewRef = useRef<EditorView>()
+
+  const onChange = useFunction(props.onChange)
+  const onLineNumberClick = useFunction(props.onLineNumberClick)
+
+  useEffect(() => {
+    if (!parentRef.current) {
+      throw new Error(
+        'Failed to mount codemirror component: parent reference is not set.',
+      )
+    }
+    syntaxHighlighting(defaultHighlightStyle)
+    viewRef.current = new EditorView({
+      doc: initialValue,
+      parent: parentRef.current,
+      extensions: [
+        lineNumbers({
+          domEventHandlers: {
+            click: (view, line) => {
+              const lineNumber = view.state.doc.lineAt(line.from).number - 1
+              onLineNumberClick(lineNumber)
+              return true
+            },
+          },
+        }),
+        stateChangePlugin(onChange),
+        theme,
+        EditorView.lineWrapping,
+      ],
+    })
+    return () => {
+      viewRef.current?.dom.remove()
+    }
+  }, [theme])
 
   return (
-    <CodeMirror
+    <div
+      ref={parentRef}
       className={props.className}
-      value={props.value}
-      options={props.options}
-      onRenderLine={onRenderLine}
-      editorDidMount={editorDidConfigure}
-      onBeforeChange={onBeforeChange}
-      onGutterClick={onGutterClick}
     />
   )
 }

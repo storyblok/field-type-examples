@@ -1,11 +1,10 @@
-import {FunctionComponent, useCallback, useEffect, useRef} from 'react'
-import {EditorDidConfigure, OnBeforeChange, OnGutterClick, ControlledCodeMirror,} from '../ControlledCodeMirror'
-import styles from './CodeEditor.module.scss'
-import './storyblok-theme.scss'
-import {CodeEditorContent} from "./CodeEditorContent";
-import {withLength} from "./withLength";
-import {highlightLines} from "./highlightLines";
-import {toggleLine} from "./toggleLine";
+import { FunctionComponent } from 'react'
+import { ControlledCodeMirror } from '../ControlledCodeMirror'
+import { CodeEditorContent, LineState } from './CodeEditorContent'
+import { withLength } from './withLength'
+import { toggleLine } from './toggleLine'
+import { css } from '@emotion/css'
+import { green, red, sb_dark_blue, white, yellow } from './theme'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -16,63 +15,70 @@ export const CodeEditor: FunctionComponent<{
   content: CodeEditorContent
   setContent: (content: CodeEditorContent) => void
 }> = (props) => {
-  const editor = useRef<CodeMirror.Editor>()
-
   const { content, setContent } = props
   const { code, highlightedLines } = content
 
-  const setCode = useCallback((value: CodeEditorContent['code']) =>
+  const onChange = (value: string, lineCount: number) =>
     setContent({
       ...content,
       code: value,
-    }), [setContent, content])
+      highlightedLines: withLength(highlightedLines, lineCount),
+    })
 
-  const setHighlightedLines = useCallback((value: CodeEditorContent['highlightedLines']) =>
+  const handleLineNumberClick = (line: number) =>
     setContent({
       ...content,
-      highlightedLines: value,
-    }), [setContent, content])
-
-
-  const onBeforeChange: OnBeforeChange = (
-    editor,
-    data,
-    value,
-  ) => setCode( value)
-
-  const onGutterClick: OnGutterClick = (editor, line) => {
-    setHighlightedLines(toggleLine(highlightedLines, line))
-  }
-
-  const editorDidConfigure: EditorDidConfigure = (e) => {
-    editor.current = e
-  }
-
-  useEffect(() => {
-    // Sync props.highlightedLines.length with the number of lines in the code
-    setHighlightedLines(
-      withLength(highlightedLines, editor.current?.lineCount() ?? 0),
-    )
-  }, [code])
-  useEffect(() => {
-    // Sync props.highlightedLines with editor
-    editor.current && highlightLines(editor.current, highlightedLines)
-  }, [highlightedLines])
+      highlightedLines: toggleLine(highlightedLines, line),
+    })
 
   return (
     <ControlledCodeMirror
-      className={styles.codeEditor}
-      options={{
-        theme: 'storyblok',
-        lineNumbers: true,
-        indentWithTabs: false,
-        tabSize: 2,
-      }}
-      value={code}
-      onBeforeChange={onBeforeChange}
-      onGutterClick={onGutterClick}
-      editorDidConfigure={editorDidConfigure}
+      className={css(
+        content.highlightedLines.map((state, index) => ({
+          [`.cm-gutterElement:nth-child(${index + 2})`]: {
+            backgroundColor: gutterBackgroundColor(state),
+            color: gutterColorFromState(state),
+          },
+          [`.cm-line:nth-child(${index + 1})`]: {
+            backgroundColor: lineBackgroundColor(state),
+          },
+        })),
+      )}
+      initialValue={code}
+      onChange={onChange}
+      onLineNumberClick={handleLineNumberClick}
     />
   )
 }
 
+const gutterBackgroundColor = (state: LineState): string =>
+  `color-mix(in srgb, ${backgroundColorFromState(state)} 50%, ${sb_dark_blue})`
+
+const lineBackgroundColor = (state: LineState): string =>
+  `color-mix(in srgb, ${backgroundColorFromState(state)} 25%, ${sb_dark_blue})`
+
+const backgroundColorFromState = (state: LineState): string => {
+  switch (state) {
+    case '':
+      return sb_dark_blue
+    case '0':
+      return yellow
+    case '+':
+      return green
+    case '-':
+      return red
+  }
+}
+
+const gutterColorFromState = (state: LineState): string => {
+  switch (state) {
+    case '':
+      return white
+    case '0':
+      return sb_dark_blue
+    case '+':
+      return sb_dark_blue
+    case '-':
+      return sb_dark_blue
+  }
+}

@@ -2,15 +2,15 @@ import { nextLineState } from './nextLineState'
 
 describe('nextLineState', () => {
   it('default -> highlight', () => {
-    expect(nextLineState('default')).toBe('neutral')
+    expect(nextLineState('')).toBe('0')
   })
   it('highlight -> add', () => {
-    expect(nextLineState('neutral')).toBe('add')
+    expect(nextLineState('0')).toBe('+')
   })
   it('add -> remove', () => {
-    expect(nextLineState('add')).toBe('remove')
+    expect(nextLineState('+')).toBe('-')
   })
   it('remove -> default', () => {
-    expect(nextLineState('remove')).toBe('default')
+    expect(nextLineState('-')).toBe('')
   })
 })

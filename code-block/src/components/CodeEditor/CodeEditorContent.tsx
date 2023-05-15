@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 // TODO use 0, -, +
-export const lineStates = ['default', 'neutral', 'add', 'remove'] as const
+export const lineStates = ['', '0', '+', '-'] as const
 
 const CodeEditorContentSchema = z.object({
   code: z.string(),

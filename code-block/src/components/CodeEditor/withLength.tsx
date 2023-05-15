@@ -1,16 +1,16 @@
 import { zeros } from '../../utils'
-import {LineState} from "./CodeEditorContent";
+import { LineState } from './CodeEditorContent'
 
 // todo tests: preserve ref, append, trim
-export const withLength = (lineStates: LineState[], length: number) => {
-  const lineDiff = length - lineStates.length
-  if (lineDiff > 0) {
+export const withLength = (lineStates: LineState[], lineCount: number) => {
+  const lineCountDiff = lineCount - lineStates.length
+  if (lineCountDiff > 0) {
     // lines were added -> append
-    return [...lineStates, ...zeros(lineDiff).map(() => 'default' as const)]
+    return [...lineStates, ...zeros(lineCountDiff).map(() => '' as const)]
   }
-  if (lineDiff < 0) {
+  if (lineCountDiff < 0) {
     // lines were removed -> trim
-    return lineStates.slice(0, length)
+    return lineStates.slice(0, lineCount)
   }
   // no lines were added or removed -> preserve reference
   return lineStates
