@@ -35,11 +35,11 @@ export const CodeEditor: FunctionComponent<{
     <ControlledCodeMirror
       className={css(
         content.highlightedLines.map((state, index) => ({
-          [`.cm-gutterElement:nth-child(${index + 2})`]: {
+          [`.cm-gutterElement:nth-child(${index + 2})`]: state !== '' && {
             backgroundColor: gutterBackgroundColor(state),
             color: gutterColorFromState(state),
           },
-          [`.cm-line:nth-child(${index + 1})`]: {
+          [`.cm-line:nth-child(${index + 1})`]: state !== '' && {
             backgroundColor: lineBackgroundColor(state),
           },
         })),
