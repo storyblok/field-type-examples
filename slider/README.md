@@ -34,7 +34,13 @@ yarn build
 5. Save
 6. Publish
 
-### Options
+# App Description
+
+Select a value within a range using the Slider field plugin. Sliders are ideal for setting properties such as opacity, brightness, percentages, and ratios.
+
+## How to set up
+
+In the Block Library, select a block to edit. Add a new field, set the _Field Type_ to _Plugin_, and set the _Custom Type_ to `storyblok-slider`.
 
 Configure the options:
 
@@ -42,7 +48,7 @@ Configure the options:
 * `maxValue`: (optional) The maximum value of the slider's range. Defaults to `100`.
 * `defaultValue`: (optional) The starting position of the slider. This number must be within the range. Defaults to `minValue`.
 * `marks`: (optional) A JSON array of numbers. The numbers must be within the range. For each value in this array, a mark will be shown, together with a label for the value. For example, for the range `[-10, 10]`, you can use the the marks `[-5, 0, 5]`.
-* `stepSize`: (optional) The minimum distance between points on the scale. To disable, set the stepSize to `0`. Defaults to `1`.
+* `stepSize`: (optional) The minimum distance between points on the scale. To disable it, set the stepSize to `0`. Defaults to `1`.
 
 The options for label formatting affects how the field is rendered, but does not change the output. These options are passed as properties to [Intl.NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat#syntax). If any of the formatting options are invalid, the formatting will be disabled. 
 
@@ -52,7 +58,7 @@ The options for label formatting affects how the field is rendered, but does not
   * `decimal`
   * `percent`
   * `unit` 
-* `unit`: (optional) [core unit identifiers](https://unicode.org/reports/tr35/tr35-general.html#Unit_Elements) to use in unit formatting. Pairs of units can be concatenated with `-per-` to make a compound unit, for example `kilobit-per-second`. The following values are allowed:
+* `unit`: (optional) [core unit identifiers](https://unicode.org/reports/tr35/tr35-general.html#Unit_Elements) to use in unit formatting. Pairs of units can be concatenated with `-per-` to make a compound unit; for example, `kilobit-per-second`. The following values are allowed:
   * `acre`
   * `bit`
   * `byte`
@@ -99,7 +105,7 @@ The options for label formatting affects how the field is rendered, but does not
 
 ### Examples
 
-Rotation with default value, discrete steps, marks, and custom formatting:
+Rotation with a default value, discrete steps, marks, and custom formatting:
 
 ```
 minValue: -180
@@ -109,10 +115,11 @@ marks: [-90, 0, 90]
 style: unit
 unit: degree
 ```
+
 ![rotation.gif](docs%2Frotation.gif)
 
 
-Format a value between 0 and 1 as percentage:
+Format a value between 0 and 1 as a percentage:
 
 ```
 minValue: 0
@@ -120,6 +127,7 @@ maxValue: 1
 stepSize: 0.01
 style: percent
 ```
+
 ![percent.gif](docs%2Fpercent.gif)
 
 
