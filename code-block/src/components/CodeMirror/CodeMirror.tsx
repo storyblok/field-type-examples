@@ -3,6 +3,7 @@ import { EditorView, ViewPlugin, lineNumbers } from '@codemirror/view'
 import { Extension } from '@codemirror/state'
 import { syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language'
 import { useSyncedFunction } from './useSyncedFunction'
+import { theme } from './theme'
 
 /**
  * A Code Mirror extension that lets you subscribe to state changes.
@@ -48,12 +49,13 @@ export const CodeMirror: FunctionComponent<{
         lineNumbers(),
         EditorView.lineWrapping,
         stateChangePlugin(onChange),
+        theme,
       ],
     })
     return () => {
       editorView.dom.remove()
     }
-  }, [])
+  }, [theme])
 
   return (
     <div
