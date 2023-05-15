@@ -1,14 +1,9 @@
 import { FunctionComponent, useEffect, useRef } from 'react'
 import { EditorView, ViewPlugin, lineNumbers } from '@codemirror/view'
+import { Extension } from '@codemirror/state'
 import { syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language'
-import { useFunction } from './useFunction'
-import {
-  sb_dark_blue,
-  sb_dark_blue_75,
-  sb_green,
-  white,
-  yellow,
-} from '../CodeEditor/theme'
+import { useSyncedFunction } from '../CodeMirror/useSyncedFunction'
+import { theme } from '../CodeMirror/theme'
 
 /**
  * A Code Mirror extension that lets you subscribe to state changes.
@@ -16,7 +11,7 @@ import {
  */
 const stateChangePlugin = (
   onCodeChange: (code: string, lineCount: number) => void,
-) =>
+): Extension =>
   ViewPlugin.define(() => ({
     update: (update) => {
       if (update.docChanged) {
@@ -27,54 +22,10 @@ const stateChangePlugin = (
   }))
 
 /**
- * A Code Mirror theme extension for Storyblok
- */
-const theme = EditorView.theme(
-  {
-    '&': {
-      // padding: '15px',
-      borderRadius: '5px',
-      overflow: 'hidden',
-      color: 'white',
-      backgroundColor: sb_dark_blue,
-      minHeight: '100px',
-    },
-    '.cm-content': {
-      caretColor: yellow,
-      paddingTop: '15px',
-      paddingBottom: '15px',
-    },
-    '.cm-line': {
-      paddingLeft: '15px',
-    },
-    '&.cm-focused .cm-cursor': {
-      borderLeftColor: yellow,
-    },
-    '&.cm-focused .cm-selectionBackground, ::selection': {
-      backgroundColor: sb_green,
-    },
-    '.cm-gutters': {
-      backgroundColor: sb_dark_blue,
-      color: sb_dark_blue_75,
-      border: 'none',
-    },
-    '& .cm-lineNumbers .cm-gutterElement': {
-      paddingLeft: '15px',
-      transition: `color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms`,
-      cursor: 'pointer',
-      '&:hover': {
-        color: white,
-      },
-    },
-  },
-  { dark: true },
-)
-
-/**
  * Controlled Code Mirror component where the event handlers can change after the initial render.
  * react-codemirror2's controlled codemirror component only binds the event listener that are initially attached to codemirror.
  */
-export const ControlledCodeMirror: FunctionComponent<{
+export const CodeMirror: FunctionComponent<{
   className?: string
   initialValue: string
   onChange: (value: string, lineCount: number) => void
@@ -82,10 +33,9 @@ export const ControlledCodeMirror: FunctionComponent<{
 }> = (props) => {
   const { initialValue } = props
   const parentRef = useRef<HTMLDivElement>(null)
-  const viewRef = useRef<EditorView>()
 
-  const onChange = useFunction(props.onChange)
-  const onLineNumberClick = useFunction(props.onLineNumberClick)
+  const onChange = useSyncedFunction(props.onChange)
+  const onLineNumberClick = useSyncedFunction(props.onLineNumberClick)
 
   useEffect(() => {
     if (!parentRef.current) {
@@ -93,8 +43,7 @@ export const ControlledCodeMirror: FunctionComponent<{
         'Failed to mount codemirror component: parent reference is not set.',
       )
     }
-    syntaxHighlighting(defaultHighlightStyle)
-    viewRef.current = new EditorView({
+    const editorView = new EditorView({
       doc: initialValue,
       parent: parentRef.current,
       extensions: [
@@ -107,13 +56,13 @@ export const ControlledCodeMirror: FunctionComponent<{
             },
           },
         }),
+        EditorView.lineWrapping,
         stateChangePlugin(onChange),
         theme,
-        EditorView.lineWrapping,
       ],
     })
     return () => {
-      viewRef.current?.dom.remove()
+      editorView.dom.remove()
     }
   }, [theme])
 
