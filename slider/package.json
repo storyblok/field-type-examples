@@ -11,7 +11,7 @@
     "test": "jest",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "dev": "vue-cli-service serve --watch src/entries/main.ts",
+    "dev": "vue-cli-service serve --watch src/entries/production.ts",
     "lint": "eslint .",
     "proxy": "ngrok http 8080 --host-header=rewrite"
   },
