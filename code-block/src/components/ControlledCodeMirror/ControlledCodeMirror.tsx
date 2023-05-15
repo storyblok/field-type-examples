@@ -2,7 +2,13 @@ import { FunctionComponent, useEffect, useRef } from 'react'
 import { EditorView, ViewPlugin, lineNumbers } from '@codemirror/view'
 import { syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language'
 import { useFunction } from './useFunction'
-import { sb_dark_blue, sb_green, white, yellow } from '../CodeEditor/theme'
+import {
+  sb_dark_blue,
+  sb_dark_blue_75,
+  sb_green,
+  white,
+  yellow,
+} from '../CodeEditor/theme'
 
 /**
  * A Code Mirror extension that lets you subscribe to state changes.
@@ -49,7 +55,7 @@ const theme = EditorView.theme(
     },
     '.cm-gutters': {
       backgroundColor: sb_dark_blue,
-      color: '#4c5776',
+      color: sb_dark_blue_75,
       border: 'none',
     },
     '& .cm-lineNumbers .cm-gutterElement': {
