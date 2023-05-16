@@ -2,12 +2,12 @@ import { FunctionComponent } from 'react'
 import { CodeEditorContent } from './CodeEditorContent'
 import { withLength } from './withLength'
 import { toggleLine } from './toggleLine'
-import { css } from '@emotion/css'
 import { CodeMirror } from '../CodeMirror'
 import { gutterColorFromState } from './gutterColorFromState'
 import { mix } from './mix'
 import { backgroundColorFromState } from './backgroundColorFromState'
 import { sb_dark_blue } from '../../design-tokens'
+import { css } from '@emotion/react'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -36,7 +36,7 @@ export const CodeEditor: FunctionComponent<{
 
   return (
     <CodeMirror
-      className={css(
+      css={css(
         content.lineStates.map((state, index) => ({
           [`.cm-gutterElement:nth-child(${index + 2})`]: state !== '' && {
             backgroundColor: mix(
