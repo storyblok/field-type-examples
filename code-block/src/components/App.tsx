@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react'
 import { useFieldPlugin } from '../useFieldPlugin'
-import { CodeMirror } from './CodeMirror'
+import { CodeEditor } from './CodeEditor'
+import { parseCodeEditorState } from './CodeEditor/CodeEditorContent'
 
 export const App: FunctionComponent = () => {
   const { type, data, actions, error } = useFieldPlugin()
@@ -14,12 +15,12 @@ export const App: FunctionComponent = () => {
     return <></>
   }
 
-  const content = typeof data.content === 'string' ? data.content : ''
+  const content = parseCodeEditorState(data.content)
 
   return (
-    <CodeMirror
-      initialValue={content}
-      onChange={(value) => actions.setContent(value)}
+    <CodeEditor
+      content={content}
+      setContent={actions.setContent}
     />
   )
 }
