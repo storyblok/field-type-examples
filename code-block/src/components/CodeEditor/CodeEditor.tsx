@@ -19,25 +19,25 @@ export const CodeEditor: FunctionComponent<{
   setContent: (content: CodeEditorContent) => void
 }> = (props) => {
   const { content, setContent } = props
-  const { code, highlightedLines } = content
+  const { code, lineStates } = content
 
   const onChange = (value: string, lineCount: number) =>
     setContent({
       ...content,
       code: value,
-      highlightedLines: withLength(highlightedLines, lineCount),
+      lineStates: withLength(lineStates, lineCount),
     })
 
   const handleLineNumberClick = (line: number) =>
     setContent({
       ...content,
-      highlightedLines: toggleLine(highlightedLines, line),
+      lineStates: toggleLine(lineStates, line),
     })
 
   return (
     <CodeMirror
       className={css(
-        content.highlightedLines.map((state, index) => ({
+        content.lineStates.map((state, index) => ({
           [`.cm-gutterElement:nth-child(${index + 2})`]: state !== '' && {
             backgroundColor: mix(
               backgroundColorFromState(state),

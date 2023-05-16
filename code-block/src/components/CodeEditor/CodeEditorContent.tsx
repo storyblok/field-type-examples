@@ -5,7 +5,7 @@ export const lineStates = ['', '0', '+', '-'] as const
 
 const CodeEditorContentSchema = z.object({
   code: z.string(),
-  highlightedLines: z.array(z.enum(lineStates)),
+  lineStates: z.array(z.enum(lineStates)),
 })
 
 export type CodeEditorContent = z.infer<typeof CodeEditorContentSchema>
@@ -17,9 +17,9 @@ export const parseCodeEditorState = (data: unknown): CodeEditorContent => {
   } else {
     return {
       code: '',
-      highlightedLines: [],
+      lineStates: [],
     }
   }
 }
 
-export type LineState = CodeEditorContent['highlightedLines'][number]
+export type LineState = CodeEditorContent['lineStates'][number]
