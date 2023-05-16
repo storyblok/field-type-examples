@@ -1,10 +1,13 @@
 import { FunctionComponent } from 'react'
-import { CodeEditorContent, LineState } from './CodeEditorContent'
+import { CodeEditorContent } from './CodeEditorContent'
 import { withLength } from './withLength'
 import { toggleLine } from './toggleLine'
 import { css } from '@emotion/css'
 import { CodeMirror } from '../CodeMirror'
-import { green, red, sb_dark_blue, white, yellow } from '../../design-tokens'
+import { gutterColorFromState } from './gutterColorFromState'
+import { mix } from './mix'
+import { backgroundColorFromState } from './backgroundColorFromState'
+import { sb_dark_blue } from '../../design-tokens'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -36,11 +39,19 @@ export const CodeEditor: FunctionComponent<{
       className={css(
         content.highlightedLines.map((state, index) => ({
           [`.cm-gutterElement:nth-child(${index + 2})`]: state !== '' && {
-            backgroundColor: gutterBackgroundColor(state),
+            backgroundColor: mix(
+              backgroundColorFromState(state),
+              sb_dark_blue,
+              0.5,
+            ),
             color: gutterColorFromState(state),
           },
           [`.cm-line:nth-child(${index + 1})`]: state !== '' && {
-            backgroundColor: lineBackgroundColor(state),
+            backgroundColor: mix(
+              backgroundColorFromState(state),
+              sb_dark_blue,
+              0.25,
+            ),
           },
         })),
       )}
@@ -49,36 +60,4 @@ export const CodeEditor: FunctionComponent<{
       onLineNumberClick={handleLineNumberClick}
     />
   )
-}
-
-const gutterBackgroundColor = (state: LineState): string =>
-  `color-mix(in srgb, ${backgroundColorFromState(state)} 50%, ${sb_dark_blue})`
-
-const lineBackgroundColor = (state: LineState): string =>
-  `color-mix(in srgb, ${backgroundColorFromState(state)} 25%, ${sb_dark_blue})`
-
-const backgroundColorFromState = (state: LineState): string => {
-  switch (state) {
-    case '':
-      return sb_dark_blue
-    case '0':
-      return yellow
-    case '+':
-      return green
-    case '-':
-      return red
-  }
-}
-
-const gutterColorFromState = (state: LineState): string => {
-  switch (state) {
-    case '':
-      return white
-    case '0':
-      return sb_dark_blue
-    case '+':
-      return sb_dark_blue
-    case '-':
-      return sb_dark_blue
-  }
 }
