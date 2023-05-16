@@ -1,9 +1,8 @@
 import { FunctionComponent, useEffect, useRef } from 'react'
 import { EditorView, ViewPlugin, lineNumbers } from '@codemirror/view'
 import { Extension } from '@codemirror/state'
-import { syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language'
-import { useSyncedFunction } from '../CodeMirror/useSyncedFunction'
-import { theme } from '../CodeMirror/theme'
+import { useSyncedFunction } from './useSyncedFunction'
+import { theme } from './theme'
 
 /**
  * A Code Mirror extension that lets you subscribe to state changes.
