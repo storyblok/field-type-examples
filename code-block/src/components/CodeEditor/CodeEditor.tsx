@@ -98,7 +98,7 @@ export const CodeEditor: FunctionComponent<{
         />
         <label
           css={css({
-            marginRight: '1em',
+            marginRight: '1ch',
             color: sb_dark_blue_50,
           })}
           htmlFor="lineNumberStart"
