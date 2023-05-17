@@ -25,12 +25,12 @@ const stateChangePlugin = (
  * react-codemirror2's controlled codemirror component only binds the event listener that are initially attached to codemirror.
  */
 export const CodeMirror: FunctionComponent<{
-  className?: string
   initialValue: string
   onChange: (value: string, lineCount: number) => void
   onLineNumberClick: (lineNumber: number) => void
+  lineNumberStart: number
 }> = (props) => {
-  const { initialValue } = props
+  const { initialValue, lineNumberStart } = props
   const parentRef = useRef<HTMLDivElement>(null)
 
   const onChange = useSyncedFunction(props.onChange)
@@ -47,6 +47,7 @@ export const CodeMirror: FunctionComponent<{
       parent: parentRef.current,
       extensions: [
         lineNumbers({
+          formatNumber: (lineNo) => (lineNo + lineNumberStart - 1).toString(10),
           domEventHandlers: {
             click: (view, line) => {
               const lineNumber = view.state.doc.lineAt(line.from).number - 1
@@ -63,12 +64,7 @@ export const CodeMirror: FunctionComponent<{
     return () => {
       editorView.dom.remove()
     }
-  }, [theme])
+  }, [theme, lineNumberStart])
 
-  return (
-    <div
-      ref={parentRef}
-      className={props.className}
-    />
-  )
+  return <div ref={parentRef} />
 }
