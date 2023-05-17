@@ -65,7 +65,7 @@ export const CodeEditor: FunctionComponent<{
           display: 'flex',
           alignItems: 'center',
           borderBottom: `1px solid rgb(141, 145, 159)`,
-          padding: '5px 15px',
+          padding: '7px 15px',
           backgroundColor: sb_dark_blue,
           color: white,
           // Typography
