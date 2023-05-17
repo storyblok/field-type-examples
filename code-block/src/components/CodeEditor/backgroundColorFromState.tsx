@@ -1,5 +1,5 @@
 import { LineState } from './CodeEditorContent'
-import { green, red, sb_dark_blue, yellow } from '../../design-tokens'
+import { green, red, sb_dark_blue, yellow } from '../../storyblok-design'
 
 export const backgroundColorFromState = (state: LineState): string => {
   switch (state) {

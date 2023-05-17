@@ -6,8 +6,17 @@ import { CodeMirror } from '../CodeMirror'
 import { gutterColorFromState } from './gutterColorFromState'
 import { mix } from './mix'
 import { backgroundColorFromState } from './backgroundColorFromState'
-import { sb_dark_blue, sb_dark_blue_50, white } from '../../design-tokens'
+import {
+  sb_dark_blue,
+  sb_dark_blue_50,
+  sb_dark_blue_75,
+  sb_dark_blue_hover,
+  sb_green,
+  sb_green_25,
+  white,
+} from '../../storyblok-design'
 import { css } from '@emotion/react'
+import { transition } from '../../storyblok-design'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -55,9 +64,6 @@ export const CodeEditor: FunctionComponent<{
       <div
         css={css({
           display: 'flex',
-          borderBottom: `1px solid rgb(141, 145, 159)`,
-          padding: '5px 15px',
-          backgroundColor: sb_dark_blue,
           color: white,
         })}
       >
@@ -66,18 +72,33 @@ export const CodeEditor: FunctionComponent<{
             flex: 1,
 
             color: 'inherit',
-            backgroundColor: 'inherit',
             border: 'none',
+            outline: 'none',
+            borderTopLeftRadius: '5px',
+            borderTopRightRadius: '5px',
 
             margin: '0px',
+            padding: '5px 15px',
             fontSize: '12px',
             fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
             fontWeight: 400,
             lineHeight: '1.66',
             letterSpacing: '0.03333em',
+            transition: transition('background-color'),
+            backgroundColor: sb_dark_blue,
+            borderBottomWidth: `1px`,
+            borderBottomStyle: `solid`,
+            borderBottomColor: sb_dark_blue_75,
 
             '&:focus': {
               outline: 'none',
+              boxShadow: `0 0 0 3px ${sb_green_25}`,
+              borderBottomColor: sb_green,
+            },
+            '&:hover': {
+              outline: 'none',
+              borderBottomColor: sb_green,
+              backgroundColor: sb_dark_blue_hover,
             },
             '&::placeholder': {
               color: sb_dark_blue_50,

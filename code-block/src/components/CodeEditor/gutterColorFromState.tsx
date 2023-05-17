@@ -1,5 +1,5 @@
 import { LineState } from './CodeEditorContent'
-import { sb_dark_blue, white } from '../../design-tokens'
+import { sb_dark_blue, white } from '../../storyblok-design'
 
 export const gutterColorFromState = (state: LineState): string => {
   switch (state) {
