@@ -19,10 +19,18 @@ html {
   width: 100%;
 }
 
-/*Element Styles*/
+/* CSS baseline */
+
 body {
   margin: 0;
   display: flex;
   box-sizing: border-box;
 }
 
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0
+}
+
+p {
+  font-size: 0.875em;
+}

@@ -1,4 +1,4 @@
-import { defaultLineState, LineState } from './CodeEditorContent'
+import { defaultLineStateValue, LineState } from './CodeEditorContent'
 
 /**
  * Rotates a given lineState to the next state.
@@ -11,4 +11,5 @@ export const nextLineState = (
   lineStateValues: string[],
   currentState: string,
 ): LineState =>
-  lineStateValues[lineStateValues.indexOf(currentState) + 1] ?? defaultLineState
+  lineStateValues[lineStateValues.indexOf(currentState) + 1] ??
+  defaultLineStateValue

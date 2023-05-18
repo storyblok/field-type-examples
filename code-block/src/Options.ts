@@ -1,34 +1,38 @@
 import { z } from 'zod'
 
 const OptionsSchema = z.object({
-  colorFromLineState: z.string().optional(),
+  lineStates: z.string().optional(),
 })
 
 export const Options = z.infer<typeof OptionsSchema>
 
-const LineStatesSchema = z.array(
+const LineStateOptionSchema = z.array(
   z.object({
     value: z.string(),
     color: z.string(),
   }),
 )
 
-export const colorFromLineStateLineStateFromOptions = (data: unknown) => {
+export type LineStateOption = z.infer<typeof LineStateOptionSchema>
+
+export const lineStateOptionFromOptions = (
+  data: unknown,
+): LineStateOption | Error => {
   const options = OptionsSchema.safeParse(data)
   if (!options.success) {
     return options.error
   }
-  if (typeof options.data.colorFromLineState === 'undefined') {
-    return undefined
+  if (typeof options.data.lineStates === 'undefined') {
+    return []
   }
   try {
-    const lineStates = LineStatesSchema.safeParse(
-      JSON.parse(options.data.colorFromLineState),
+    const lineStates = LineStateOptionSchema.safeParse(
+      JSON.parse(options.data.lineStates),
     )
     if (!lineStates.success) {
       return lineStates.error
     }
-    return lineStates.data
+    return [...lineStates.data]
   } catch (e) {
     return e instanceof Error ? e : new Error('unknown error parsing options')
   }
