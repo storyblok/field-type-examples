@@ -17,8 +17,10 @@ import { css } from '@emotion/react'
 export const CodeEditor: FunctionComponent<{
   content: CodeEditorContent
   setContent: (content: CodeEditorContent) => void
+  colorFromLineState?: (lineState: string) => string
+  lineStateValues: string[]
 }> = (props) => {
-  const { content, setContent } = props
+  const { content, setContent, colorFromLineState, lineStateValues } = props
   const { code, lineStates } = content
 
   const onChange = (value: string, lineCount: number) =>
@@ -31,30 +33,33 @@ export const CodeEditor: FunctionComponent<{
   const handleLineNumberClick = (line: number) =>
     setContent({
       ...content,
-      lineStates: toggleLine(lineStates, line),
+      lineStates: toggleLine(lineStateValues, lineStates, line),
     })
 
   return (
     <CodeMirror
-      css={css(
-        content.lineStates.map((state, index) => ({
-          [`.cm-gutterElement:nth-child(${index + 2})`]: state !== '' && {
-            backgroundColor: mix(
-              backgroundColorFromState(state),
-              sb_dark_blue,
-              0.5,
-            ),
-            color: gutterColorFromState(state),
-          },
-          [`.cm-line:nth-child(${index + 1})`]: state !== '' && {
-            backgroundColor: mix(
-              backgroundColorFromState(state),
-              sb_dark_blue,
-              0.25,
-            ),
-          },
-        })),
-      )}
+      css={
+        colorFromLineState &&
+        css(
+          content.lineStates.map((state, index) => ({
+            [`.cm-gutterElement:nth-child(${index + 2})`]: state !== '' && {
+              backgroundColor: mix(
+                colorFromLineState(state),
+                sb_dark_blue,
+                0.5,
+              ),
+              color: gutterColorFromState(state),
+            },
+            [`.cm-line:nth-child(${index + 1})`]: state !== '' && {
+              backgroundColor: mix(
+                colorFromLineState(state),
+                sb_dark_blue,
+                0.25,
+              ),
+            },
+          })),
+        )
+      }
       initialValue={code}
       onChange={onChange}
       onLineNumberClick={handleLineNumberClick}
