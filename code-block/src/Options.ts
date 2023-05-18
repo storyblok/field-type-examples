@@ -21,7 +21,6 @@ export const defaultLineStateOption = {
   color: 'transparent',
 }
 
-// TODO Tests
 export const lineStateOptionFromOptions = (
   data: unknown,
 ): LineStateOptions | Error => {

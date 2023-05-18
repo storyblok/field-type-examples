@@ -1,13 +1,13 @@
 import { FunctionComponent } from 'react'
 import { CodeEditorContent } from './CodeEditorContent'
-import { withLength } from './withLength'
 import { toggleLine } from './toggleLine'
 import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
 import { sb_dark_blue, white } from '../../design-tokens'
 import { css } from '@emotion/react'
-import { LineStateOptions } from '../../Options'
+import { defaultLineStateOption, LineStateOptions } from '../../Options'
 import { colorFromLineState } from './colorFromLineState'
+import { withLength } from '../../utils'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -26,7 +26,11 @@ export const CodeEditor: FunctionComponent<{
     setContent({
       ...content,
       code: value,
-      lineStates: withLength(lineStates, lineCount),
+      lineStates: withLength(
+        lineStates,
+        lineCount,
+        defaultLineStateOption.value,
+      ),
     })
 
   const handleLineNumberClick = (line: number) =>

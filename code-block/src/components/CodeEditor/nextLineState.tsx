@@ -1,5 +1,5 @@
 import { LineState } from './CodeEditorContent'
-import { unique } from '../../utils/unique'
+import { unique } from '../../utils'
 
 /**
  * Rotates a given lineState to the next state.
