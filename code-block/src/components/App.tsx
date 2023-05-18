@@ -33,7 +33,7 @@ export const App: FunctionComponent = () => {
     <CodeEditor
       content={content}
       setContent={actions.setContent}
-      lineStateOption={lineStateOption}
+      lineStateOptions={lineStateOption}
     />
   )
 }

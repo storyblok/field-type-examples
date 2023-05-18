@@ -1,8 +1,5 @@
 import { z } from 'zod'
 
-export const defaultLineStateValue = ''
-export const defaultLineStateColor = 'transparent'
-
 const CodeEditorContentSchema = z.object({
   code: z.string(),
   lineStates: z.array(z.string()),

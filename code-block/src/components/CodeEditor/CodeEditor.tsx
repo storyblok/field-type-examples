@@ -1,16 +1,13 @@
 import { FunctionComponent } from 'react'
-import {
-  CodeEditorContent,
-  defaultLineStateColor,
-  defaultLineStateValue,
-} from './CodeEditorContent'
+import { CodeEditorContent } from './CodeEditorContent'
 import { withLength } from './withLength'
 import { toggleLine } from './toggleLine'
 import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
 import { sb_dark_blue, white } from '../../design-tokens'
 import { css } from '@emotion/react'
-import { LineStateOption } from '../../Options'
+import { LineStateOptions } from '../../Options'
+import { colorFromLineState } from './colorFromLineState'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -20,27 +17,10 @@ import { LineStateOption } from '../../Options'
 export const CodeEditor: FunctionComponent<{
   content: CodeEditorContent
   setContent: (content: CodeEditorContent) => void
-  lineStateOption: LineStateOption
+  lineStateOptions: LineStateOptions
 }> = (props) => {
-  const { content, setContent, lineStateOption } = props
+  const { content, setContent, lineStateOptions } = props
   const { code, lineStates } = content
-
-  const colorFromLineState = (lineState: string): string => {
-    const defaultColor = defaultLineStateColor
-    if (!lineStateOption) {
-      return defaultColor
-    }
-    return (
-      lineStateOption.find((it) => it.value === lineState)?.color ??
-      defaultColor
-    )
-  }
-
-  // TODO unique
-  const lineStateValues: string[] = [
-    defaultLineStateValue,
-    ...(lineStateOption?.map((it) => it.value) ?? []),
-  ]
 
   const onChange = (value: string, lineCount: number) =>
     setContent({
@@ -52,7 +32,7 @@ export const CodeEditor: FunctionComponent<{
   const handleLineNumberClick = (line: number) =>
     setContent({
       ...content,
-      lineStates: toggleLine(lineStateValues, lineStates, line),
+      lineStates: toggleLine(lineStateOptions, lineStates, line),
     })
 
   return (
@@ -61,20 +41,17 @@ export const CodeEditor: FunctionComponent<{
         colorFromLineState &&
         css(
           content.lineStates.map((state, index) => ({
-            [`.cm-gutterElement:nth-child(${index + 2})`]: {
+            [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
               backgroundColor: mix(
-                colorFromLineState(state),
+                colorFromLineState(lineStateOptions, state),
                 sb_dark_blue,
                 0.5,
               ),
-              color:
-                colorFromLineState(state) === defaultLineStateColor
-                  ? white
-                  : sb_dark_blue,
+              color: state === lineStateOptions[0].value ? white : sb_dark_blue,
             },
-            [`.cm-line:nth-child(${index + 1})`]: {
+            [`.cm-line:nth-of-type(${index + 1})`]: {
               backgroundColor: mix(
-                colorFromLineState(state),
+                colorFromLineState(lineStateOptions, state),
                 sb_dark_blue,
                 0.25,
               ),
