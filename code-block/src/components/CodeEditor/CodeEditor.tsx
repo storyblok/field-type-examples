@@ -51,7 +51,6 @@ export const CodeEditor: FunctionComponent<{
                 sb_dark_blue,
                 0.5,
               ),
-              color: state === lineStateOptions[0].value ? white : sb_dark_blue,
             },
             [`.cm-line:nth-of-type(${index + 1})`]: {
               backgroundColor: mix(
