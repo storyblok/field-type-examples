@@ -1,7 +1,6 @@
 import { FunctionComponent, useEffect, useRef } from 'react'
 import { EditorView, ViewPlugin, lineNumbers } from '@codemirror/view'
 import { Extension } from '@codemirror/state'
-import { syntaxHighlighting, defaultHighlightStyle } from '@codemirror/language'
 import { useSyncedFunction } from './useSyncedFunction'
 import { theme } from './theme'
 
@@ -29,11 +28,13 @@ export const CodeMirror: FunctionComponent<{
   className?: string
   initialValue: string
   onChange: (value: string, lineCount: number) => void
+  onLineNumberClick: (lineNumber: number) => void
 }> = (props) => {
   const { initialValue } = props
   const parentRef = useRef<HTMLDivElement>(null)
 
   const onChange = useSyncedFunction(props.onChange)
+  const onLineNumberClick = useSyncedFunction(props.onLineNumberClick)
 
   useEffect(() => {
     if (!parentRef.current) {
@@ -41,12 +42,19 @@ export const CodeMirror: FunctionComponent<{
         'Failed to mount codemirror component: parent reference is not set.',
       )
     }
-    syntaxHighlighting(defaultHighlightStyle)
     const editorView = new EditorView({
       doc: initialValue,
       parent: parentRef.current,
       extensions: [
-        lineNumbers(),
+        lineNumbers({
+          domEventHandlers: {
+            click: (view, line) => {
+              const lineNumber = view.state.doc.lineAt(line.from).number - 1
+              onLineNumberClick(lineNumber)
+              return true
+            },
+          },
+        }),
         EditorView.lineWrapping,
         stateChangePlugin(onChange),
         theme,
