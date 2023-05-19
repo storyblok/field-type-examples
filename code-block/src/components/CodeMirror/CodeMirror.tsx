@@ -25,6 +25,7 @@ const stateChangePlugin = (
  * react-codemirror2's controlled codemirror component only binds the event listener that are initially attached to codemirror.
  */
 export const CodeMirror: FunctionComponent<{
+  className?: string
   initialValue: string
   onChange: (value: string, lineCount: number) => void
   onLineNumberClick: (lineNumber: number) => void
@@ -66,5 +67,10 @@ export const CodeMirror: FunctionComponent<{
     }
   }, [theme, lineNumberStart])
 
-  return <div ref={parentRef} />
+  return (
+    <div
+      ref={parentRef}
+      className={props.className}
+    />
+  )
 }
