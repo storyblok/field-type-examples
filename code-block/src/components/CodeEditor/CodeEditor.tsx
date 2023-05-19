@@ -114,7 +114,9 @@ export const CodeEditor: FunctionComponent<{
         )}
         initialValue={code}
         onChange={onChange}
-        onLineNumberClick={handleLineNumberClick}
+        onLineNumberClick={
+          lineStateOptions.length > 1 ? handleLineNumberClick : undefined
+        }
       />
     </div>
   )
