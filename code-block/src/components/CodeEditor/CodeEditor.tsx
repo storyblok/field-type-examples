@@ -56,6 +56,7 @@ export const CodeEditor: FunctionComponent<{
       css={css({
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'stretch',
         borderRadius: '5px',
         overflow: 'hidden',
       })}
