@@ -13,9 +13,6 @@ import {
 export const theme = EditorView.theme(
   {
     '&': {
-      // padding: '15px',
-      borderRadius: '5px',
-      overflow: 'hidden',
       color: 'white',
       backgroundColor: sb_dark_blue,
       minHeight: '100px',

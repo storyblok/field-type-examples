@@ -3,6 +3,7 @@ import { z } from 'zod'
 const CodeEditorContentSchema = z.object({
   code: z.string(),
   lineStates: z.array(z.string()),
+  title: z.string().optional(),
 })
 
 export type CodeEditorContent = z.infer<typeof CodeEditorContentSchema>
