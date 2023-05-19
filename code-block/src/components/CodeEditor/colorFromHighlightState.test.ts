@@ -1,14 +1,14 @@
-import { colorFromLineState } from './colorFromLineState'
+import { colorFromHighlightState } from './colorFromHighlightState'
 
-describe('colorFromLineState', () => {
+describe('colorFromHighlightState', () => {
   it('falls back to the default color when the value is not found in the array', () => {
-    expect(colorFromLineState([{ value: '', color: 'red' }], 'blah')).toBe(
+    expect(colorFromHighlightState([{ value: '', color: 'red' }], 'blah')).toBe(
       'red',
     )
   })
   it('finds the color', () => {
     expect(
-      colorFromLineState(
+      colorFromHighlightState(
         [
           { value: '', color: 'red' },
           { value: 'pear', color: '#0F0' },
@@ -19,7 +19,7 @@ describe('colorFromLineState', () => {
   })
   it('picks the first options when there is ambiguity', () => {
     expect(
-      colorFromLineState(
+      colorFromHighlightState(
         [
           { value: '', color: 'red' },
           { value: 'pear', color: '#0F0' },

@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 const CodeEditorContentSchema = z.object({
   code: z.string(),
-  lineStates: z.array(z.string()),
+  highlightStates: z.array(z.string()),
   title: z.string().optional(),
 })
 
@@ -13,11 +13,11 @@ export const parseCodeEditorState = (data: unknown): CodeEditorContent => {
   if (!content.success) {
     return {
       code: '',
-      lineStates: [],
+      highlightStates: [],
     }
   }
 
   return content.data
 }
 
-export type LineState = CodeEditorContent['lineStates'][number]
+export type HighlightState = CodeEditorContent['highlightStates'][number]
