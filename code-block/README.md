@@ -31,7 +31,7 @@ Configure the options:
 * `lineStates`: (optional) A JSON array of objects. Each object has two properties: `value` (`string`) and `color` (`string`). For example:
     ```json
     [{ 
-      "value": "neutral", 
+      "value": "attention", 
       "color": "#fbce41"
     },{
       "value":"add",
