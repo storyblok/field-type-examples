@@ -6,6 +6,7 @@ export const lineStates = ['', '0', '+', '-'] as const
 const CodeEditorContentSchema = z.object({
   code: z.string(),
   lineStates: z.array(z.enum(lineStates)),
+  title: z.string().optional(),
 })
 
 export type CodeEditorContent = z.infer<typeof CodeEditorContentSchema>
