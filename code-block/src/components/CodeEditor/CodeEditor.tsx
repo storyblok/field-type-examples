@@ -16,28 +16,30 @@ import { withLength } from '../../utils'
  */
 export const CodeEditor: FunctionComponent<{
   content: CodeEditorContent
-  setContent: (content: CodeEditorContent) => void
+  setContent: (
+    setStateAction: CodeEditorContent | ((content: CodeEditorContent) => void),
+  ) => void
   lineStateOptions: LineStateOptions
 }> = (props) => {
   const { content, setContent, lineStateOptions } = props
-  const { code, lineStates } = content
+  const { code } = content
 
   const onChange = (value: string, lineCount: number) =>
-    setContent({
+    setContent((content) => ({
       ...content,
       code: value,
       lineStates: withLength(
-        lineStates,
+        content.lineStates,
         lineCount,
         defaultLineStateOption.value,
       ),
-    })
+    }))
 
   const handleLineNumberClick = (line: number) =>
-    setContent({
+    setContent((content) => ({
       ...content,
-      lineStates: toggleLine(lineStateOptions, lineStates, line),
-    })
+      lineStates: toggleLine(lineStateOptions, content.lineStates, line),
+    }))
 
   const setTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.currentTarget
