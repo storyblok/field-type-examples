@@ -3,7 +3,6 @@ name: Node.js Package
 on:
   push:
     paths:
-      - '.github/**'
       - 'code-block/**'
 
 jobs:
