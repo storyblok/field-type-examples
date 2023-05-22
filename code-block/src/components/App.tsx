@@ -2,7 +2,7 @@ import { FunctionComponent } from 'react'
 import { useFieldPlugin } from '../useFieldPlugin'
 import { CodeEditor } from './CodeEditor'
 import { parseCodeEditorState } from './CodeEditor/CodeEditorContent'
-import { highlightStateOptionFromOptions } from '../Options'
+import { lineStateOptionFromOptions } from '../Options'
 import { ErrorAlert } from './ErrorAlert'
 
 export const App: FunctionComponent = () => {
@@ -17,12 +17,12 @@ export const App: FunctionComponent = () => {
     return <></>
   }
 
-  const highlightStateOption = highlightStateOptionFromOptions(data.options)
+  const lineStateOption = lineStateOptionFromOptions(data.options)
 
-  if (highlightStateOption instanceof Error) {
+  if (lineStateOption instanceof Error) {
     return (
       <ErrorAlert title="Error parsing options">
-        {highlightStateOption.message}
+        {lineStateOption.message}
       </ErrorAlert>
     )
   }
@@ -33,7 +33,7 @@ export const App: FunctionComponent = () => {
     <CodeEditor
       content={content}
       setContent={actions.setContent}
-      highlightStateOptions={highlightStateOption}
+      lineStateOptions={lineStateOption}
     />
   )
 }
