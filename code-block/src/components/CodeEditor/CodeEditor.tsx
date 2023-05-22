@@ -6,9 +6,6 @@ import { mix } from './mix'
 import {
   sb_dark_blue,
   sb_dark_blue_50,
-  sb_dark_blue_hover,
-  sb_green,
-  transition,
   white,
 } from '../../storyblok-design'
 import { css } from '@emotion/react'
