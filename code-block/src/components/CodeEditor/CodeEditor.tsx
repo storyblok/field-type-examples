@@ -21,8 +21,7 @@ export const CodeEditor: FunctionComponent<{
   ) => void
   lineStateOptions: LineStateOptions
 }> = (props) => {
-  const { content, setContent, lineStateOptions } = props
-  const { code } = content
+  const { setContent, lineStateOptions } = props
 
   const onChange = (value: string, lineCount: number) =>
     setContent((content) => ({
@@ -43,10 +42,10 @@ export const CodeEditor: FunctionComponent<{
 
   const setTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.currentTarget
-    setContent({
+    setContent((content) => ({
       ...content,
       title: value === '' ? undefined : value,
-    })
+    }))
   }
 
   return (
@@ -97,7 +96,7 @@ export const CodeEditor: FunctionComponent<{
       </div>
       <CodeMirror
         css={css(
-          content.lineStates.map((state, index) => ({
+          props.content.lineStates.map((state, index) => ({
             [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
               backgroundColor: mix(
                 colorFromLineState(lineStateOptions, state),
@@ -114,7 +113,7 @@ export const CodeEditor: FunctionComponent<{
             },
           })),
         )}
-        initialValue={code}
+        initialValue={props.content.code}
         onChange={onChange}
         onLineNumberClick={
           lineStateOptions.length > 1 ? handleLineNumberClick : undefined
