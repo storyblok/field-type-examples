@@ -3,7 +3,14 @@ import { CodeEditorContent } from './CodeEditorContent'
 import { toggleLine } from './toggleLine'
 import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
-import { sb_dark_blue, sb_dark_blue_50, white } from '../../design-tokens'
+import {
+  sb_dark_blue,
+  sb_dark_blue_50,
+  sb_dark_blue_hover,
+  sb_green,
+  transition,
+  white,
+} from '../../storyblok-design'
 import { css } from '@emotion/react'
 import {
   defaultHighlightStateOption,
@@ -63,8 +70,6 @@ export const CodeEditor: FunctionComponent<{
       <div
         css={css({
           display: 'flex',
-          borderBottom: `1px solid rgb(141, 145, 159)`,
-          padding: '5px 15px',
           backgroundColor: sb_dark_blue,
           color: white,
         })}
@@ -76,6 +81,8 @@ export const CodeEditor: FunctionComponent<{
             color: 'inherit',
             backgroundColor: 'inherit',
             border: 'none',
+            borderBottom: `1px solid rgb(141, 145, 159)`,
+            padding: '5px 15px',
 
             margin: '0px',
             fontSize: '12px',
@@ -83,9 +90,14 @@ export const CodeEditor: FunctionComponent<{
             fontWeight: 400,
             lineHeight: '1.66',
             letterSpacing: '0.03333em',
+            transition: transition('background-color', 'border-color'),
 
             '&:focus': {
               outline: 'none',
+              borderColor: sb_green,
+            },
+            '&:hover': {
+              backgroundColor: sb_dark_blue_hover,
             },
             '&::placeholder': {
               color: sb_dark_blue_50,
@@ -102,14 +114,14 @@ export const CodeEditor: FunctionComponent<{
             [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
               backgroundColor: mix(
                 colorFromHighlightState(highlightStatesOption, state),
-                sb_dark_blue,
+                'transparent',
                 0.5,
               ),
             },
             [`.cm-line:nth-of-type(${index + 1})`]: {
               backgroundColor: mix(
                 colorFromHighlightState(highlightStatesOption, state),
-                sb_dark_blue,
+                'transparent',
                 0.25,
               ),
             },
