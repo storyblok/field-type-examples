@@ -43,3 +43,4 @@ Configure the options:
     ```
     The color will be used to highlight lines on the screen inside the Visual Editor, while the value will be used in the content to indicate which lines were highlighted by the user. 
     If this option is omitted, line highlighting is turned off.
+

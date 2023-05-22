@@ -2,7 +2,6 @@ name: Node.js Package
 
 on:
   push:
-    - '.github/**'
     - 'code-block/**'
 
 jobs:
