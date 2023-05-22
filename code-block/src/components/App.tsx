@@ -1,7 +1,10 @@
 import { FunctionComponent } from 'react'
 import { useFieldPlugin } from '../useFieldPlugin'
 import { CodeEditor } from './CodeEditor'
-import { parseCodeEditorState } from './CodeEditor/CodeEditorContent'
+import {
+  CodeEditorContent,
+  parseCodeEditorState,
+} from './CodeEditor/CodeEditorContent'
 import { highlightStatesOptionFromOptions } from '../Options'
 import { ErrorAlert } from './ErrorAlert'
 import { SetContent } from '@storyblok/field-plugin'

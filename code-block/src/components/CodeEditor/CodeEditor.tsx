@@ -5,12 +5,12 @@ import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
 import { sb_dark_blue, sb_dark_blue_50, white } from '../../design-tokens'
 import { css } from '@emotion/react'
+import { colorFromHighlightState } from './colorFromHighlightState'
+import { withLength } from '../../utils'
 import {
   defaultHighlightStateOption,
   HighlightStateOptions,
 } from '../../Options'
-import { colorFromHighlightState } from './colorFromHighlightState'
-import { withLength } from '../../utils'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -24,7 +24,7 @@ export const CodeEditor: FunctionComponent<{
   ) => void
   highlightStatesOption: HighlightStateOptions
 }> = (props) => {
-  const {  setContent, highlightStatesOption } = props
+  const { setContent, highlightStatesOption } = props
 
   const onChange = (value: string, lineCount: number) =>
     setContent((content) => ({
@@ -40,7 +40,11 @@ export const CodeEditor: FunctionComponent<{
   const handleLineNumberClick = (line: number) =>
     setContent((content) => ({
       ...content,
-      highlightStates: toggleLine(highlightStatesOption, content.highlightStates, line),
+      highlightStates: toggleLine(
+        highlightStatesOption,
+        content.highlightStates,
+        line,
+      ),
     }))
 
   const setTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
