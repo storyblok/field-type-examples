@@ -2,7 +2,8 @@ name: Node.js Package
 
 on:
   push:
-    - 'code-block/**'
+    paths:
+      - 'code-block/**'
 
 jobs:
   build:
