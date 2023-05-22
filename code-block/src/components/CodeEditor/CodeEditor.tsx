@@ -82,12 +82,6 @@ export const CodeEditor: FunctionComponent<{
           alignItems: 'center',
           backgroundColor: sb_dark_blue,
           color: white,
-          // Typography
-          fontSize: '12px',
-          fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-          fontWeight: 400,
-          lineHeight: '1.66',
-          letterSpacing: '0.03333em',
         })}
       >
         <FieldSet
