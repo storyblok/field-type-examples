@@ -82,77 +82,35 @@ export const CodeEditor: FunctionComponent<{
           alignItems: 'center',
           backgroundColor: sb_dark_blue,
           color: white,
-          // Typography
-          fontSize: '12px',
-          fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-          fontWeight: 400,
-          lineHeight: '1.66',
-          letterSpacing: '0.03333em',
         })}
       >
-        <input
-          id="title"
-          css={css({
+        <FieldSet
+          css={{
             flex: 1,
-
-            color: 'inherit',
-            backgroundColor: 'inherit',
-            border: 'none',
-            borderBottom: `1px solid rgb(141, 145, 159)`,
-            padding: '7px 15px',
-
-            margin: '0px',
-            transition: transition('background-color', 'border-color'),
-
-            '&:focus': {
-              outline: 'none',
-              borderColor: sb_green,
-            },
-            '&:hover': {
-              backgroundColor: sb_dark_blue_hover,
-            },
-            '&::placeholder': {
-              color: sb_dark_blue_50,
-            },
-          })}
-          placeholder="Title"
-          onChange={setTitle}
-          value={content.title}
-        />
-        <label
-          css={css({
-            marginRight: '1ch',
-            color: sb_dark_blue_50,
-          })}
-          htmlFor="lineNumberStart"
+          }}
         >
-          Starts at:
-        </label>
-        <input
-          id="lineNumberStart"
-          type="number"
-          min={1}
-          css={css({
-            color: 'inherit',
-            backgroundColor: 'inherit',
-            border: 'none',
-            appearance: 'textfield',
-            width: '5ch',
-
-            '&:focus': {
-              outline: 'none',
-            },
-            '&::placeholder': {
-              color: sb_dark_blue_50,
-            },
-            '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
-              '-webkit-appearance': 'none',
-            },
-          })}
-          placeholder="1"
-          onChange={setLineNumberOffset}
-          value={content.lineNumberStart}
-        />
+          <input
+            id="title"
+            placeholder="Title"
+            onChange={setTitle}
+            value={content.title}
+          />
+        </FieldSet>
+        <FieldSet>
+          <label htmlFor="lineNumberStart">Starts at:</label>
+          <input
+            id="lineNumberStart"
+            type="number"
+            min={1}
+            css={css({
+              appearance: 'textfield',
+              width: '5ch',
+            })}
+            placeholder="1"
+            onChange={setLineNumberOffset}
+            value={content.lineNumberStart}
+          />
+        </FieldSet>
       </div>
       <CodeMirror
         css={css(
@@ -183,3 +141,57 @@ export const CodeEditor: FunctionComponent<{
     </div>
   )
 }
+
+const FieldSet: FunctionComponent<
+  React.DetailedHTMLProps<
+    React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
+    HTMLFieldSetElement
+  >
+> = (props) => (
+  <fieldset
+    css={css({
+      display: 'flex',
+
+      border: 'none',
+      margin: 0,
+      padding: 0,
+      color: 'inherit',
+      backgroundColor: 'inherit',
+      '& > *': {
+        padding: '7px 15px',
+        border: 'none',
+        borderBottom: `1px solid ${sb_dark_blue_50}`,
+        transition: transition('background-color', 'border-color'),
+        // Typography
+        fontSize: '12px',
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        fontWeight: 400,
+        lineHeight: '1.66',
+        letterSpacing: '0.03333em',
+      },
+      '& > label': {
+        color: sb_dark_blue_50,
+      },
+      '& > input': {
+        flex: 1,
+        color: 'inherit',
+        backgroundColor: 'inherit',
+
+        '&::placeholder': {
+          color: sb_dark_blue_50,
+        },
+        '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+          '-webkit-appearance': 'none',
+        },
+      },
+      '& > input:focus': {
+        borderColor: sb_green,
+        outline: 'none',
+      },
+      '&:hover input': {
+        backgroundColor: sb_dark_blue_hover,
+      },
+    })}
+    {...props}
+  />
+)
