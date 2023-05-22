@@ -20,9 +20,9 @@ import { withLength } from '../../utils'
 export const CodeEditor: FunctionComponent<{
   content: CodeEditorContent
   setContent: (content: CodeEditorContent) => void
-  highlightStateOptions: HighlightStateOptions
+  highlightStatesOption: HighlightStateOptions
 }> = (props) => {
-  const { content, setContent, highlightStateOptions } = props
+  const { content, setContent, highlightStatesOption } = props
   const { code, highlightStates } = content
 
   const onChange = (value: string, lineCount: number) =>
@@ -39,7 +39,7 @@ export const CodeEditor: FunctionComponent<{
   const handleLineNumberClick = (line: number) =>
     setContent({
       ...content,
-      highlightStates: toggleLine(highlightStateOptions, highlightStates, line),
+      highlightStates: toggleLine(highlightStatesOption, highlightStates, line),
     })
 
   const setTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -101,14 +101,14 @@ export const CodeEditor: FunctionComponent<{
           content.highlightStates.map((state, index) => ({
             [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
               backgroundColor: mix(
-                colorFromHighlightState(highlightStateOptions, state),
+                colorFromHighlightState(highlightStatesOption, state),
                 sb_dark_blue,
                 0.5,
               ),
             },
             [`.cm-line:nth-of-type(${index + 1})`]: {
               backgroundColor: mix(
-                colorFromHighlightState(highlightStateOptions, state),
+                colorFromHighlightState(highlightStatesOption, state),
                 sb_dark_blue,
                 0.25,
               ),
@@ -118,7 +118,7 @@ export const CodeEditor: FunctionComponent<{
         initialValue={code}
         onChange={onChange}
         onLineNumberClick={
-          highlightStateOptions.length > 1 ? handleLineNumberClick : undefined
+          highlightStatesOption.length > 1 ? handleLineNumberClick : undefined
         }
       />
     </div>

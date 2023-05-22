@@ -1,7 +1,7 @@
 import {
   defaultHighlightStateOption,
   HighlightStateOption,
-  highlightStateOptionFromOptions,
+  highlightStatesOptionFromOptions,
   Options,
 } from './Options'
 
@@ -12,7 +12,7 @@ describe('Options', () => {
     describe('parsing', () => {
       it('adds a default state', () => {
         expect(
-          highlightStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
             highlightStates: JSON.stringify(
               [] satisfies HighlightStateOption[],
@@ -20,7 +20,7 @@ describe('Options', () => {
           }),
         ).toHaveLength(1)
         expect(
-          highlightStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
             highlightStates: JSON.stringify([
               {
@@ -33,13 +33,13 @@ describe('Options', () => {
       })
       it('is optional', () => {
         expect(
-          highlightStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
             highlightStates: undefined,
           }),
         ).toEqual([defaultHighlightStateOption])
         expect(
-          highlightStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
             highlightStates: '',
           }),
@@ -47,7 +47,7 @@ describe('Options', () => {
       })
       it('returns an Error when the JSON is invalid', () => {
         expect(
-          highlightStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
             highlightStates: '{value: 1}',
           }),
@@ -55,7 +55,7 @@ describe('Options', () => {
       })
       it('returns an Error when the JSON does not adhere to the schema ', () => {
         expect(
-          highlightStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
             highlightStates: '{"blah": 123}',
           }),

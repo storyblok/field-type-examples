@@ -26,7 +26,7 @@ export const defaultHighlightStateOption = {
   color: 'transparent',
 }
 
-export const highlightStateOptionFromOptions = (
+export const highlightStatesOptionFromOptions = (
   data: unknown,
 ): HighlightStateOptions | Error => {
   const options = OptionsSchema.safeParse(data)
