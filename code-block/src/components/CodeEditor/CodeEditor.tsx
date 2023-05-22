@@ -6,6 +6,9 @@ import { mix } from './mix'
 import {
   sb_dark_blue,
   sb_dark_blue_50,
+  sb_dark_blue_hover,
+  sb_green,
+  transition,
   white,
 } from '../../storyblok-design'
 import { css } from '@emotion/react'
@@ -77,8 +80,6 @@ export const CodeEditor: FunctionComponent<{
         css={css({
           display: 'flex',
           alignItems: 'center',
-          borderBottom: `1px solid rgb(141, 145, 159)`,
-          padding: '7px 15px',
           backgroundColor: sb_dark_blue,
           color: white,
           // Typography
@@ -97,9 +98,18 @@ export const CodeEditor: FunctionComponent<{
             color: 'inherit',
             backgroundColor: 'inherit',
             border: 'none',
+            borderBottom: `1px solid rgb(141, 145, 159)`,
+            padding: '7px 15px',
+
+            margin: '0px',
+            transition: transition('background-color', 'border-color'),
 
             '&:focus': {
               outline: 'none',
+              borderColor: sb_green,
+            },
+            '&:hover': {
+              backgroundColor: sb_dark_blue_hover,
             },
             '&::placeholder': {
               color: sb_dark_blue_50,
