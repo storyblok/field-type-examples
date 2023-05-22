@@ -28,7 +28,7 @@ export const CodeMirror: FunctionComponent<{
   className?: string
   initialValue: string
   onChange: (value: string, lineCount: number) => void
-  onLineNumberClick: (lineNumber: number) => void
+  onLineNumberClick?: (lineNumber: number) => void
   lineNumberStart: number
 }> = (props) => {
   const { initialValue, lineNumberStart } = props
@@ -36,6 +36,9 @@ export const CodeMirror: FunctionComponent<{
 
   const onChange = useSyncedFunction(props.onChange)
   const onLineNumberClick = useSyncedFunction(props.onLineNumberClick)
+
+  const enableClickableLineNumbers =
+    typeof props.onLineNumberClick !== 'undefined'
 
   useEffect(() => {
     if (!parentRef.current) {
@@ -59,13 +62,13 @@ export const CodeMirror: FunctionComponent<{
         }),
         EditorView.lineWrapping,
         stateChangePlugin(onChange),
-        theme,
+        theme(enableClickableLineNumbers),
       ],
     })
     return () => {
       editorView.dom.remove()
     }
-  }, [theme, lineNumberStart])
+  }, [theme, enableClickableLineNumbers, lineNumberStart])
 
   return (
     <div
