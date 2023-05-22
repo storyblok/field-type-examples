@@ -1,61 +1,63 @@
 import {
-  defaultLineStateOption,
-  LineStateOption,
-  lineStateOptionFromOptions,
+  defaultHighlightStateOption,
+  HighlightStateOption,
+  highlightStatesOptionFromOptions,
   Options,
 } from './Options'
 
 const stub: Options = {}
 
 describe('Options', () => {
-  describe('lineState', () => {
+  describe('highlightState', () => {
     describe('parsing', () => {
       it('adds a default state', () => {
         expect(
-          lineStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
-            lineStates: JSON.stringify([] satisfies LineStateOption[]),
+            highlightStates: JSON.stringify(
+              [] satisfies HighlightStateOption[],
+            ),
           }),
         ).toHaveLength(1)
         expect(
-          lineStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
-            lineStates: JSON.stringify([
+            highlightStates: JSON.stringify([
               {
                 value: 'a',
                 color: 'red',
               },
-            ] satisfies LineStateOption[]),
+            ] satisfies HighlightStateOption[]),
           }),
-        ).toEqual(expect.arrayContaining([defaultLineStateOption]))
+        ).toEqual(expect.arrayContaining([defaultHighlightStateOption]))
       })
       it('is optional', () => {
         expect(
-          lineStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
-            lineStates: undefined,
+            highlightStates: undefined,
           }),
-        ).toEqual([defaultLineStateOption])
+        ).toEqual([defaultHighlightStateOption])
         expect(
-          lineStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
-            lineStates: '',
+            highlightStates: '',
           }),
-        ).toEqual([defaultLineStateOption])
+        ).toEqual([defaultHighlightStateOption])
       })
       it('returns an Error when the JSON is invalid', () => {
         expect(
-          lineStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
-            lineStates: '{value: 1}',
+            highlightStates: '{value: 1}',
           }),
         ).toBeInstanceOf(Error)
       })
       it('returns an Error when the JSON does not adhere to the schema ', () => {
         expect(
-          lineStateOptionFromOptions({
+          highlightStatesOptionFromOptions({
             ...stub,
-            lineStates: '{"blah": 123}',
+            highlightStates: '{"blah": 123}',
           }),
         ).toBeInstanceOf(Error)
       })

@@ -1,9 +1,9 @@
 import { toggleLine } from './toggleLine'
-import { LineState } from './CodeEditorContent'
-import { nextLineState } from './nextLineState'
-import { LineStateOptions } from '../../Options'
+import { HighlightState } from './CodeEditorContent'
+import { nextHighlightState } from './nextHighlightState'
+import { HighlightStateOptions } from '../../Options'
 
-const lineStateOptions = [
+const highlightStateOptions = [
   {
     value: '',
     color: 'transparent',
@@ -20,16 +20,16 @@ const lineStateOptions = [
     value: 'c',
     color: '#00F',
   },
-] satisfies LineStateOptions
+] satisfies HighlightStateOptions
 
 describe('toggleLine', () => {
   it('returns an identical array when the index is out of bounds', () => {
-    const arr = ['', '', ''] satisfies LineState[]
-    expect(toggleLine(lineStateOptions, arr, -1)).toEqual(arr)
-    expect(toggleLine(lineStateOptions, arr, 20)).toEqual(arr)
+    const arr = ['', '', ''] satisfies HighlightState[]
+    expect(toggleLine(highlightStateOptions, arr, -1)).toEqual(arr)
+    expect(toggleLine(highlightStateOptions, arr, 20)).toEqual(arr)
   })
   it('toggles the indicated line', () => {
-    expect(toggleLine(lineStateOptions, ['', '', '', ''], 2)).toEqual([
+    expect(toggleLine(highlightStateOptions, ['', '', '', ''], 2)).toEqual([
       '',
       '',
       'a',

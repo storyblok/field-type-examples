@@ -5,8 +5,11 @@ import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
 import { sb_dark_blue, sb_dark_blue_50, white } from '../../design-tokens'
 import { css } from '@emotion/react'
-import { defaultLineStateOption, LineStateOptions } from '../../Options'
-import { colorFromLineState } from './colorFromLineState'
+import {
+  defaultHighlightStateOption,
+  HighlightStateOptions,
+} from '../../Options'
+import { colorFromHighlightState } from './colorFromHighlightState'
 import { withLength } from '../../utils'
 
 /**
@@ -17,26 +20,26 @@ import { withLength } from '../../utils'
 export const CodeEditor: FunctionComponent<{
   content: CodeEditorContent
   setContent: (content: CodeEditorContent) => void
-  lineStateOptions: LineStateOptions
+  highlightStatesOption: HighlightStateOptions
 }> = (props) => {
-  const { content, setContent, lineStateOptions } = props
-  const { code, lineStates } = content
+  const { content, setContent, highlightStatesOption } = props
+  const { code, highlightStates } = content
 
   const onChange = (value: string, lineCount: number) =>
     setContent({
       ...content,
       code: value,
-      lineStates: withLength(
-        lineStates,
+      highlightStates: withLength(
+        highlightStates,
         lineCount,
-        defaultLineStateOption.value,
+        defaultHighlightStateOption.value,
       ),
     })
 
   const handleLineNumberClick = (line: number) =>
     setContent({
       ...content,
-      lineStates: toggleLine(lineStateOptions, lineStates, line),
+      highlightStates: toggleLine(highlightStatesOption, highlightStates, line),
     })
 
   const setTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -95,17 +98,17 @@ export const CodeEditor: FunctionComponent<{
       </div>
       <CodeMirror
         css={css(
-          content.lineStates.map((state, index) => ({
+          content.highlightStates.map((state, index) => ({
             [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
               backgroundColor: mix(
-                colorFromLineState(lineStateOptions, state),
+                colorFromHighlightState(highlightStatesOption, state),
                 sb_dark_blue,
                 0.5,
               ),
             },
             [`.cm-line:nth-of-type(${index + 1})`]: {
               backgroundColor: mix(
-                colorFromLineState(lineStateOptions, state),
+                colorFromHighlightState(highlightStatesOption, state),
                 sb_dark_blue,
                 0.25,
               ),
@@ -115,7 +118,7 @@ export const CodeEditor: FunctionComponent<{
         initialValue={code}
         onChange={onChange}
         onLineNumberClick={
-          lineStateOptions.length > 1 ? handleLineNumberClick : undefined
+          highlightStatesOption.length > 1 ? handleLineNumberClick : undefined
         }
       />
     </div>
