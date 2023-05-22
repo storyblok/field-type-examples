@@ -1,13 +1,13 @@
 import { ChangeEventHandler, FunctionComponent } from 'react'
 import { CodeEditorContent } from './CodeEditorContent'
-import { withLength } from './withLength'
 import { toggleLine } from './toggleLine'
 import { CodeMirror } from '../CodeMirror'
-import { gutterColorFromState } from './gutterColorFromState'
 import { mix } from './mix'
-import { backgroundColorFromState } from './backgroundColorFromState'
 import { sb_dark_blue, sb_dark_blue_50, white } from '../../design-tokens'
 import { css } from '@emotion/react'
+import { defaultLineStateOption, LineStateOptions } from '../../Options'
+import { colorFromLineState } from './colorFromLineState'
+import { withLength } from '../../utils'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -17,21 +17,26 @@ import { css } from '@emotion/react'
 export const CodeEditor: FunctionComponent<{
   content: CodeEditorContent
   setContent: (content: CodeEditorContent) => void
+  lineStateOptions: LineStateOptions
 }> = (props) => {
-  const { content, setContent } = props
+  const { content, setContent, lineStateOptions } = props
   const { code, lineStates } = content
 
   const onChange = (value: string, lineCount: number) =>
     setContent({
       ...content,
       code: value,
-      lineStates: withLength(lineStates, lineCount),
+      lineStates: withLength(
+        lineStates,
+        lineCount,
+        defaultLineStateOption.value,
+      ),
     })
 
   const handleLineNumberClick = (line: number) =>
     setContent({
       ...content,
-      lineStates: toggleLine(lineStates, line),
+      lineStates: toggleLine(lineStateOptions, lineStates, line),
     })
 
   const setTitle: ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -91,17 +96,16 @@ export const CodeEditor: FunctionComponent<{
       <CodeMirror
         css={css(
           content.lineStates.map((state, index) => ({
-            [`.cm-gutterElement:nth-child(${index + 2})`]: state !== '' && {
+            [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
               backgroundColor: mix(
-                backgroundColorFromState(state),
+                colorFromLineState(lineStateOptions, state),
                 sb_dark_blue,
                 0.5,
               ),
-              color: gutterColorFromState(state),
             },
-            [`.cm-line:nth-child(${index + 1})`]: state !== '' && {
+            [`.cm-line:nth-of-type(${index + 1})`]: {
               backgroundColor: mix(
-                backgroundColorFromState(state),
+                colorFromLineState(lineStateOptions, state),
                 sb_dark_blue,
                 0.25,
               ),
@@ -110,7 +114,9 @@ export const CodeEditor: FunctionComponent<{
         )}
         initialValue={code}
         onChange={onChange}
-        onLineNumberClick={handleLineNumberClick}
+        onLineNumberClick={
+          lineStateOptions.length > 1 ? handleLineNumberClick : undefined
+        }
       />
     </div>
   )
