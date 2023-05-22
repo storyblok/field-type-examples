@@ -1,7 +1,7 @@
-import { LineStateOptions } from '../../Options'
+import { HighlightStateOptions } from '../../Options'
 
 export const colorFromLineState = (
-  lineStateOptions: LineStateOptions,
+  lineStateOptions: HighlightStateOptions,
   lineState: string,
 ): string => {
   const defaultColor = lineStateOptions[0].color

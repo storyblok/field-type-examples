@@ -1,48 +1,53 @@
 import { z } from 'zod'
 
 const OptionsSchema = z.object({
-  lineStates: z.string().optional(),
+  highlightStates: z.string().optional(),
 })
 
 export type Options = z.infer<typeof OptionsSchema>
 
-const LineStateOptionSchema = z.array(
+const HighlightStateOptionSchema = z.array(
   z.object({
     value: z.string(),
     color: z.string(),
   }),
 )
 
-export type LineStateOption = z.infer<typeof LineStateOptionSchema>[number]
-export type LineStateOptions = [LineStateOption, ...LineStateOption[]]
+export type HighlightStateOption = z.infer<
+  typeof HighlightStateOptionSchema
+>[number]
+export type HighlightStateOptions = [
+  HighlightStateOption,
+  ...HighlightStateOption[],
+]
 
-export const defaultLineStateOption = {
+export const defaultHighlightStateOption = {
   value: '',
   color: 'transparent',
 }
 
-export const lineStateOptionFromOptions = (
+export const highlightStatesOptionFromOptions = (
   data: unknown,
-): LineStateOptions | Error => {
+): HighlightStateOptions | Error => {
   const options = OptionsSchema.safeParse(data)
   if (!options.success) {
     return options.error
   }
   if (
-    typeof options.data.lineStates === 'undefined' ||
-    options.data.lineStates === ''
+    typeof options.data.highlightStates === 'undefined' ||
+    options.data.highlightStates === ''
   ) {
-    return [defaultLineStateOption]
+    return [defaultHighlightStateOption]
   }
   try {
-    const lineStates = LineStateOptionSchema.safeParse(
-      JSON.parse(options.data.lineStates),
+    const highlightStates = HighlightStateOptionSchema.safeParse(
+      JSON.parse(options.data.highlightStates),
     )
-    if (!lineStates.success) {
-      return lineStates.error
+    if (!highlightStates.success) {
+      return highlightStates.error
     }
     // TODO unique
-    return [defaultLineStateOption, ...lineStates.data]
+    return [defaultHighlightStateOption, ...highlightStates.data]
   } catch (e) {
     return e instanceof Error ? e : new Error('unknown error parsing options')
   }

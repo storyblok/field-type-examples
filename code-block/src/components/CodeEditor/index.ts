@@ -1,2 +1,2 @@
 export * from './CodeEditor'
-export { colorFromLineState } from './colorFromLineState'
+export { colorFromHighlightState } from './colorFromHighlightState'

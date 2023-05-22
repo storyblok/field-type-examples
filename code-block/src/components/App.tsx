@@ -1,11 +1,8 @@
 import { FunctionComponent } from 'react'
 import { useFieldPlugin } from '../useFieldPlugin'
 import { CodeEditor } from './CodeEditor'
-import {
-  CodeEditorContent,
-  parseCodeEditorState,
-} from './CodeEditor/CodeEditorContent'
-import { lineStateOptionFromOptions } from '../Options'
+import { parseCodeEditorState } from './CodeEditor/CodeEditorContent'
+import { highlightStatesOptionFromOptions } from '../Options'
 import { ErrorAlert } from './ErrorAlert'
 import { SetContent } from '@storyblok/field-plugin'
 
@@ -21,12 +18,12 @@ export const App: FunctionComponent = () => {
     return <></>
   }
 
-  const lineStateOption = lineStateOptionFromOptions(data.options)
+  const highlightStatesOption = highlightStatesOptionFromOptions(data.options)
 
-  if (lineStateOption instanceof Error) {
+  if (highlightStatesOption instanceof Error) {
     return (
       <ErrorAlert title="Error parsing options">
-        {lineStateOption.message}
+        {highlightStatesOption.message}
       </ErrorAlert>
     )
   }
@@ -49,7 +46,7 @@ export const App: FunctionComponent = () => {
     <CodeEditor
       content={content}
       setContent={setContent}
-      lineStateOptions={lineStateOption}
+      highlightStatesOption={highlightStatesOption}
     />
   )
 }
