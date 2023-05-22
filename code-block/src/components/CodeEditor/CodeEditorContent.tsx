@@ -4,6 +4,7 @@ const CodeEditorContentSchema = z.object({
   code: z.string(),
   highlightStates: z.array(z.string()),
   title: z.string().optional(),
+  lineNumberStart: z.number().optional(),
 })
 
 export type CodeEditorContent = z.infer<typeof CodeEditorContentSchema>
