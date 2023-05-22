@@ -2,7 +2,7 @@ name: Node.js Package
 
 on:
   push:
-    - '.github/workflows/**'
+    - '.github/**'
     - 'code-block/**'
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: 18
           cache: 'yarn'
-      - name: Install deps
+      - name: Install
         run: yarn install
       - name: Check types
         run: yarn workspace code-block check:types
