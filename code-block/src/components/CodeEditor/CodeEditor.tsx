@@ -5,9 +5,8 @@ import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
 import { sb_dark_blue, sb_dark_blue_50, white } from '../../design-tokens'
 import { css } from '@emotion/react'
-import { integerFromString } from '../../utils/numberFromString'
 import { colorFromHighlightState } from './colorFromHighlightState'
-import { withLength } from '../../utils'
+import { withLength, integerFromString } from '../../utils'
 import {
   defaultHighlightStateOption,
   HighlightStateOptions,

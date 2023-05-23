@@ -3,11 +3,17 @@
  * `number`. All other combination of characters yield `undefined`.
  */
 export const integerFromString = (str: string): number | undefined => {
-  const parsed = parseInt(str)
-  return str !== '' && !hasWhiteSpace(str) && !isNaN(parsed) && isFinite(parsed)
+  const parsed = Number(str)
+  return str !== '' &&
+    !hasWhiteSpace(str) &&
+    isInt(parsed) &&
+    !isNaN(parsed) &&
+    isFinite(parsed)
     ? parsed
     : undefined
 }
+
+const isInt = (n: number): boolean => Number(n) === n && n % 1 === 0
 
 /**
  * @param str
