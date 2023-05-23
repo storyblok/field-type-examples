@@ -7,7 +7,6 @@ import {
 } from './CodeEditor/CodeEditorContent'
 import { highlightStatesOptionFromOptions } from '../Options'
 import { ErrorAlert } from './ErrorAlert'
-import { SetContent } from '@storyblok/field-plugin'
 
 export const App: FunctionComponent = () => {
   const { type, data, actions, error } = useFieldPlugin()
