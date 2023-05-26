@@ -24,10 +24,10 @@ export const CodeEditor: FunctionComponent<{
   ) => void
   highlightStatesOption: HighlightStateOptions
 }> = (props) => {
-  const { content, setContent, highlightStatesOption } = props
+  const { setContent, highlightStatesOption } = props
 
   const onChange = (value: string, lineCount: number) =>
-    setContent(() => ({
+    setContent((content) => ({
       ...content,
       code: value,
       highlightStates: withLength(
@@ -38,7 +38,7 @@ export const CodeEditor: FunctionComponent<{
     }))
 
   const handleLineNumberClick = (line: number) =>
-    setContent(() => ({
+    setContent((content) => ({
       ...content,
       highlightStates: toggleLine(
         highlightStatesOption,
@@ -48,16 +48,16 @@ export const CodeEditor: FunctionComponent<{
     }))
 
   const handleTitleChange = (title: string | undefined) =>
-    setContent({
+    setContent((content) => ({
       ...content,
       title,
-    })
+    }))
 
   const handleLineNumberStartChange = (lineNumberStart: number | undefined) =>
-    setContent({
+    setContent((content) => ({
       ...content,
       lineNumberStart,
-    })
+    }))
 
   return (
     <div
@@ -70,9 +70,9 @@ export const CodeEditor: FunctionComponent<{
       })}
     >
       <CodeEditorHeader
-        title={content.title}
+        title={props.content.title}
         onTitleChange={handleTitleChange}
-        lineNumberStart={content.lineNumberStart}
+        lineNumberStart={props.content.lineNumberStart}
         onLineNumberStartChange={handleLineNumberStartChange}
       />
       <CodeMirror

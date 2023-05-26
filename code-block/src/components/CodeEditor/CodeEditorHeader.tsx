@@ -8,7 +8,7 @@ import {
   transition,
   white,
 } from '../../storyblok-design'
-import { integerFromString } from '../../utils/numberFromString'
+import { integerFromString } from '../../utils'
 
 export const CodeEditorHeader: FunctionComponent<{
   title: string | undefined
