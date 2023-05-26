@@ -4,12 +4,14 @@ describe('numberFromString', () => {
   it('should parse natural numbers', () => {
     expect(integerFromString('123')).toEqual(123)
   })
-  it('should parse integers', () => {
+  it('parses integers', () => {
     expect(integerFromString('123')).toEqual(123)
+  })
+  it('parses negative integers', () => {
     expect(integerFromString('-123')).toEqual(-123)
   })
   it('should not parse floating numbers', () => {
-    expect(integerFromString('1.5')).toBeUndefined
+    expect(integerFromString('1.5')).toBeUndefined()
   })
   it('should not return infinity for large numbers', () => {
     const googolStr = `1${new Array(1000).fill(0).join('')}`

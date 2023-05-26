@@ -19,28 +19,33 @@ import { CodeEditorHeader } from './CodeEditorHeader'
  */
 export const CodeEditor: FunctionComponent<{
   content: CodeEditorContent
-  setContent: (content: CodeEditorContent) => void
+  setContent: (
+    setStateAction: CodeEditorContent | ((content: CodeEditorContent) => void),
+  ) => void
   highlightStatesOption: HighlightStateOptions
 }> = (props) => {
   const { content, setContent, highlightStatesOption } = props
-  const { code, highlightStates } = content
 
   const onChange = (value: string, lineCount: number) =>
-    setContent({
+    setContent(() => ({
       ...content,
       code: value,
       highlightStates: withLength(
-        highlightStates,
+        content.highlightStates,
         lineCount,
         defaultHighlightStateOption.value,
       ),
-    })
+    }))
 
   const handleLineNumberClick = (line: number) =>
-    setContent({
+    setContent(() => ({
       ...content,
-      highlightStates: toggleLine(highlightStatesOption, highlightStates, line),
-    })
+      highlightStates: toggleLine(
+        highlightStatesOption,
+        content.highlightStates,
+        line,
+      ),
+    }))
 
   const handleTitleChange = (title: string | undefined) =>
     setContent({
@@ -72,7 +77,7 @@ export const CodeEditor: FunctionComponent<{
       />
       <CodeMirror
         css={css(
-          content.highlightStates.map((state, index) => ({
+          props.content.highlightStates.map((state, index) => ({
             [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
               backgroundColor: mix(
                 colorFromHighlightState(highlightStatesOption, state),
@@ -89,12 +94,12 @@ export const CodeEditor: FunctionComponent<{
             },
           })),
         )}
-        initialValue={code}
+        initialValue={props.content.code}
         onChange={onChange}
         onLineNumberClick={
           highlightStatesOption.length > 1 ? handleLineNumberClick : undefined
         }
-        lineNumberStart={content.lineNumberStart ?? 1}
+        lineNumberStart={props.content.lineNumberStart ?? 1}
       />
     </div>
   )

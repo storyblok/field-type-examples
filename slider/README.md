@@ -107,33 +107,33 @@ The options for label formatting affects how the field is rendered, but does not
 
 Rotation with a default value, discrete steps, marks, and custom formatting:
 
-```
+~~~
 minValue: -180
 maxValue: 180
 stepSize: 5
 marks: [-90, 0, 90]
 style: unit
 unit: degree
-```
+~~~
 
-![rotation.gif](docs%2Frotation.gif)
+![rotation.gif](https://raw.githubusercontent.com/storyblok/field-type-examples/main/slider/docs/rotation.gif)
 
 
 Format a value between 0 and 1 as a percentage:
 
-```
+~~~
 minValue: 0
 maxValue: 1
 stepSize: 0.01
 style: percent
-```
+~~~
 
-![percent.gif](docs%2Fpercent.gif)
+![percent.gif](https://raw.githubusercontent.com/storyblok/field-type-examples/main/slider/docs/percent.gif)
 
 
 Format with unit and custom significant digits:
 
-```
+~~~
 minValue: 0
 maxValue: 1000
 stepSize: 0
@@ -141,6 +141,6 @@ minimumSignificantDigits: 2
 maximumSignificantDigits: 2
 style: unit
 unit: gigabit-per-second
-```
+~~~
 
-![gigabit-per-second.gif](docs%2Fgigabit-per-second.gif)
+![gigabit-per-second.gif](https://raw.githubusercontent.com/storyblok/field-type-examples/main/slider/docs/gigabit-per-second.gif)

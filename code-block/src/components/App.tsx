@@ -1,7 +1,10 @@
 import { FunctionComponent } from 'react'
 import { useFieldPlugin } from '../useFieldPlugin'
 import { CodeEditor } from './CodeEditor'
-import { parseCodeEditorState } from './CodeEditor/CodeEditorContent'
+import {
+  CodeEditorContent,
+  parseCodeEditorState,
+} from './CodeEditor/CodeEditorContent'
 import { highlightStatesOptionFromOptions } from '../Options'
 import { ErrorAlert } from './ErrorAlert'
 
@@ -29,10 +32,22 @@ export const App: FunctionComponent = () => {
 
   const content = parseCodeEditorState(data.content)
 
+  const setContent = (
+    setStateAction: CodeEditorContent | ((content: CodeEditorContent) => void),
+  ) => {
+    if (typeof setStateAction === 'function') {
+      actions.setContent((oldContent) =>
+        setStateAction(parseCodeEditorState(oldContent)),
+      )
+    } else {
+      actions.setContent(setStateAction)
+    }
+  }
+
   return (
     <CodeEditor
       content={content}
-      setContent={actions.setContent}
+      setContent={setContent}
       highlightStatesOption={highlightStatesOption}
     />
   )
