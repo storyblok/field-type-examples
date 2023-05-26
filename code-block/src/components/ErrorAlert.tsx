@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactNode } from 'react'
 import { css } from '@emotion/react'
-import { red_25, sb_dark_blue } from '../design-tokens'
+import { red_25, sb_dark_blue } from '../storyblok-design'
 
 export const ErrorAlert: FunctionComponent<{
   title?: ReactNode
