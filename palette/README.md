@@ -63,9 +63,6 @@ Configure the options:
 * `defaultValue` (optional): One of the values in `color` without the quotes. For example `#00B3B0`.
 * `size` (optional): `small`, `medium`, or `large`
 
-`large`:
-![option-large.png](https://raw.githubusercontent.com/storyblok/field-type-examples/main/palette/docs/sized.png)
-
 Example output:
 
 ~~~json
