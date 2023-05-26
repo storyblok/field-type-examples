@@ -14,7 +14,7 @@ export const parseCodeEditorState = (data: unknown): CodeEditorContent => {
   if (!content.success) {
     return {
       code: '',
-      highlightStates: [],
+      highlightStates: [''],
     }
   }
 
