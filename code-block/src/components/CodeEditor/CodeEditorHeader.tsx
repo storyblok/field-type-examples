@@ -39,7 +39,7 @@ export const CodeEditorHeader: FunctionComponent<{
     props.onLineNumberStartChange(integerFromString(value))
   }
 
-  return (
+  return enableTitle || enableLanguage || enableLineNumberStart ? (
     <div
       css={css({
         display: 'flex',
@@ -102,6 +102,8 @@ export const CodeEditorHeader: FunctionComponent<{
         </FieldSet>
       )}
     </div>
+  ) : (
+    <></>
   )
 }
 const FieldSet: FunctionComponent<
