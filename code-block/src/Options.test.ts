@@ -98,32 +98,32 @@ describe('Options', () => {
       ).toBeInstanceOf(Error)
     })
   })
-  describe('enableStartsAt', () => {
+  describe('enableLineNumberStart', () => {
     it('can be "true"', () => {
       expect(
         parseOptions({
-          enableStartsAt: 'true',
+          enableLineNumberStart: 'true',
         }),
-      ).toHaveProperty('enableStartsAt', true)
+      ).toHaveProperty('enableLineNumberStart', true)
     })
     it('can be "false"', () => {
       expect(
         parseOptions({
-          enableStartsAt: 'false',
+          enableLineNumberStart: 'false',
         }),
-      ).toHaveProperty('enableStartsAt', false)
+      ).toHaveProperty('enableLineNumberStart', false)
     })
     it('can be "empty"', () => {
       expect(
         parseOptions({
-          enableStartsAt: '',
+          enableLineNumberStart: '',
         }),
-      ).toHaveProperty('enableStartsAt', false)
+      ).toHaveProperty('enableLineNumberStart', false)
     })
     it('can not be any string', () => {
       expect(
         parseOptions({
-          enableStartsAt: 'somethignelse',
+          enableLineNumberStart: 'somethignelse',
         }),
       ).toBeInstanceOf(Error)
     })
