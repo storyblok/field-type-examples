@@ -13,12 +13,23 @@ import { integerFromString } from '../../utils'
 export const CodeEditorHeader: FunctionComponent<{
   title: string | undefined
   onTitleChange: (title: string | undefined) => void
+  language: string | undefined
+  onLanguageChange: (language: string | undefined) => void
   lineNumberStart: number | undefined
   onLineNumberStartChange: (lineNumberStart: number | undefined) => void
+  enableTitle: boolean
+  enableLanguage: boolean
+  enableLineNumberStart: boolean
 }> = (props) => {
+  const { enableTitle, enableLanguage, enableLineNumberStart } = props
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.currentTarget
     props.onTitleChange(value === '' ? undefined : value)
+  }
+
+  const handleLanguageChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { value } = e.currentTarget
+    props.onLanguageChange(value === '' ? undefined : value)
   }
 
   const handleLineNumberOffsetChange: ChangeEventHandler<HTMLInputElement> = (
@@ -32,38 +43,64 @@ export const CodeEditorHeader: FunctionComponent<{
     <div
       css={css({
         display: 'flex',
-        alignItems: 'center',
+        alignItems: 'stretch',
+        flexWrap: 'wrap',
         backgroundColor: sb_dark_blue,
         color: white,
       })}
     >
       <FieldSet
-        css={{
+        css={css({
           flex: 1,
-        }}
+        })}
       >
-        <input
-          id="title"
-          placeholder="Title"
-          onChange={handleTitleChange}
-          value={props.title}
-        />
+        {enableTitle ? (
+          <input
+            id="title"
+            placeholder="Title"
+            onChange={handleTitleChange}
+            value={props.title}
+          />
+        ) : (
+          // This element is there to fill the space to the left if the title is disabled,
+          //  which will align the other items to the right
+          <div
+            css={css({
+              flex: 1,
+            })}
+          />
+        )}
       </FieldSet>
-      <FieldSet>
-        <label htmlFor="lineNumberStart">Starts at:</label>
-        <input
-          id="lineNumberStart"
-          type="number"
-          min={1}
-          css={css({
-            appearance: 'textfield',
-            width: '5ch',
-          })}
-          placeholder="1"
-          onChange={handleLineNumberOffsetChange}
-          value={props.lineNumberStart}
-        />
-      </FieldSet>
+      {enableLineNumberStart && (
+        <FieldSet>
+          <label htmlFor="lineNumberStart">Starts at:</label>
+          <input
+            id="lineNumberStart"
+            type="number"
+            min={1}
+            css={css({
+              appearance: 'textfield',
+              width: '5ch',
+            })}
+            placeholder="1"
+            onChange={handleLineNumberOffsetChange}
+            value={props.lineNumberStart}
+          />
+        </FieldSet>
+      )}
+      {enableLanguage && (
+        <FieldSet>
+          <input
+            id="language"
+            placeholder="Language"
+            css={css({
+              maxWidth: '10ch',
+            })}
+            onChange={handleLanguageChange}
+            value={props.language}
+          />
+        </FieldSet>
+      )}
     </div>
   )
 }
@@ -76,14 +113,19 @@ const FieldSet: FunctionComponent<
   <fieldset
     css={css({
       display: 'flex',
-
       border: 'none',
       margin: 0,
       padding: 0,
       color: 'inherit',
       backgroundColor: 'inherit',
+      '& > *:first-child': {
+        paddingLeft: '15px',
+      },
+      '& > *:last-child': {
+        paddingRight: '15px',
+      },
       '& > *': {
-        padding: '7px 15px',
+        padding: '7px 5px',
         border: 'none',
         borderBottom: `1px solid ${sb_dark_blue_50}`,
         transition: transition('background-color', 'border-color'),
