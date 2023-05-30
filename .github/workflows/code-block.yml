@@ -17,9 +17,33 @@ jobs:
           cache: 'yarn'
       - name: Install
         run: yarn install
+      - name: Prettier
+        run: yarn workspace code-block prettier
+      - name: Lint
+        run: yarn workspace code-block lint
       - name: Check types
         run: yarn workspace code-block check:types
       - name: Test
         run: yarn workspace code-block test
       - name: Build
         run: yarn workspace code-block build
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    depends-on: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      - name: Install
+        run: yarn install
+      - name: Build
+        run: yarn workspace code-block build
+      - name: Deploy
+        env:
+          STORYBLOK_PERSONAL_ACCESS_TOKEN: ${{secrets.STORYBLOK_PERSONAL_ACCESS_TOKEN}}
+        run: yarn workspace code-block deploy --skipPrompts --name storyblok-code-block --scope partner-portal
+
