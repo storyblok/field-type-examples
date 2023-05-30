@@ -1,4 +1,4 @@
-import { ChangeEventHandler, FunctionComponent } from 'react'
+import { ChangeEventHandler, FunctionComponent, useMemo, useState } from 'react'
 import { css } from '@emotion/react'
 import {
   sb_dark_blue,
@@ -9,6 +9,15 @@ import {
   white,
 } from '../../storyblok-design'
 import { integerFromString } from '../../utils'
+
+const headerCss = css({
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'stretch',
+  flexWrap: 'wrap',
+  backgroundColor: sb_dark_blue,
+  color: white,
+})
 
 export const CodeEditorHeader: FunctionComponent<{
   title: string | undefined
@@ -44,125 +53,184 @@ export const CodeEditorHeader: FunctionComponent<{
   }
 
   return (
-    <div
-      css={css({
-        display: 'flex',
-        alignItems: 'stretch',
-        flexWrap: 'wrap',
-        backgroundColor: sb_dark_blue,
-        color: white,
-      })}
-    >
-      <FieldSet
+    <div css={headerCss}>
+      <Divider
         css={css({
-          flex: 1,
+          position: 'absolute',
+          bottom: 0,
         })}
-      >
-        {enableTitle ? (
-          <input
-            id="title"
-            placeholder="Title"
-            onChange={handleTitleChange}
-            value={props.title}
-          />
-        ) : (
-          // This element is there to fill the space to the left if the title is disabled,
-          //  which will align the other items to the right
-          <div
-            css={css({
-              flex: 1,
-            })}
-          />
-        )}
-      </FieldSet>
+      />
+      {enableTitle ? (
+        <Input
+          css={css({
+            flex: 1,
+          })}
+          id="title"
+          label="Title"
+          onChange={handleTitleChange}
+          value={props.title}
+        />
+      ) : (
+        // This element is there to fill the space to the left if the title is disabled,
+        //  which will align the other items to the right
+        <div
+          css={css({
+            flex: 1,
+          })}
+        />
+      )}
       {enableLineNumberStart && (
-        <FieldSet>
-          <label htmlFor="lineNumberStart">Starts at:</label>
-          <input
-            id="lineNumberStart"
-            type="number"
-            min={1}
-            css={css({
-              appearance: 'textfield',
-              width: '5ch',
-            })}
-            placeholder="1"
-            onChange={handleLineNumberOffsetChange}
-            value={props.lineNumberStart}
-          />
-        </FieldSet>
+        <Input
+          label="Starts at"
+          type="number"
+          min={1}
+          placeholder="1"
+          onChange={handleLineNumberOffsetChange}
+          value={props.lineNumberStart}
+          css={css({
+            maxWidth: '5ch',
+          })}
+        />
       )}
       {enableLanguage && (
-        <FieldSet>
-          <input
-            id="language"
-            placeholder="Language"
-            css={css({
-              maxWidth: '10ch',
-            })}
-            onChange={handleLanguageChange}
-            value={props.language}
-          />
-        </FieldSet>
+        <Input
+          value={props.language}
+          onChange={handleLanguageChange}
+          label="Language"
+          css={css({
+            maxWidth: '10ch',
+          })}
+        />
       )}
     </div>
   )
 }
-const FieldSet: FunctionComponent<
-  React.DetailedHTMLProps<
-    React.FieldsetHTMLAttributes<HTMLFieldSetElement>,
-    HTMLFieldSetElement
-  >
-> = (props) => (
-  <fieldset
-    css={css({
-      display: 'flex',
-      border: 'none',
-      margin: 0,
-      padding: 0,
-      color: 'inherit',
-      backgroundColor: 'inherit',
-      '& > *:first-child': {
-        paddingLeft: '15px',
-      },
-      '& > *:last-child': {
-        paddingRight: '15px',
-      },
-      '& > *': {
-        padding: '7px 5px',
-        border: 'none',
-        borderBottom: `1px solid ${sb_dark_blue_50}`,
-        transition: transition('background-color', 'border-color'),
+
+const borderWith = 1
+
+const fieldsetCss = css({
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'stretch',
+  border: 'none',
+  margin: 0,
+  padding: 0,
+  color: 'inherit',
+  backgroundColor: 'transparent',
+  transition: transition('background-color'),
+
+  '&:hover': {
+    backgroundColor: sb_dark_blue_hover,
+  },
+
+  marginBottom: borderWith,
+})
+
+const inputCss = css({
+  flex: 1,
+  color: 'inherit',
+  backgroundColor: 'transparent',
+
+  paddingLeft: 15,
+  paddingRight: 15,
+  paddingTop: 0,
+  paddingBottom: 0,
+  border: 'none',
+  transition: transition('background-color', 'border-color'),
+  // Typography
+  fontSize: '12px',
+  fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+  fontWeight: 400,
+  lineHeight: '1.66',
+  letterSpacing: '0.03333em',
+
+  '&::placeholder': {
+    color: sb_dark_blue_50,
+  },
+
+  '&:focus': {
+    borderColor: sb_green,
+    outline: 'none',
+  },
+  // hide up/down arrows
+  '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+    '-webkit-appearance': 'none',
+  },
+  'input[type=number]': {
+    MozAppearance: 'textfield',
+  },
+})
+
+const Input: FunctionComponent<
+  { label: string } & JSX.IntrinsicElements['input']
+> = (props) => {
+  const { className, label, ...inputProps } = props
+  const [focused, setFocused] = useState(false)
+
+  const labelCss = useMemo(
+    () =>
+      css({
+        transition: transition('color'),
+        color: focused ? sb_green : sb_dark_blue_50,
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingTop: 5,
+        paddingBottom: 0,
         // Typography
-        fontSize: '12px',
+        fontSize: '10px',
         fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
         fontWeight: 400,
         lineHeight: '1.66',
         letterSpacing: '0.03333em',
-      },
-      '& > label': {
-        color: sb_dark_blue_50,
-      },
-      '& > input': {
-        flex: 1,
-        color: 'inherit',
-        backgroundColor: 'inherit',
+      }),
+    [focused],
+  )
+  const borderCss = useMemo(
+    () =>
+      css({
+        position: 'absolute',
+        bottom: -borderWith,
+        transition: transition('border-bottom-color'),
+        color: focused ? sb_green : 'transparent',
+      }),
+    [focused],
+  )
+  return (
+    <fieldset
+      css={fieldsetCss}
+      className={className}
+    >
+      <label
+        htmlFor={props.id}
+        css={labelCss}
+      >
+        {label}
+      </label>
+      <input
+        css={inputCss}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        {...inputProps}
+      />
+      <Divider css={borderCss} />
+    </fieldset>
+  )
+}
 
-        '&::placeholder': {
-          color: sb_dark_blue_50,
-        },
-        '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
-          '-webkit-appearance': 'none',
-        },
-      },
-      '& > input:focus': {
-        borderColor: sb_green,
-        outline: 'none',
-      },
-      '&:hover input': {
-        backgroundColor: sb_dark_blue_hover,
-      },
-    })}
-    {...props}
+const dividerCss = css({
+  width: '100%',
+  borderBottomWidth: borderWith,
+  borderBottomStyle: 'solid',
+  color: sb_dark_blue_50,
+  borderBottomColor: 'currentcolor',
+})
+
+const Divider: FunctionComponent<{
+  className?: string
+}> = (props) => (
+  <div
+    className={props.className}
+    css={dividerCss}
   />
 )
