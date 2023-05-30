@@ -65,4 +65,4 @@ Example output:
 
 Given that `options.highlightStates` were configured as in the example above.
 
-Note that all properties except `code` are optional
+Note that all properties except `code` are optional.
