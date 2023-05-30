@@ -8,7 +8,6 @@ const RawOptionsSchema = z.object({
   enableLanguage: z.enum(['', 'true', 'false']).optional(),
 })
 
-// TODO do not export
 type RawOptionsOptions = z.infer<typeof RawOptionsSchema>
 
 export type CodeBlockOptions = {
