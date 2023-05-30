@@ -30,7 +30,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    depends-on: build
+    needs: build
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v3
