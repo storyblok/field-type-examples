@@ -1,10 +1,21 @@
+import { FieldPluginData } from '@storyblok/field-plugin'
 import { z } from 'zod'
 
-const OptionsSchema = z.object({
+const RawOptionsSchema = z.object({
   highlightStates: z.string().optional(),
+  enableTitle: z.enum(['', 'true', 'false']).optional(),
+  enableLineNumberStart: z.enum(['', 'true', 'false']).optional(),
+  enableLanguage: z.enum(['', 'true', 'false']).optional(),
 })
 
-export type Options = z.infer<typeof OptionsSchema>
+type RawOptionsOptions = z.infer<typeof RawOptionsSchema>
+
+export type CodeBlockOptions = {
+  highlightStates: HighlightStateOptions
+  enableTitle: boolean
+  enableLineNumberStart: boolean
+  enableLanguage: boolean
+}
 
 const HighlightStateOptionSchema = z.array(
   z.object({
@@ -16,6 +27,7 @@ const HighlightStateOptionSchema = z.array(
 export type HighlightStateOption = z.infer<
   typeof HighlightStateOptionSchema
 >[number]
+
 export type HighlightStateOptions = [
   HighlightStateOption,
   ...HighlightStateOption[],
@@ -26,22 +38,18 @@ export const defaultHighlightStateOption = {
   color: 'transparent',
 }
 
-export const highlightStatesOptionFromOptions = (
-  data: unknown,
+const highlightStatesOptionFromOptions = (
+  rawOptions: RawOptionsOptions,
 ): HighlightStateOptions | Error => {
-  const options = OptionsSchema.safeParse(data)
-  if (!options.success) {
-    return options.error
-  }
   if (
-    typeof options.data.highlightStates === 'undefined' ||
-    options.data.highlightStates === ''
+    typeof rawOptions.highlightStates === 'undefined' ||
+    rawOptions.highlightStates === ''
   ) {
     return [defaultHighlightStateOption]
   }
   try {
     const highlightStates = HighlightStateOptionSchema.safeParse(
-      JSON.parse(options.data.highlightStates),
+      JSON.parse(rawOptions.highlightStates),
     )
     if (!highlightStates.success) {
       return highlightStates.error
@@ -50,5 +58,24 @@ export const highlightStatesOptionFromOptions = (
     return [defaultHighlightStateOption, ...highlightStates.data]
   } catch (e) {
     return e instanceof Error ? e : new Error('unknown error parsing options')
+  }
+}
+
+export const parseOptions = (
+  data: FieldPluginData['options'],
+): CodeBlockOptions | Error => {
+  const rawOptions = RawOptionsSchema.safeParse(data)
+  if (!rawOptions.success) {
+    return rawOptions.error
+  }
+  const highlightStates = highlightStatesOptionFromOptions(rawOptions.data)
+  if (highlightStates instanceof Error) {
+    return highlightStates
+  }
+  return {
+    highlightStates,
+    enableTitle: rawOptions.data.enableTitle === 'true',
+    enableLineNumberStart: rawOptions.data.enableLineNumberStart === 'true',
+    enableLanguage: rawOptions.data.enableLanguage === 'true',
   }
 }

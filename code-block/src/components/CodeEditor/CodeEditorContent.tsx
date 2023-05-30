@@ -4,6 +4,7 @@ const CodeEditorContentSchema = z.object({
   code: z.string(),
   highlightStates: z.array(z.string()),
   title: z.string().optional(),
+  language: z.string().optional(),
   lineNumberStart: z.number().optional(),
 })
 
@@ -14,7 +15,7 @@ export const parseCodeEditorState = (data: unknown): CodeEditorContent => {
   if (!content.success) {
     return {
       code: '',
-      highlightStates: [],
+      highlightStates: [''],
     }
   }
 

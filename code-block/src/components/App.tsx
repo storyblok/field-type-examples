@@ -5,7 +5,7 @@ import {
   CodeEditorContent,
   parseCodeEditorState,
 } from './CodeEditor/CodeEditorContent'
-import { highlightStatesOptionFromOptions } from '../Options'
+import { parseOptions } from '../Options'
 import { ErrorAlert } from './ErrorAlert'
 
 export const App: FunctionComponent = () => {
@@ -20,13 +20,11 @@ export const App: FunctionComponent = () => {
     return <></>
   }
 
-  const highlightStatesOption = highlightStatesOptionFromOptions(data.options)
+  const options = parseOptions(data.options)
 
-  if (highlightStatesOption instanceof Error) {
+  if (options instanceof Error) {
     return (
-      <ErrorAlert title="Error parsing options">
-        {highlightStatesOption.message}
-      </ErrorAlert>
+      <ErrorAlert title="Error parsing options">{options.message}</ErrorAlert>
     )
   }
 
@@ -48,7 +46,7 @@ export const App: FunctionComponent = () => {
     <CodeEditor
       content={content}
       setContent={setContent}
-      highlightStatesOption={highlightStatesOption}
+      options={options}
     />
   )
 }
