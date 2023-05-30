@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useCallback, useMemo } from 'react'
 import { CodeEditorContent } from './CodeEditorContent'
 import { toggleLine } from './toggleLine'
 import { CodeMirror } from '../CodeMirror'
@@ -23,34 +23,18 @@ export const CodeEditor: FunctionComponent<{
 }> = (props) => {
   const { setContent, options } = props
 
-  const onChange = (value: string, lineCount: number) =>
-    setContent((content) => ({
-      ...content,
-      code: value,
-      highlightStates: options.highlightStates
-        ? withLength(
-            content.highlightStates ?? [],
-            lineCount,
-            defaultHighlightStateOption.value,
-          )
-        : undefined,
-    }))
-
-  const handleLineNumberClick = (line: number, lineCount: number) =>
-    setContent((content) => ({
-      ...content,
-      highlightStates: options.highlightStates
-        ? toggleLine(
-            options.highlightStates,
-            withLength(
-              content.highlightStates ?? [],
-              lineCount,
-              defaultHighlightStateOption.value,
-            ),
-            line,
-          )
-        : undefined,
-    }))
+  const onChange = useCallback(
+    (value: string, lineCount: number) =>
+      setContent(onChangeSetAction(options.highlightStates, value, lineCount)),
+    [options.highlightStates],
+  )
+  const handleLineNumberClick = useCallback(
+    (line: number, lineCount: number) =>
+      setContent(
+        onLineClickSetAction(options.highlightStates, lineCount, line),
+      ),
+    [options.highlightStates],
+  )
 
   const handleTitleChange = (title: string | undefined) =>
     setContent((content) => ({
@@ -125,3 +109,42 @@ export const CodeEditor: FunctionComponent<{
     </div>
   )
 }
+
+const onChangeSetAction =
+  (
+    options: CodeBlockOptions['highlightStates'],
+    value: string,
+    lineCount: number,
+  ) =>
+  (content: CodeEditorContent): CodeEditorContent => ({
+    ...content,
+    code: value,
+    highlightStates: options
+      ? withLength(
+          content.highlightStates ?? [],
+          lineCount,
+          defaultHighlightStateOption.value,
+        )
+      : undefined,
+  })
+
+const onLineClickSetAction =
+  (
+    options: CodeBlockOptions['highlightStates'],
+    lineCount: number,
+    line: number,
+  ) =>
+  (content: CodeEditorContent): CodeEditorContent => ({
+    ...content,
+    highlightStates: options
+      ? toggleLine(
+          options,
+          withLength(
+            content.highlightStates ?? [],
+            lineCount,
+            defaultHighlightStateOption.value,
+          ),
+          line,
+        )
+      : undefined,
+  })
