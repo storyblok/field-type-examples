@@ -106,7 +106,7 @@ const FieldSet: FunctionComponent<
           color: sb_dark_blue_50,
         },
         '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
-          '-webkit-appearance': 'none',
+          WebkitAppearance: 'none',
         },
       },
       '& > input:focus': {
