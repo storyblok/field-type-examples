@@ -155,7 +155,7 @@ const inputCss = css({
   },
   // hide up/down arrows
   '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
-    '-webkit-appearance': 'none',
+    WebkitAppearance: 'none',
   },
   'input[type=number]': {
     MozAppearance: 'textfield',
