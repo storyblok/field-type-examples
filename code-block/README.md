@@ -20,7 +20,7 @@ If you want to deploy your field plugin to Storyblok, you can do so by using our
 
 # App Description
 
-[//]: # (TODO)
+The Code Block extension for is a lightweight text editor tailored for developers and content creators. It provides a seamless solution for pasting code snippets into documentation sites or other platforms. With customizable titles, programming language options, line number offsets, and line highlighting, this user-friendly extension allows you to effortlessly manage and present code snippets with clarity and precision. Enhance your documentation workflow and make code sharing a breeze with the Code Block extension.
 
 ## How to set up
 
@@ -28,37 +28,35 @@ In the Block Library, select a block to edit. Add a new field, set the _Field Ty
 
 Configure the options:
 
-* `enableTitle`: (optional) if set to `true`, users can provide a title (`content.title`).
-* `enableLanguage`: (optional) if set to `true`, users can provide a language (`content.language`).
-* `enableLineNumberStart`: (optional) if set to `true`, users can change the starting line numbers (`content.lineNumberStart`).
-* `highlightStates`: (optional) A JSON array of objects. Each object has two properties: `value` (`string`) and `color` (`string`). For example:
-    ```json
-    [{ 
-      "value": "attention", 
+- `enableTitle`: (optional) if set to `true`, users can provide a title (`content.title`).
+- `enableLanguage`: (optional) if set to `true`, users can provide a language (`content.language`).
+- `enableLineNumberStart`: (optional) if set to `true`, users can change the starting line numbers (`content.lineNumberStart`).
+- `highlightStates`: (optional) A JSON array of objects. Each object has two properties: `value` (`string`) and `color` (`string`). For example:
+  ```json
+  [
+    {
+      "value": "attention",
       "color": "#fbce41"
-    },{
-      "value":"add",
+    },
+    {
+      "value": "add",
       "color": "#2db47d"
-    },{
+    },
+    {
       "value": "remove",
       "color": "#ff6159"
-    }]
-    ```
-    The color will be used to highlight lines on the screen inside the Visual Editor, while the value will be used in the content to indicate which lines were highlighted by the user. 
-    If this option is omitted, line highlighting is turned off.
+    }
+  ]
+  ```
+  The color will be used to highlight lines on the screen inside the Visual Editor, while the value will be used in the content to indicate which lines were highlighted by the user.
+  If this option is omitted, line highlighting is turned off.
 
 Example output:
 
 ```json
 {
   "code": "\"output\": {\n  \"dest\": \"./dist/index.js\",\n  \"dest\": \"./dist/index.cjs\",\n  \"types\": \"./dist/types.d.ts\",\n}",
-  "highlightStates": [
-    "",
-    "remove",
-    "add",
-    "",
-    ""
-  ],
+  "highlightStates": ["", "remove", "add", "", ""],
   "title": "myfile.json",
   "language": "json",
   "lineNumberStart": 10
