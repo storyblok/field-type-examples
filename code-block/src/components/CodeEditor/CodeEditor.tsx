@@ -27,21 +27,29 @@ export const CodeEditor: FunctionComponent<{
     setContent((content) => ({
       ...content,
       code: value,
-      highlightStates: withLength(
-        content.highlightStates,
-        lineCount,
-        defaultHighlightStateOption.value,
-      ),
+      highlightStates: options.highlightStates
+        ? withLength(
+            content.highlightStates ?? [],
+            lineCount,
+            defaultHighlightStateOption.value,
+          )
+        : undefined,
     }))
 
-  const handleLineNumberClick = (line: number) =>
+  const handleLineNumberClick = (line: number, lineCount: number) =>
     setContent((content) => ({
       ...content,
-      highlightStates: toggleLine(
-        options.highlightStates,
-        content.highlightStates,
-        line,
-      ),
+      highlightStates: options.highlightStates
+        ? toggleLine(
+            options.highlightStates,
+            withLength(
+              content.highlightStates ?? [],
+              lineCount,
+              defaultHighlightStateOption.value,
+            ),
+            line,
+          )
+        : undefined,
     }))
 
   const handleTitleChange = (title: string | undefined) =>
@@ -85,27 +93,32 @@ export const CodeEditor: FunctionComponent<{
       />
       <CodeMirror
         css={css(
-          props.content.highlightStates.map((state, index) => ({
-            [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
-              backgroundColor: mix(
-                colorFromHighlightState(options.highlightStates, state),
-                'transparent',
-                0.5,
-              ),
-            },
-            [`.cm-line:nth-of-type(${index + 1})`]: {
-              backgroundColor: mix(
-                colorFromHighlightState(options.highlightStates, state),
-                'transparent',
-                0.25,
-              ),
-            },
-          })),
+          props.content.highlightStates?.map(
+            (state, index) =>
+              options.highlightStates && {
+                [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
+                  backgroundColor: mix(
+                    colorFromHighlightState(options.highlightStates, state),
+                    'transparent',
+                    0.5,
+                  ),
+                },
+                [`.cm-line:nth-of-type(${index + 1})`]: {
+                  backgroundColor: mix(
+                    colorFromHighlightState(options.highlightStates, state),
+                    'transparent',
+                    0.25,
+                  ),
+                },
+              },
+          ),
         )}
         initialValue={props.content.code}
         onChange={onChange}
         onLineNumberClick={
-          options.highlightStates.length > 1 ? handleLineNumberClick : undefined
+          options.highlightStates && options.highlightStates.length > 1
+            ? handleLineNumberClick
+            : undefined
         }
         lineNumberStart={props.content.lineNumberStart ?? 1}
       />

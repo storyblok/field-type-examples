@@ -28,7 +28,7 @@ export const CodeMirror: FunctionComponent<{
   className?: string
   initialValue: string
   onChange: (value: string, lineCount: number) => void
-  onLineNumberClick?: (lineNumber: number) => void
+  onLineNumberClick?: (lineNumber: number, lineCount: number) => void
   lineNumberStart: number
 }> = (props) => {
   const { initialValue, lineNumberStart } = props
@@ -54,8 +54,9 @@ export const CodeMirror: FunctionComponent<{
           formatNumber: (lineNo) => (lineNo + lineNumberStart - 1).toString(10),
           domEventHandlers: {
             click: (view, line) => {
-              const lineNumber = view.state.doc.lineAt(line.from).number - 1
-              onLineNumberClick(lineNumber)
+              const { doc } = view.state
+              const lineNumber = doc.lineAt(line.from).number - 1
+              onLineNumberClick(lineNumber, doc.lines)
               return true
             },
           },
