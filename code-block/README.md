@@ -28,7 +28,10 @@ In the Block Library, select a block to edit. Add a new field, set the _Field Ty
 
 Configure the options:
 
-* `lineStates`: (optional) A JSON array of objects. Each object has two properties: `value` (`string`) and `color` (`string`). For example:
+* `enableTitle`: (optional) if set to `true`, users can provide a title (`content.title`).
+* `enableLanguage`: (optional) if set to `true`, users can provide a language (`content.language`).
+* `enableLineNumberStart`: (optional) if set to `true`, users can change the starting line numbers (`content.lineNumberStart`).
+* `highlightStates`: (optional) A JSON array of objects. Each object has two properties: `value` (`string`) and `color` (`string`). For example:
     ```json
     [{ 
       "value": "attention", 
@@ -44,3 +47,24 @@ Configure the options:
     The color will be used to highlight lines on the screen inside the Visual Editor, while the value will be used in the content to indicate which lines were highlighted by the user. 
     If this option is omitted, line highlighting is turned off.
 
+Example output:
+
+```json
+{
+  "code": "\"output\": {\n  \"dest\": \"./dist/index.js\",\n  \"dest\": \"./dist/index.cjs\",\n  \"types\": \"./dist/types.d.ts\",\n}",
+  "highlightStates": [
+    "",
+    "remove",
+    "add",
+    "",
+    ""
+  ],
+  "title": "myfile.json",
+  "language": "json",
+  "lineNumberStart": 10
+}
+```
+
+Given that `options.highlightStates` were configured as in the example above.
+
+Note that all properties except `code` are optional.

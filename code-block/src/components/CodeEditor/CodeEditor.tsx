@@ -4,10 +4,7 @@ import { toggleLine } from './toggleLine'
 import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
 import { css } from '@emotion/react'
-import {
-  defaultHighlightStateOption,
-  HighlightStateOptions,
-} from '../../Options'
+import { CodeBlockOptions, defaultHighlightStateOption } from '../../Options'
 import { colorFromHighlightState } from './colorFromHighlightState'
 import { withLength } from '../../utils'
 import { CodeEditorHeader } from './CodeEditorHeader'
@@ -22,9 +19,9 @@ export const CodeEditor: FunctionComponent<{
   setContent: (
     setStateAction: CodeEditorContent | ((content: CodeEditorContent) => void),
   ) => void
-  highlightStatesOption: HighlightStateOptions
+  options: CodeBlockOptions
 }> = (props) => {
-  const { setContent, highlightStatesOption } = props
+  const { setContent, options } = props
 
   const onChange = (value: string, lineCount: number) =>
     setContent((content) => ({
@@ -41,7 +38,7 @@ export const CodeEditor: FunctionComponent<{
     setContent((content) => ({
       ...content,
       highlightStates: toggleLine(
-        highlightStatesOption,
+        options.highlightStates,
         content.highlightStates,
         line,
       ),
@@ -51,6 +48,12 @@ export const CodeEditor: FunctionComponent<{
     setContent((content) => ({
       ...content,
       title,
+    }))
+
+  const handleLanguageChange = (language: string | undefined) =>
+    setContent((content) => ({
+      ...content,
+      language,
     }))
 
   const handleLineNumberStartChange = (lineNumberStart: number | undefined) =>
@@ -72,22 +75,27 @@ export const CodeEditor: FunctionComponent<{
       <CodeEditorHeader
         title={props.content.title}
         onTitleChange={handleTitleChange}
+        language={props.content.language}
+        onLanguageChange={handleLanguageChange}
         lineNumberStart={props.content.lineNumberStart}
         onLineNumberStartChange={handleLineNumberStartChange}
+        enableTitle={options.enableTitle}
+        enableLanguage={options.enableLanguage}
+        enableLineNumberStart={options.enableLineNumberStart}
       />
       <CodeMirror
         css={css(
           props.content.highlightStates.map((state, index) => ({
             [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
               backgroundColor: mix(
-                colorFromHighlightState(highlightStatesOption, state),
+                colorFromHighlightState(options.highlightStates, state),
                 'transparent',
                 0.5,
               ),
             },
             [`.cm-line:nth-of-type(${index + 1})`]: {
               backgroundColor: mix(
-                colorFromHighlightState(highlightStatesOption, state),
+                colorFromHighlightState(options.highlightStates, state),
                 'transparent',
                 0.25,
               ),
@@ -97,7 +105,7 @@ export const CodeEditor: FunctionComponent<{
         initialValue={props.content.code}
         onChange={onChange}
         onLineNumberClick={
-          highlightStatesOption.length > 1 ? handleLineNumberClick : undefined
+          options.highlightStates.length > 1 ? handleLineNumberClick : undefined
         }
         lineNumberStart={props.content.lineNumberStart ?? 1}
       />
