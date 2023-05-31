@@ -67,8 +67,6 @@ const highlightStatesOptionFromOptions = (
   }
 }
 
-// TODO tests
-//  sorted
 const languagesOptionFromOptions = (
   rawOptions: RawOptions,
 ): CodeBlockOptions['languages'] | Error => {

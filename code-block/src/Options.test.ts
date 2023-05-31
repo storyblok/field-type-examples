@@ -5,7 +5,7 @@ import {
 } from './Options'
 
 describe('Options', () => {
-  test('that all option are optional', () => {
+  test('that all options are optional', () => {
     expect(parseOptions({})).not.toBeInstanceOf(Error)
   })
   describe('enableTitle', () => {
@@ -68,32 +68,39 @@ describe('Options', () => {
       ).toBeInstanceOf(Error)
     })
   })
-  describe('enableLanguage', () => {
-    it('can be "true"', () => {
+  describe('languages', () => {
+    it('can be an empty JSON array', () => {
       expect(
         parseOptions({
-          enableLanguage: 'true',
+          languages: JSON.stringify([]),
         }),
-      ).toHaveProperty('enableLanguage', true)
+      ).toHaveProperty('languages', [])
     })
-    it('can be "false"', () => {
+    it('can be a JSON array of strings', () => {
       expect(
         parseOptions({
-          enableLanguage: 'false',
+          languages: JSON.stringify(['js']),
         }),
-      ).toHaveProperty('enableLanguage', false)
+      ).toHaveProperty('languages', ['js'])
+    })
+    it('sorts the languages', () => {
+      expect(
+        parseOptions({
+          languages: JSON.stringify(['b', 'a', 'B', 'A', 'Á']),
+        }),
+      ).toHaveProperty('languages', ['a', 'A', 'Á', 'b', 'B'])
     })
     it('can be "empty"', () => {
       expect(
         parseOptions({
-          enableLanguage: '',
+          languages: '',
         }),
-      ).toHaveProperty('enableLanguage', false)
+      ).not.toBeInstanceOf(Error)
     })
-    it('can not be any string', () => {
+    it('can not be any array', () => {
       expect(
         parseOptions({
-          enableLanguage: 'somethignelse',
+          languages: JSON.stringify([1, 2, 3]),
         }),
       ).toBeInstanceOf(Error)
     })

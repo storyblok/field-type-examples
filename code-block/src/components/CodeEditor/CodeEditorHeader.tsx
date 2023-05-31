@@ -112,7 +112,7 @@ export const CodeEditorHeader: FunctionComponent<{
             value={props.language}
             onChange={handleLanguageChange}
             css={css({
-              width: '20ch',
+              width: '15ch',
             })}
           >
             <option value=""></option>
