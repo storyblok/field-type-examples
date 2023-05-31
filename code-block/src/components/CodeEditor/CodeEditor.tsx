@@ -1,13 +1,13 @@
-import { FunctionComponent, useCallback, useMemo } from 'react'
+import { FunctionComponent, useCallback } from 'react'
 import { CodeEditorContent } from './CodeEditorContent'
-import { toggleLine } from './toggleLine'
 import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
 import { css } from '@emotion/react'
-import { CodeBlockOptions, defaultHighlightStateOption } from '../../Options'
+import { CodeBlockOptions } from '../../Options'
 import { colorFromHighlightState } from './colorFromHighlightState'
-import { withLength } from '../../utils'
 import { CodeEditorHeader } from './CodeEditorHeader'
+import { onLineClickSetAction } from './onLineClickSetAction'
+import { onChangeSetAction } from './onChangeSetAction'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -109,42 +109,3 @@ export const CodeEditor: FunctionComponent<{
     </div>
   )
 }
-
-const onChangeSetAction =
-  (
-    options: CodeBlockOptions['highlightStates'],
-    value: string,
-    lineCount: number,
-  ) =>
-  (content: CodeEditorContent): CodeEditorContent => ({
-    ...content,
-    code: value,
-    highlightStates: options
-      ? withLength(
-          content.highlightStates ?? [],
-          lineCount,
-          defaultHighlightStateOption.value,
-        )
-      : undefined,
-  })
-
-const onLineClickSetAction =
-  (
-    options: CodeBlockOptions['highlightStates'],
-    lineCount: number,
-    line: number,
-  ) =>
-  (content: CodeEditorContent): CodeEditorContent => ({
-    ...content,
-    highlightStates: options
-      ? toggleLine(
-          options,
-          withLength(
-            content.highlightStates ?? [],
-            lineCount,
-            defaultHighlightStateOption.value,
-          ),
-          line,
-        )
-      : undefined,
-  })
