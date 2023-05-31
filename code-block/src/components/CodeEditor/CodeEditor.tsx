@@ -1,13 +1,13 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useCallback } from 'react'
 import { CodeEditorContent } from './CodeEditorContent'
-import { toggleLine } from './toggleLine'
 import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
 import { css } from '@emotion/react'
-import { CodeBlockOptions, defaultHighlightStateOption } from '../../Options'
+import { CodeBlockOptions } from '../../Options'
 import { colorFromHighlightState } from './colorFromHighlightState'
-import { withLength } from '../../utils'
 import { CodeEditorHeader } from './CodeEditorHeader'
+import { onLineClickSetAction } from './onLineClickSetAction'
+import { onChangeSetAction } from './onChangeSetAction'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -23,26 +23,18 @@ export const CodeEditor: FunctionComponent<{
 }> = (props) => {
   const { setContent, options } = props
 
-  const onChange = (value: string, lineCount: number) =>
-    setContent((content) => ({
-      ...content,
-      code: value,
-      highlightStates: withLength(
-        content.highlightStates,
-        lineCount,
-        defaultHighlightStateOption.value,
+  const onChange = useCallback(
+    (value: string, lineCount: number) =>
+      setContent(onChangeSetAction(options.highlightStates, value, lineCount)),
+    [options.highlightStates],
+  )
+  const handleLineNumberClick = useCallback(
+    (line: number, lineCount: number) =>
+      setContent(
+        onLineClickSetAction(options.highlightStates, lineCount, line),
       ),
-    }))
-
-  const handleLineNumberClick = (line: number) =>
-    setContent((content) => ({
-      ...content,
-      highlightStates: toggleLine(
-        options.highlightStates,
-        content.highlightStates,
-        line,
-      ),
-    }))
+    [options.highlightStates],
+  )
 
   const handleTitleChange = (title: string | undefined) =>
     setContent((content) => ({
@@ -85,27 +77,32 @@ export const CodeEditor: FunctionComponent<{
       />
       <CodeMirror
         css={css(
-          props.content.highlightStates.map((state, index) => ({
-            [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
-              backgroundColor: mix(
-                colorFromHighlightState(options.highlightStates, state),
-                'transparent',
-                0.5,
-              ),
-            },
-            [`.cm-line:nth-of-type(${index + 1})`]: {
-              backgroundColor: mix(
-                colorFromHighlightState(options.highlightStates, state),
-                'transparent',
-                0.25,
-              ),
-            },
-          })),
+          props.content.highlightStates?.map(
+            (state, index) =>
+              options.highlightStates && {
+                [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
+                  backgroundColor: mix(
+                    colorFromHighlightState(options.highlightStates, state),
+                    'transparent',
+                    0.5,
+                  ),
+                },
+                [`.cm-line:nth-of-type(${index + 1})`]: {
+                  backgroundColor: mix(
+                    colorFromHighlightState(options.highlightStates, state),
+                    'transparent',
+                    0.25,
+                  ),
+                },
+              },
+          ),
         )}
         initialValue={props.content.code}
         onChange={onChange}
         onLineNumberClick={
-          options.highlightStates.length > 1 ? handleLineNumberClick : undefined
+          options.highlightStates && options.highlightStates.length > 1
+            ? handleLineNumberClick
+            : undefined
         }
         lineNumberStart={props.content.lineNumberStart ?? 1}
       />

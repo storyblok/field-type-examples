@@ -11,7 +11,7 @@ const RawOptionsSchema = z.object({
 type RawOptionsOptions = z.infer<typeof RawOptionsSchema>
 
 export type CodeBlockOptions = {
-  highlightStates: HighlightStateOptions
+  highlightStates?: HighlightStateOptions
   enableTitle: boolean
   enableLineNumberStart: boolean
   enableLanguage: boolean
@@ -40,12 +40,12 @@ export const defaultHighlightStateOption = {
 
 const highlightStatesOptionFromOptions = (
   rawOptions: RawOptionsOptions,
-): HighlightStateOptions | Error => {
+): HighlightStateOptions | undefined | Error => {
   if (
     typeof rawOptions.highlightStates === 'undefined' ||
     rawOptions.highlightStates === ''
   ) {
-    return [defaultHighlightStateOption]
+    return undefined
   }
   try {
     const highlightStates = HighlightStateOptionSchema.safeParse(
