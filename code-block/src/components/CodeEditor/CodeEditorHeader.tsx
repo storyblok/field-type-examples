@@ -10,11 +10,20 @@ import {
 } from '../../storyblok-design'
 import { integerFromString } from '../../utils'
 
-const headerCss = css({
+const toolbarCss = css({
   position: 'relative',
   display: 'flex',
   alignItems: 'stretch',
   flexWrap: 'wrap',
+  '& > *:first-child': {
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: 'auto',
+  },
+})
+
+const headerCss = css({
+  position: 'relative',
   backgroundColor: sb_dark_blue,
   color: white,
 })
@@ -60,48 +69,43 @@ export const CodeEditorHeader: FunctionComponent<{
           bottom: 0,
         })}
       />
-      {enableTitle ? (
-        <Input
-          css={css({
-            flex: 1,
-          })}
-          id="title"
-          label="Title"
-          onChange={handleTitleChange}
-          value={props.title}
-        />
-      ) : (
-        // This element is there to fill the space to the left if the title is disabled,
-        //  which will align the other items to the right
-        <div
-          css={css({
-            flex: 1,
-          })}
-        />
-      )}
-      {enableLineNumberStart && (
-        <Input
-          label="Starts at"
-          type="number"
-          min={1}
-          placeholder="1"
-          onChange={handleLineNumberOffsetChange}
-          value={props.lineNumberStart}
-          css={css({
-            maxWidth: '5ch',
-          })}
-        />
-      )}
-      {enableLanguage && (
-        <Input
-          value={props.language}
-          onChange={handleLanguageChange}
-          label="Language"
-          css={css({
-            maxWidth: '10ch',
-          })}
-        />
-      )}
+      <div css={toolbarCss}>
+        {enableTitle ? (
+          <Input
+            id="title"
+            label="Title"
+            onChange={handleTitleChange}
+            value={props.title}
+          />
+        ) : (
+          // This element is there to fill the space to the left if the title is disabled,
+          //  which will align the other items to the right
+          <div />
+        )}
+        {enableLineNumberStart && (
+          <Input
+            label="Starts at"
+            type="number"
+            min={1}
+            placeholder="1"
+            onChange={handleLineNumberOffsetChange}
+            value={props.lineNumberStart}
+            css={css({
+              width: '5ch',
+            })}
+          />
+        )}
+        {enableLanguage && (
+          <Input
+            value={props.language}
+            onChange={handleLanguageChange}
+            label="Language"
+            css={css({
+              width: '10ch',
+            })}
+          />
+        )}
+      </div>
     </div>
   )
 }
@@ -165,7 +169,7 @@ const inputCss = css({
 const Input: FunctionComponent<
   { label: string } & JSX.IntrinsicElements['input']
 > = (props) => {
-  const { className, label, ...inputProps } = props
+  const { label, ...inputProps } = props
   const [focused, setFocused] = useState(false)
 
   const labelCss = useMemo(
@@ -197,10 +201,7 @@ const Input: FunctionComponent<
     [focused],
   )
   return (
-    <fieldset
-      css={fieldsetCss}
-      className={className}
-    >
+    <fieldset css={fieldsetCss}>
       <label
         htmlFor={props.id}
         css={labelCss}
