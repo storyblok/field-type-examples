@@ -72,7 +72,7 @@ export const CodeEditor: FunctionComponent<{
         lineNumberStart={props.content.lineNumberStart}
         onLineNumberStartChange={handleLineNumberStartChange}
         enableTitle={options.enableTitle}
-        enableLanguage={options.enableLanguage}
+        languages={options.languages}
         enableLineNumberStart={options.enableLineNumberStart}
       />
       <CodeMirror

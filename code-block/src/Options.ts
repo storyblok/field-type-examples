@@ -5,16 +5,16 @@ const RawOptionsSchema = z.object({
   highlightStates: z.string().optional(),
   enableTitle: z.enum(['', 'true', 'false']).optional(),
   enableLineNumberStart: z.enum(['', 'true', 'false']).optional(),
-  enableLanguage: z.enum(['', 'true', 'false']).optional(),
+  languages: z.string().optional(),
 })
 
-type RawOptionsOptions = z.infer<typeof RawOptionsSchema>
+type RawOptions = z.infer<typeof RawOptionsSchema>
 
 export type CodeBlockOptions = {
   highlightStates?: HighlightStateOptions
   enableTitle: boolean
   enableLineNumberStart: boolean
-  enableLanguage: boolean
+  languages: string[]
 }
 
 const HighlightStateOptionSchema = z.array(
@@ -23,6 +23,8 @@ const HighlightStateOptionSchema = z.array(
     color: z.string(),
   }),
 )
+
+const LanguagesOptionSchema = z.array(z.string())
 
 export type HighlightStateOption = z.infer<
   typeof HighlightStateOptionSchema
@@ -39,8 +41,8 @@ export const defaultHighlightStateOption = {
 }
 
 const highlightStatesOptionFromOptions = (
-  rawOptions: RawOptionsOptions,
-): HighlightStateOptions | undefined | Error => {
+  rawOptions: RawOptions,
+): CodeBlockOptions['highlightStates'] | undefined | Error => {
   if (
     typeof rawOptions.highlightStates === 'undefined' ||
     rawOptions.highlightStates === ''
@@ -57,7 +59,39 @@ const highlightStatesOptionFromOptions = (
     // TODO unique
     return [defaultHighlightStateOption, ...highlightStates.data]
   } catch (e) {
-    return e instanceof Error ? e : new Error('unknown error parsing options')
+    return new Error(
+      `Error parsing "highlightStates" option: ${
+        e instanceof Error ? e.message : 'unknown error'
+      }`,
+    )
+  }
+}
+
+// TODO tests
+//  sorted
+const languagesOptionFromOptions = (
+  rawOptions: RawOptions,
+): CodeBlockOptions['languages'] | Error => {
+  if (
+    typeof rawOptions.languages === 'undefined' ||
+    rawOptions.languages === ''
+  ) {
+    return []
+  }
+  try {
+    const languages = LanguagesOptionSchema.safeParse(
+      JSON.parse(rawOptions.languages),
+    )
+    if (!languages.success) {
+      return languages.error
+    }
+    return languages.data.sort((a, b) => a.localeCompare(b))
+  } catch (e) {
+    return new Error(
+      `Error parsing "languages" option: ${
+        e instanceof Error ? e.message : 'unknown error'
+      }`,
+    )
   }
 }
 
@@ -72,10 +106,14 @@ export const parseOptions = (
   if (highlightStates instanceof Error) {
     return highlightStates
   }
+  const languages = languagesOptionFromOptions(rawOptions.data)
+  if (languages instanceof Error) {
+    return languages
+  }
   return {
     highlightStates,
     enableTitle: rawOptions.data.enableTitle === 'true',
     enableLineNumberStart: rawOptions.data.enableLineNumberStart === 'true',
-    enableLanguage: rawOptions.data.enableLanguage === 'true',
+    languages,
   }
 }

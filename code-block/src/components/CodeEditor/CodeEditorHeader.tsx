@@ -1,4 +1,10 @@
-import { ChangeEventHandler, FunctionComponent, useMemo, useState } from 'react'
+import {
+  ChangeEventHandler,
+  createElement,
+  FunctionComponent,
+  useMemo,
+  useState,
+} from 'react'
 import { css } from '@emotion/react'
 import {
   sb_dark_blue,
@@ -36,16 +42,16 @@ export const CodeEditorHeader: FunctionComponent<{
   lineNumberStart: number | undefined
   onLineNumberStartChange: (lineNumberStart: number | undefined) => void
   enableTitle: boolean
-  enableLanguage: boolean
+  languages: string[]
   enableLineNumberStart: boolean
 }> = (props) => {
-  const { enableTitle, enableLanguage, enableLineNumberStart } = props
+  const { enableTitle, languages, enableLineNumberStart } = props
   const handleTitleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.currentTarget
     props.onTitleChange(value === '' ? undefined : value)
   }
 
-  const handleLanguageChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleLanguageChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const { value } = e.currentTarget
     props.onLanguageChange(value === '' ? undefined : value)
   }
@@ -57,7 +63,7 @@ export const CodeEditorHeader: FunctionComponent<{
     props.onLineNumberStartChange(integerFromString(value))
   }
 
-  if (!enableTitle && !enableLanguage && !enableLineNumberStart) {
+  if (!enableTitle && !languages && !enableLineNumberStart) {
     return <></>
   }
 
@@ -71,7 +77,8 @@ export const CodeEditorHeader: FunctionComponent<{
       />
       <div css={toolbarCss}>
         {enableTitle ? (
-          <Input
+          <InputField
+            component="input"
             id="title"
             label="Title"
             onChange={handleTitleChange}
@@ -83,7 +90,9 @@ export const CodeEditorHeader: FunctionComponent<{
           <div />
         )}
         {enableLineNumberStart && (
-          <Input
+          <InputField
+            component="input"
+            id="lineNumberStart"
             label="Starts at"
             type="number"
             min={1}
@@ -95,15 +104,27 @@ export const CodeEditorHeader: FunctionComponent<{
             })}
           />
         )}
-        {enableLanguage && (
-          <Input
+        {languages && (
+          <InputField
+            component="select"
+            id="language"
+            label="Language"
             value={props.language}
             onChange={handleLanguageChange}
-            label="Language"
             css={css({
-              width: '10ch',
+              width: '20ch',
             })}
-          />
+          >
+            <option value=""></option>
+            {languages.map((language, index) => (
+              <option
+                key={index}
+                value={language}
+              >
+                {language}
+              </option>
+            ))}
+          </InputField>
         )}
       </div>
     </div>
@@ -129,68 +150,55 @@ const fieldsetCss = css({
   },
 
   marginBottom: borderWith,
+
+  '& > input, & > select': {
+    flex: 1,
+    color: 'inherit',
+    backgroundColor: 'transparent',
+
+    marginLeft: 15,
+    marginRight: 15,
+    paddingTop: 0,
+    paddingBottom: 0,
+    border: 'none',
+    transition: transition('background-color', 'border-color'),
+    // Typography
+    fontSize: '12px',
+    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+    fontWeight: 400,
+    lineHeight: '1.66',
+    letterSpacing: '0.03333em',
+
+    '&::placeholder': {
+      color: sb_dark_blue_50,
+    },
+
+    '&:focus': {
+      borderColor: sb_green,
+      outline: 'none',
+    },
+    // hide up/down arrows
+    '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+      appearance: 'none',
+    },
+    'input[type=number]': {
+      appearance: 'textfield',
+    },
+  },
 })
 
-const inputCss = css({
-  flex: 1,
-  color: 'inherit',
-  backgroundColor: 'transparent',
+const inputCss = css({})
 
-  paddingLeft: 15,
-  paddingRight: 15,
-  paddingTop: 0,
-  paddingBottom: 0,
-  border: 'none',
-  transition: transition('background-color', 'border-color'),
-  // Typography
-  fontSize: '12px',
-  fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-  fontWeight: 400,
-  lineHeight: '1.66',
-  letterSpacing: '0.03333em',
-
-  '&::placeholder': {
-    color: sb_dark_blue_50,
-  },
-
-  '&:focus': {
-    borderColor: sb_green,
-    outline: 'none',
-  },
-  // hide up/down arrows
-  '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
-    WebkitAppearance: 'none',
-  },
-  'input[type=number]': {
-    MozAppearance: 'textfield',
-  },
-})
-
-const Input: FunctionComponent<
-  { label: string } & JSX.IntrinsicElements['input']
-> = (props) => {
-  const { label, ...inputProps } = props
+const InputField = <Component extends 'select' | 'input'>(
+  props: {
+    label: string
+    component: Component
+  } & JSX.IntrinsicElements[Component],
+): JSX.Element => {
+  const { label, component, ...inputProps } = props
   const [focused, setFocused] = useState(false)
 
-  const labelCss = useMemo(
-    () =>
-      css({
-        transition: transition('color'),
-        color: focused ? sb_green : sb_dark_blue_50,
-        paddingLeft: 15,
-        paddingRight: 15,
-        paddingTop: 5,
-        paddingBottom: 0,
-        // Typography
-        fontSize: '10px',
-        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-        fontWeight: 400,
-        lineHeight: '1.66',
-        letterSpacing: '0.03333em',
-      }),
-    [focused],
-  )
-  const borderCss = useMemo(
+  const dividerCss = useMemo(
     () =>
       css({
         position: 'absolute',
@@ -201,37 +209,98 @@ const Input: FunctionComponent<
     [focused],
   )
   return (
-    <fieldset css={fieldsetCss}>
-      <label
+    <FieldSet>
+      <Label
         htmlFor={props.id}
-        css={labelCss}
+        focused={focused}
       >
         {label}
-      </label>
-      <input
-        css={inputCss}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        {...inputProps}
-      />
-      <Divider css={borderCss} />
-    </fieldset>
+      </Label>
+      {createElement(component, {
+        css: inputCss,
+        onFocus: () => setFocused(true),
+        onBlur: () => setFocused(false),
+        ...inputProps,
+      })}
+      <Divider css={dividerCss} />
+    </FieldSet>
+  )
+}
+
+export const Select: FunctionComponent<JSX.IntrinsicElements['select']> = (
+  props,
+) => (
+  <select
+    css={inputCss}
+    {...props}
+  />
+)
+
+export const Input: FunctionComponent<JSX.IntrinsicElements['input']> = (
+  props,
+) => (
+  <input
+    css={inputCss}
+    {...props}
+  />
+)
+export const FieldSet: FunctionComponent<JSX.IntrinsicElements['fieldset']> = (
+  props,
+) => (
+  <fieldset
+    css={fieldsetCss}
+    {...props}
+  />
+)
+
+export const Label: FunctionComponent<
+  { focused: boolean } & JSX.IntrinsicElements['label']
+> = (props) => {
+  const { focused, ...labelProps } = props
+  const labelCss = useMemo(
+    () =>
+      css({
+        transition: transition('color'),
+        color: focused ? sb_green : sb_dark_blue_50,
+        marginLeft: 15,
+        marginRight: 15,
+        marginTop: 5,
+        marginBottom: 0,
+        padding: 0,
+        // Typography
+        fontSize: '10px',
+        fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+        fontWeight: 400,
+        lineHeight: '1.66',
+        letterSpacing: '0.03333em',
+      }),
+    [focused],
+  )
+
+  return (
+    <label
+      htmlFor={props.id}
+      css={labelCss}
+      {...labelProps}
+    />
   )
 }
 
 const dividerCss = css({
   width: '100%',
-  borderBottomWidth: borderWith,
+  borderWidth: borderWith,
   borderBottomStyle: 'solid',
   color: sb_dark_blue_50,
   borderBottomColor: 'currentcolor',
+  marginBlockStart: 0,
+  marginBlockEnd: 0,
 })
 
-const Divider: FunctionComponent<{
-  className?: string
-}> = (props) => (
-  <div
-    className={props.className}
-    css={dividerCss}
-  />
-)
+const Divider: FunctionComponent<JSX.IntrinsicElements['div']> = (props) => {
+  return (
+    <div
+      css={dividerCss}
+      {...props}
+    />
+  )
+}
