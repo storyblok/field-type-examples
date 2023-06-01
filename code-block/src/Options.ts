@@ -74,11 +74,6 @@ const optionsSchema = z.object({
     .optional(),
   languages: z
     .preprocess(optionalJsonPreprocessor('languages'), LanguagesOptionSchema)
-    .transform((languages) =>
-      typeof languages === 'undefined'
-        ? languages
-        : languages.sort((a, b) => a.localeCompare(b)),
-    )
     .optional(),
 })
 
