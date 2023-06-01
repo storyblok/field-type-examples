@@ -29,7 +29,11 @@ In the Block Library, select a block to edit. Add a new field, set the _Field Ty
 Configure the options:
 
 - `enableTitle`: (optional) if set to `true`, users can provide a title (`content.title`).
-- `enableLanguage`: (optional) if set to `true`, users can provide a language (`content.language`).
+- `languages`: (optional) a JSON array of strings. The strings are the languages that the user can choose between.
+  ```json
+  ["JavaScript", "TypeScript", "Elm", "Vue", "Rust", "JSON"]
+  ```
+  If this option is omitted, the language select input is hidden.
 - `enableLineNumberStart`: (optional) if set to `true`, users can change the starting line numbers (`content.lineNumberStart`).
 - `highlightStates`: (optional) A JSON array of objects. Each object has two properties: `value` (`string`) and `color` (`string`). For example:
   ```json
