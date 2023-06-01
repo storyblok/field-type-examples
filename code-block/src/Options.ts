@@ -45,7 +45,7 @@ const optionalJsonPreprocessor = (name: string) => (data: unknown) => {
     return undefined
   }
   if (typeof data !== 'string') {
-    return new Error('Not a string')
+    return new Error(`Failed to parse "${name}" because it is not a string`)
   }
   if (data === '') {
     return undefined
@@ -58,18 +58,14 @@ const optionalJsonPreprocessor = (name: string) => (data: unknown) => {
 }
 
 const optionsSchema = z.object({
-  enableTitle: z
-    .preprocess(
-      optionalJsonPreprocessor('options.enableLineNumberStart'),
-      z.boolean().optional(),
-    )
-    .default(false),
-  enableLineNumberStart: z
-    .preprocess(
-      optionalJsonPreprocessor('options.enableLineNumberStart'),
-      z.boolean().optional(),
-    )
-    .default(false),
+  enableTitle: z.preprocess(
+    optionalJsonPreprocessor('options.enableLineNumberStart'),
+    z.boolean().optional().default(false),
+  ),
+  enableLineNumberStart: z.preprocess(
+    optionalJsonPreprocessor('options.enableLineNumberStart'),
+    z.boolean().default(false),
+  ),
   highlightStates: z
     .preprocess(
       optionalJsonPreprocessor('options.highlightStates'),
@@ -80,6 +76,11 @@ const optionsSchema = z.object({
     .preprocess(
       optionalJsonPreprocessor('options.highlightStates'),
       LanguagesOptionSchema,
+    )
+    .transform((languages) =>
+      typeof languages === 'undefined'
+        ? languages
+        : languages.sort((a, b) => a.localeCompare(b)),
     )
     .optional(),
 })

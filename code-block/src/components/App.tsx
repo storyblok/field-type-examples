@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useMemo } from 'react'
 import { useFieldPlugin } from '../useFieldPlugin'
 import { CodeEditor } from './CodeEditor'
 import {
@@ -20,7 +20,7 @@ export const App: FunctionComponent = () => {
     return <></>
   }
 
-  const options = parseOptions(data.options)
+  const options = useMemo(() => parseOptions(data.options), [data.options])
 
   if (options instanceof Error) {
     return (
@@ -28,7 +28,10 @@ export const App: FunctionComponent = () => {
     )
   }
 
-  const content = parseCodeEditorState(data.content)
+  const content = useMemo(
+    () => parseCodeEditorState(data.content),
+    [data.content],
+  )
 
   const setContent = (
     setStateAction: CodeEditorContent | ((content: CodeEditorContent) => void),
