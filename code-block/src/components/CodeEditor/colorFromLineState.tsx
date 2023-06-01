@@ -1,10 +1,13 @@
-import { HighlightStateOptions } from '../../Options'
+import {
+  defaultHighlightStateOption,
+  HighlightStateOptions,
+} from '../../Options'
 
 export const colorFromLineState = (
   lineStateOptions: HighlightStateOptions,
   lineState: string,
 ): string => {
-  const defaultColor = lineStateOptions[0].color
+  const defaultColor = defaultHighlightStateOption(lineStateOptions).color
   return (
     lineStateOptions.find((it) => it.value === lineState)?.color ?? defaultColor
   )
