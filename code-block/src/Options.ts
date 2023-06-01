@@ -59,24 +59,21 @@ const optionalJsonPreprocessor = (name: string) => (data: unknown) => {
 
 const optionsSchema = z.object({
   enableTitle: z.preprocess(
-    optionalJsonPreprocessor('options.enableLineNumberStart'),
+    optionalJsonPreprocessor('enableTitle'),
     z.boolean().optional().default(false),
   ),
   enableLineNumberStart: z.preprocess(
-    optionalJsonPreprocessor('options.enableLineNumberStart'),
+    optionalJsonPreprocessor('enableLineNumberStart'),
     z.boolean().default(false),
   ),
   highlightStates: z
     .preprocess(
-      optionalJsonPreprocessor('options.highlightStates'),
+      optionalJsonPreprocessor('highlightStates'),
       HighlightStateOptionSchema,
     )
     .optional(),
   languages: z
-    .preprocess(
-      optionalJsonPreprocessor('options.highlightStates'),
-      LanguagesOptionSchema,
-    )
+    .preprocess(optionalJsonPreprocessor('languages'), LanguagesOptionSchema)
     .transform((languages) =>
       typeof languages === 'undefined'
         ? languages
@@ -85,6 +82,12 @@ const optionsSchema = z.object({
     .optional(),
 })
 
+/**
+ * `z.safeParse` is not completely safe, because if the processor in
+ *  `z.preprocess()` throw an exception, `safeParse` will throw that error
+ * @param schema
+ * @param data
+ */
 const superSafeParse = <Schema extends ZodSchema>(
   schema: Schema,
   data: unknown,
@@ -97,9 +100,11 @@ const superSafeParse = <Schema extends ZodSchema>(
       return res.data
     }
   } catch (e) {
-    return e instanceof Error
-      ? e
-      : new Error('Failed to parse by unknown reason')
+    throw new Error(
+      `Failed to parse options: ${
+        e instanceof Error ? e.message : 'Unknown reason'
+      }`,
+    )
   }
 }
 
