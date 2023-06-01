@@ -46,9 +46,12 @@ export const CodeEditorHeader: FunctionComponent<{
     props.onTitleChange(value === '' ? undefined : value)
   }
 
-  const handleLanguageChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+  const handleLanguageChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.currentTarget
-    props.onLanguageChange(value === '' ? undefined : value)
+
+    props.onLanguageChange(
+      languages.some((it) => it === value) ? value : undefined,
+    )
   }
 
   const handleLineNumberOffsetChange: ChangeEventHandler<HTMLInputElement> = (
@@ -74,7 +77,7 @@ export const CodeEditorHeader: FunctionComponent<{
         {enableTitle ? (
           <InputField
             component="input"
-            id="title"
+            id="title-input"
             label="Title"
             onChange={handleTitleChange}
             value={props.title}
@@ -87,7 +90,7 @@ export const CodeEditorHeader: FunctionComponent<{
         {enableLineNumberStart && (
           <InputField
             component="input"
-            id="lineNumberStart"
+            id="lineNumberStart-input"
             label="Starts at"
             type="number"
             min={1}
@@ -101,8 +104,10 @@ export const CodeEditorHeader: FunctionComponent<{
         )}
         {languages && (
           <InputField
-            component="select"
-            id="language"
+            component="input"
+            type="text"
+            list="language-datalist"
+            id="language-input"
             label="Language"
             value={props.language}
             onChange={handleLanguageChange}
@@ -111,18 +116,19 @@ export const CodeEditorHeader: FunctionComponent<{
               //  such as "Visual Basic"
               width: '15ch',
             })}
-          >
-            <option value=""></option>
-            {languages.map((language, index) => (
-              <option
-                key={index}
-                value={language}
-              >
-                {language}
-              </option>
-            ))}
-          </InputField>
+          />
         )}
+        <datalist id="language-datalist">
+          <option value=""></option>
+          {languages.map((language, index) => (
+            <option
+              key={index}
+              value={language}
+            >
+              {language}
+            </option>
+          ))}
+        </datalist>
       </div>
     </div>
   )
