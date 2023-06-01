@@ -31,7 +31,7 @@ Configure the options:
 - `enableTitle`: (optional) if set to `true`, users can provide a title (`content.title`).
 - `languages`: (optional) a JSON array of strings. The strings are the languages that the user can choose between.
   ```json
-  ["JavaScript", "TypeScript", "Elm", "Vue", "Rust", "JSON"]
+  ["Ada", "Basic", "Elm", "Haskell", "JavaScript", "JSON", "TypeScript"]
   ```
   If this option is omitted, the language select input is hidden.
 - `enableLineNumberStart`: (optional) if set to `true`, users can change the starting line numbers (`content.lineNumberStart`).
