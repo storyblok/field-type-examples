@@ -17,7 +17,7 @@ export const onLineClickSetAction =
           withLength(
             content.highlightStates ?? [],
             lineCount,
-            defaultHighlightStateOption.value,
+            defaultHighlightStateOption(options).value,
           ),
           line,
         )

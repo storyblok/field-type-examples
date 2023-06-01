@@ -1,5 +1,5 @@
-import { FieldPluginData } from '@storyblok/field-plugin'
 import { z, ZodSchema } from 'zod'
+import { defaultHighlightStateOptionValue } from './DefaultHighlightStateOptionValue'
 
 export type CodeBlockOptions = {
   highlightStates?: HighlightStateOptions
@@ -16,28 +16,35 @@ const HighlightStateOptionSchema = z
     }),
   )
   .nonempty()
-  .min(2)
   .optional()
+  .transform((highlightStates) =>
+    typeof highlightStates === 'undefined'
+      ? undefined
+      : ([
+          defaultHighlightStateOptionValue,
+          ...highlightStates,
+        ] as HighlightStateOptions),
+  )
 
 const LanguagesOptionSchema = z.array(z.string()).nonempty().optional()
 
-type ArrayElement<ArrType> = ArrType extends readonly (infer ElementType)[]
-  ? ElementType
-  : never
-
-export type HighlightStateOption = ArrayElement<
-  Required<z.infer<typeof HighlightStateOptionSchema>>
->
+export type HighlightStateOption = {
+  value: string
+  color: string
+}
 
 export type HighlightStateOptions = [
   HighlightStateOption,
   ...HighlightStateOption[],
 ]
 
-export const defaultHighlightStateOption = {
-  value: '',
-  color: 'transparent',
-}
+/**
+ * Even though it's trivial, it improves code readability
+ * @param options
+ */
+export const defaultHighlightStateOption = (
+  options: HighlightStateOptions,
+): HighlightStateOption => options[0]
 
 // The next minor version after zod@3.21.4 will eliminate the need of `name`: https://github.com/colinhacks/zod/pull/2426
 const optionalJsonPreprocessor = (name: string) => (data: unknown) => {

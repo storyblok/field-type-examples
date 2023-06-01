@@ -103,32 +103,34 @@ export const CodeEditorHeader: FunctionComponent<{
           />
         )}
         {languages && (
-          <InputField
-            component="input"
-            type="text"
-            list="language-datalist"
-            id="language-input"
-            label="Language"
-            value={props.language}
-            onChange={handleLanguageChange}
-            css={css({
-              // Enough width to display even the programming language longest names,
-              //  such as "Visual Basic"
-              width: '15ch',
-            })}
-          />
+          <>
+            <InputField
+              component="input"
+              type="text"
+              list="language-datalist"
+              id="language-input"
+              label="Language"
+              value={props.language}
+              onChange={handleLanguageChange}
+              css={css({
+                // Enough width to display even the programming language longest names,
+                //  such as "Visual Basic"
+                width: '15ch',
+              })}
+            />
+            <datalist id="language-datalist">
+              <option value=""></option>
+              {languages.map((language, index) => (
+                <option
+                  key={index}
+                  value={language}
+                >
+                  {language}
+                </option>
+              ))}
+            </datalist>
+          </>
         )}
-        <datalist id="language-datalist">
-          <option value=""></option>
-          {languages.map((language, index) => (
-            <option
-              key={index}
-              value={language}
-            >
-              {language}
-            </option>
-          ))}
-        </datalist>
       </div>
     </div>
   )

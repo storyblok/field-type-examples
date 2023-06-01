@@ -1,9 +1,12 @@
 import { onChangeSetAction } from './onChangeSetAction'
 import { CodeEditorContent } from './CodeEditorContent'
-import { CodeBlockOptions, defaultHighlightStateOption } from '../../Options'
+import { CodeBlockOptions } from '../../Options'
 
 const options: CodeBlockOptions['highlightStates'] = [
-  defaultHighlightStateOption,
+  {
+    value: '',
+    color: 'transparent',
+  },
   {
     value: 'neutral',
     color: 'yellow',
@@ -107,7 +110,7 @@ describe('onChangeSetAction', () => {
         highlightStates,
       }
       const newContent = onChangeSetAction(
-        [defaultHighlightStateOption],
+        [options[0]],
         'new content',
         3,
       )(content).highlightStates

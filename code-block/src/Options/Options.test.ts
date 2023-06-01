@@ -1,4 +1,5 @@
 import { HighlightStateOption, parseOptions } from './Options'
+import { defaultHighlightStateOptionValue } from './DefaultHighlightStateOptionValue'
 
 describe('Options', () => {
   test('that all options are optional', () => {
@@ -138,7 +139,7 @@ describe('Options', () => {
   })
   describe('highlightStates', () => {
     describe('parsing', () => {
-      it('requires at least two elements', () => {
+      it('requires at least one elements', () => {
         expect(
           parseOptions({
             highlightStates: JSON.stringify(
@@ -152,15 +153,20 @@ describe('Options', () => {
               { value: '', color: 'transparent' },
             ] satisfies HighlightStateOption[]),
           }),
-        ).toBeInstanceOf(Error)
+        ).not.toBeInstanceOf(Error)
+      })
+      it('add a default state to the start of the list', () => {
+        const highlightStates: HighlightStateOption[] = [
+          { value: 'add', color: 'green' },
+        ]
         expect(
           parseOptions({
-            highlightStates: JSON.stringify([
-              { value: '', color: 'transparent' },
-              { value: 'add', color: 'green' },
-            ] satisfies HighlightStateOption[]),
+            highlightStates: JSON.stringify(highlightStates),
           }),
-        ).not.toBeInstanceOf(Error)
+        ).toHaveProperty('highlightStates', [
+          defaultHighlightStateOptionValue,
+          ...highlightStates,
+        ])
       })
       it('can be empty', () => {
         expect(

@@ -15,7 +15,7 @@ export const onChangeSetAction =
       ? withLength(
           content.highlightStates ?? [],
           lineCount,
-          defaultHighlightStateOption.value,
+          defaultHighlightStateOption(options).value,
         )
       : undefined,
   })

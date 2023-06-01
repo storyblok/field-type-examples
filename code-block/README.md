@@ -56,7 +56,7 @@ Configure the options:
     }
   ]
   ```
-  The color will be used to highlight lines on the screen inside the Visual Editor, while the value will be used in the content to indicate which lines were highlighted by the user. The first object in the list becomes the default.
+  The `color` will be used to highlight lines on the screen inside the Visual Editor, while the `value` will be used in the content to indicate which lines were highlighted by the user. By default, lines will not be highlighted and have the value of an empty string (`""`).
   If this option is omitted, line highlighting is turned off.
 
 Example output:
