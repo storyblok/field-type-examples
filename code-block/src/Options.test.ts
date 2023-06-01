@@ -83,12 +83,12 @@ describe('Options', () => {
         }),
       ).toHaveProperty('languages', ['js'])
     })
-    it('sorts the languages', () => {
+    it('parses the arry', () => {
       expect(
         parseOptions({
           languages: JSON.stringify(['b', 'a', 'B', 'A', 'Á']),
         }),
-      ).toHaveProperty('languages', ['a', 'A', 'Á', 'b', 'B'])
+      ).toHaveProperty('languages', ['b', 'a', 'B', 'A', 'Á'])
     })
     it('can be "empty"', () => {
       expect(

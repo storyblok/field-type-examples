@@ -83,7 +83,7 @@ const languagesOptionFromOptions = (
     if (!languages.success) {
       return languages.error
     }
-    return languages.data.sort((a, b) => a.localeCompare(b))
+    return languages
   } catch (e) {
     return new Error(
       `Error parsing "languages" option: ${

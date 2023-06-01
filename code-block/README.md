@@ -33,7 +33,7 @@ Configure the options:
   ```json
   ["JavaScript", "TypeScript", "Elm", "Vue", "Rust", "JSON"]
   ```
-  The options will be sorted alphabetically. If this option is omitted, the language select input is hidden.
+  If this option is omitted, the language select input is hidden.
 - `enableLineNumberStart`: (optional) if set to `true`, users can change the starting line numbers (`content.lineNumberStart`).
 - `highlightStates`: (optional) A JSON array of objects. Each object has two properties: `value` (`string`) and `color` (`string`). For example:
   ```json
