@@ -84,7 +84,7 @@ describe('Options', () => {
         }),
       ).toHaveProperty('languages', ['js'])
     })
-    it('parses the arry', () => {
+    it('parses the array', () => {
       expect(
         parseOptions({
           languages: JSON.stringify(['b', 'a', 'B', 'A', 'Á']),
