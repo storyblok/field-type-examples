@@ -1,34 +1,33 @@
 import { FieldPluginData } from '@storyblok/field-plugin'
-import { z } from 'zod'
-
-const RawOptionsSchema = z.object({
-  highlightStates: z.string().optional(),
-  enableTitle: z.enum(['', 'true', 'false']).optional(),
-  enableLineNumberStart: z.enum(['', 'true', 'false']).optional(),
-  languages: z.string().optional(),
-})
-
-type RawOptions = z.infer<typeof RawOptionsSchema>
+import { z, ZodSchema } from 'zod'
 
 export type CodeBlockOptions = {
   highlightStates?: HighlightStateOptions
   enableTitle: boolean
   enableLineNumberStart: boolean
-  languages: string[]
+  languages?: [string, ...string[]]
 }
 
-const HighlightStateOptionSchema = z.array(
-  z.object({
-    value: z.string(),
-    color: z.string(),
-  }),
-)
+const HighlightStateOptionSchema = z
+  .array(
+    z.object({
+      value: z.string(),
+      color: z.string(),
+    }),
+  )
+  .nonempty()
+  .min(2)
+  .optional()
 
-const LanguagesOptionSchema = z.array(z.string())
+const LanguagesOptionSchema = z.array(z.string()).nonempty().optional()
 
-export type HighlightStateOption = z.infer<
-  typeof HighlightStateOptionSchema
->[number]
+type ArrayElement<ArrType> = ArrType extends readonly (infer ElementType)[]
+  ? ElementType
+  : never
+
+export type HighlightStateOption = ArrayElement<
+  Required<z.infer<typeof HighlightStateOptionSchema>>
+>
 
 export type HighlightStateOptions = [
   HighlightStateOption,
@@ -40,78 +39,69 @@ export const defaultHighlightStateOption = {
   color: 'transparent',
 }
 
-const highlightStatesOptionFromOptions = (
-  rawOptions: RawOptions,
-): CodeBlockOptions['highlightStates'] | undefined | Error => {
-  if (
-    typeof rawOptions.highlightStates === 'undefined' ||
-    rawOptions.highlightStates === ''
-  ) {
+// The next minor version after zod@3.21.4 will eliminate the need of `name`: https://github.com/colinhacks/zod/pull/2426
+const optionalJsonPreprocessor = (name: string) => (data: unknown) => {
+  if (typeof data === 'undefined') {
+    return undefined
+  }
+  if (typeof data !== 'string') {
+    return new Error('Not a string')
+  }
+  if (data === '') {
     return undefined
   }
   try {
-    const highlightStates = HighlightStateOptionSchema.safeParse(
-      JSON.parse(rawOptions.highlightStates),
-    )
-    if (!highlightStates.success) {
-      return highlightStates.error
-    }
-    // TODO unique
-    return [defaultHighlightStateOption, ...highlightStates.data]
+    return JSON.parse(data)
   } catch (e) {
-    return new Error(
-      `Error parsing "highlightStates" option: ${
-        e instanceof Error ? e.message : 'unknown error'
-      }`,
-    )
+    throw new Error(`Failed to parse "${name}" because it is not a valid JSON`)
   }
 }
 
-const languagesOptionFromOptions = (
-  rawOptions: RawOptions,
-): CodeBlockOptions['languages'] | Error => {
-  if (
-    typeof rawOptions.languages === 'undefined' ||
-    rawOptions.languages === ''
-  ) {
-    return []
-  }
+const optionsSchema = z.object({
+  enableTitle: z
+    .preprocess(
+      optionalJsonPreprocessor('options.enableLineNumberStart'),
+      z.boolean().optional(),
+    )
+    .default(false),
+  enableLineNumberStart: z
+    .preprocess(
+      optionalJsonPreprocessor('options.enableLineNumberStart'),
+      z.boolean().optional(),
+    )
+    .default(false),
+  highlightStates: z
+    .preprocess(
+      optionalJsonPreprocessor('options.highlightStates'),
+      HighlightStateOptionSchema,
+    )
+    .optional(),
+  languages: z
+    .preprocess(
+      optionalJsonPreprocessor('options.highlightStates'),
+      LanguagesOptionSchema,
+    )
+    .optional(),
+})
+
+const superSafeParse = <Schema extends ZodSchema>(
+  schema: Schema,
+  data: unknown,
+): Error | z.infer<Schema> => {
   try {
-    const languages = LanguagesOptionSchema.safeParse(
-      JSON.parse(rawOptions.languages),
-    )
-    if (!languages.success) {
-      return languages.error
+    const res = schema.safeParse(data)
+    if (!res.success) {
+      return res.error
+    } else {
+      return res.data
     }
-    return languages.data.sort((a, b) => a.localeCompare(b))
   } catch (e) {
-    return new Error(
-      `Error parsing "languages" option: ${
-        e instanceof Error ? e.message : 'unknown error'
-      }`,
-    )
+    return e instanceof Error
+      ? e
+      : new Error('Failed to parse by unknown reason')
   }
 }
 
 export const parseOptions = (
   data: FieldPluginData['options'],
-): CodeBlockOptions | Error => {
-  const rawOptions = RawOptionsSchema.safeParse(data)
-  if (!rawOptions.success) {
-    return rawOptions.error
-  }
-  const highlightStates = highlightStatesOptionFromOptions(rawOptions.data)
-  if (highlightStates instanceof Error) {
-    return highlightStates
-  }
-  const languages = languagesOptionFromOptions(rawOptions.data)
-  if (languages instanceof Error) {
-    return languages
-  }
-  return {
-    highlightStates,
-    enableTitle: rawOptions.data.enableTitle === 'true',
-    enableLineNumberStart: rawOptions.data.enableLineNumberStart === 'true',
-    languages,
-  }
-}
+): CodeBlockOptions | Error => superSafeParse(optionsSchema, data)
