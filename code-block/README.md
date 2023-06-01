@@ -33,7 +33,7 @@ Configure the options:
   ```json
   [
     "Ada",
-    "Basic",
+    "Bash",
     "C",
     "Dart",
     "Elm",
