@@ -37,7 +37,7 @@ export const CodeEditorHeader: FunctionComponent<{
   lineNumberStart: number | undefined
   onLineNumberStartChange: (lineNumberStart: number | undefined) => void
   enableTitle: boolean
-  languages: undefined | [string, ...string[]]
+  languages: undefined | string[]
   enableLineNumberStart: boolean
 }> = (props) => {
   const { enableTitle, languages, enableLineNumberStart } = props

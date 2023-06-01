@@ -11,6 +11,12 @@ import { ErrorAlert } from './ErrorAlert'
 export const App: FunctionComponent = () => {
   const { type, data, actions, error } = useFieldPlugin()
 
+  const options = useMemo(() => parseOptions(data?.options), [data?.options])
+  const content = useMemo(
+    () => parseCodeEditorState(data?.content),
+    [data?.content],
+  )
+
   if (type === 'loading') {
     return <></>
   }
@@ -19,19 +25,11 @@ export const App: FunctionComponent = () => {
     console.error(error.message)
     return <></>
   }
-
-  const options = useMemo(() => parseOptions(data.options), [data.options])
-
   if (options instanceof Error) {
     return (
       <ErrorAlert title="Error parsing options">{options.message}</ErrorAlert>
     )
   }
-
-  const content = useMemo(
-    () => parseCodeEditorState(data.content),
-    [data.content],
-  )
 
   const setContent = (
     setStateAction: CodeEditorContent | ((content: CodeEditorContent) => void),

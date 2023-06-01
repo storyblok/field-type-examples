@@ -100,7 +100,7 @@ const superSafeParse = <Schema extends ZodSchema>(
       return res.data
     }
   } catch (e) {
-    throw new Error(
+    return new Error(
       `Failed to parse options: ${
         e instanceof Error ? e.message : 'Unknown reason'
       }`,
@@ -108,6 +108,5 @@ const superSafeParse = <Schema extends ZodSchema>(
   }
 }
 
-export const parseOptions = (
-  data: FieldPluginData['options'],
-): CodeBlockOptions | Error => superSafeParse(optionsSchema, data)
+export const parseOptions = (data: unknown): CodeBlockOptions | Error =>
+  superSafeParse(optionsSchema, data)
