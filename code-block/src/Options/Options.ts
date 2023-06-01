@@ -1,5 +1,5 @@
 import { z, ZodSchema } from 'zod'
-import { defaultHighlightStateOptionValue } from './DefaultHighlightStateOptionValue'
+import { defaultHighlightStateOptionValue } from './defaultHighlightStateOptionValue'
 
 export type CodeBlockOptions = {
   highlightStates?: HighlightStateOptions

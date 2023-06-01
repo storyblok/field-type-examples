@@ -1,5 +1,5 @@
 import { HighlightStateOption, parseOptions } from './Options'
-import { defaultHighlightStateOptionValue } from './DefaultHighlightStateOptionValue'
+import { defaultHighlightStateOptionValue } from './defaultHighlightStateOptionValue'
 
 describe('Options', () => {
   test('that all options are optional', () => {
