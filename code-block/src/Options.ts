@@ -83,7 +83,7 @@ const languagesOptionFromOptions = (
     if (!languages.success) {
       return languages.error
     }
-    return languages
+    return languages.data
   } catch (e) {
     return new Error(
       `Error parsing "languages" option: ${
