@@ -1,11 +1,6 @@
-import {
-  ChangeEventHandler,
-  createElement,
-  FunctionComponent,
-  useMemo,
-  useState,
-} from 'react'
-import { css } from '@emotion/react'
+import { ChangeEventHandler, FunctionComponent, useMemo, useState } from 'react'
+import { css, jsx } from '@emotion/react'
+import { CSSInterpolation } from '@emotion/serialize'
 import {
   sb_dark_blue,
   sb_dark_blue_50,
@@ -112,6 +107,8 @@ export const CodeEditorHeader: FunctionComponent<{
             value={props.language}
             onChange={handleLanguageChange}
             css={css({
+              // Enough width to display even the programming language longest names,
+              //  such as "Visual Basic"
               width: '15ch',
             })}
           >
@@ -150,44 +147,41 @@ const fieldsetCss = css({
   },
 
   marginBottom: borderWith,
-
-  '& > input, & > select': {
-    flex: 1,
-    color: 'inherit',
-    backgroundColor: 'transparent',
-
-    marginLeft: 15,
-    marginRight: 15,
-    paddingTop: 0,
-    paddingBottom: 0,
-    border: 'none',
-    transition: transition('background-color', 'border-color'),
-    // Typography
-    fontSize: '12px',
-    fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
-    fontWeight: 400,
-    lineHeight: '1.66',
-    letterSpacing: '0.03333em',
-
-    '&::placeholder': {
-      color: sb_dark_blue_50,
-    },
-
-    '&:focus': {
-      borderColor: sb_green,
-      outline: 'none',
-    },
-    // hide up/down arrows
-    '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
-      appearance: 'none',
-    },
-    'input[type=number]': {
-      appearance: 'textfield',
-    },
-  },
 })
 
-const inputCss = css({})
+const inputCss = {
+  flex: 1,
+  color: 'inherit',
+  backgroundColor: 'transparent',
+
+  marginLeft: 15,
+  marginRight: 15,
+  paddingTop: 0,
+  paddingBottom: 0,
+  border: 'none',
+  transition: transition('background-color', 'border-color'),
+  // Typography
+  fontSize: '12px',
+  fontFamily: 'Roboto, Helvetica, Arial, sans-serif',
+  fontWeight: 400,
+  lineHeight: '1.66',
+  letterSpacing: '0.03333em',
+  '&::placeholder': {
+    color: sb_dark_blue_50,
+  },
+
+  '&:focus': {
+    borderColor: sb_green,
+    outline: 'none',
+  },
+  // hide up/down arrows
+  '&::-webkit-inner-spin-button, &::-webkit-outer-spin-button': {
+    appearance: 'none',
+  },
+  'input[type=number]': {
+    appearance: 'textfield',
+  },
+} satisfies CSSInterpolation
 
 const InputField = <Component extends 'select' | 'input'>(
   props: {
@@ -198,65 +192,6 @@ const InputField = <Component extends 'select' | 'input'>(
   const { label, component, ...inputProps } = props
   const [focused, setFocused] = useState(false)
 
-  const dividerCss = useMemo(
-    () =>
-      css({
-        position: 'absolute',
-        bottom: -borderWith,
-        transition: transition('border-bottom-color'),
-        color: focused ? sb_green : 'transparent',
-      }),
-    [focused],
-  )
-  return (
-    <FieldSet>
-      <Label
-        htmlFor={props.id}
-        focused={focused}
-      >
-        {label}
-      </Label>
-      {createElement(component, {
-        css: inputCss,
-        onFocus: () => setFocused(true),
-        onBlur: () => setFocused(false),
-        ...inputProps,
-      })}
-      <Divider css={dividerCss} />
-    </FieldSet>
-  )
-}
-
-export const Select: FunctionComponent<JSX.IntrinsicElements['select']> = (
-  props,
-) => (
-  <select
-    css={inputCss}
-    {...props}
-  />
-)
-
-export const Input: FunctionComponent<JSX.IntrinsicElements['input']> = (
-  props,
-) => (
-  <input
-    css={inputCss}
-    {...props}
-  />
-)
-export const FieldSet: FunctionComponent<JSX.IntrinsicElements['fieldset']> = (
-  props,
-) => (
-  <fieldset
-    css={fieldsetCss}
-    {...props}
-  />
-)
-
-export const Label: FunctionComponent<
-  { focused: boolean } & JSX.IntrinsicElements['label']
-> = (props) => {
-  const { focused, ...labelProps } = props
   const labelCss = useMemo(
     () =>
       css({
@@ -277,12 +212,33 @@ export const Label: FunctionComponent<
     [focused],
   )
 
+  const dividerCss = useMemo(
+    () =>
+      css({
+        position: 'absolute',
+        bottom: -borderWith,
+        transition: transition('border-bottom-color'),
+        color: focused ? sb_green : 'transparent',
+      }),
+    [focused],
+  )
+
   return (
-    <label
-      htmlFor={props.id}
-      css={labelCss}
-      {...labelProps}
-    />
+    <fieldset css={fieldsetCss}>
+      <label
+        htmlFor={props.id}
+        css={labelCss}
+      >
+        {label}
+      </label>
+      {jsx(component, {
+        css: inputCss,
+        onFocus: () => setFocused(true),
+        onBlur: () => setFocused(false),
+        ...inputProps,
+      })}
+      <Divider css={dividerCss} />
+    </fieldset>
   )
 }
 
