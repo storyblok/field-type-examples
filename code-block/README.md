@@ -46,9 +46,13 @@ Configure the options:
   ```
   If this option is omitted, the language select input is hidden.
 - `enableLineNumberStart`: (optional) if set to `true`, users can change the starting line numbers (`content.lineNumberStart`).
-- `highlightStates`: (optional) A JSON array of objects. Each object has two properties: `value` (`string`) and `color` (`string`). For example:
+- `highlightStates`: (optional) A JSON array of at least two objects. Each object has two properties: `value` (`string`) and `color` (`string`). For example:
   ```json
   [
+    {
+      "value": "",
+      "color": "transparent"
+    },
     {
       "value": "attention",
       "color": "#fbce41"
@@ -63,7 +67,7 @@ Configure the options:
     }
   ]
   ```
-  The color will be used to highlight lines on the screen inside the Visual Editor, while the value will be used in the content to indicate which lines were highlighted by the user.
+  The `color` will be used to highlight lines on the screen inside the Visual Editor, while the `value` will be used in the content to indicate which lines were highlighted by the user. By default, lines will not be highlighted and have the value of an empty string (`""`).
   If this option is omitted, line highlighting is turned off.
 
 Example output:

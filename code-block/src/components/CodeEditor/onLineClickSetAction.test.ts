@@ -1,11 +1,14 @@
 import { CodeEditorContent } from './CodeEditorContent'
-import { CodeBlockOptions, defaultHighlightStateOption } from '../../Options'
+import { CodeBlockOptions } from '../../Options'
 import { onLineClickSetAction } from './onLineClickSetAction'
 
 const code = 'dummy code'
 
 const options: CodeBlockOptions['highlightStates'] = [
-  defaultHighlightStateOption,
+  {
+    value: '',
+    color: 'transparent',
+  },
   {
     value: 'neutral',
     color: 'yellow',

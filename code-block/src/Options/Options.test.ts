@@ -1,8 +1,5 @@
-import {
-  defaultHighlightStateOption,
-  HighlightStateOption,
-  parseOptions,
-} from './Options'
+import { HighlightStateOption, parseOptions } from './Options'
+import { defaultHighlightStateOptionValue } from './defaultHighlightStateOptionValue'
 
 describe('Options', () => {
   test('that all options are optional', () => {
@@ -69,12 +66,17 @@ describe('Options', () => {
     })
   })
   describe('languages', () => {
-    it('can be an empty JSON array', () => {
+    it('requires at least one element', () => {
       expect(
         parseOptions({
           languages: JSON.stringify([]),
         }),
-      ).toHaveProperty('languages', [])
+      ).toBeInstanceOf(Error)
+      expect(
+        parseOptions({
+          languages: JSON.stringify(['Elm']),
+        }),
+      ).not.toBeInstanceOf(Error)
     })
     it('can be a JSON array of strings', () => {
       expect(
@@ -135,19 +137,43 @@ describe('Options', () => {
       ).toBeInstanceOf(Error)
     })
   })
-  describe('highlightState', () => {
+  describe('highlightStates', () => {
     describe('parsing', () => {
-      it('adds a default state', () => {
+      it('requires at least one elements', () => {
         expect(
           parseOptions({
             highlightStates: JSON.stringify(
               [] satisfies HighlightStateOption[],
             ),
           }),
-        ).toHaveProperty(
-          'highlightStates',
-          expect.arrayContaining([defaultHighlightStateOption]),
-        )
+        ).toBeInstanceOf(Error)
+        expect(
+          parseOptions({
+            highlightStates: JSON.stringify([
+              { value: '', color: 'transparent' },
+            ] satisfies HighlightStateOption[]),
+          }),
+        ).not.toBeInstanceOf(Error)
+      })
+      it('add a default state to the start of the list', () => {
+        const highlightStates: HighlightStateOption[] = [
+          { value: 'add', color: 'green' },
+        ]
+        expect(
+          parseOptions({
+            highlightStates: JSON.stringify(highlightStates),
+          }),
+        ).toHaveProperty('highlightStates', [
+          defaultHighlightStateOptionValue,
+          ...highlightStates,
+        ])
+      })
+      it('can be empty', () => {
+        expect(
+          parseOptions({
+            highlightStates: '',
+          }),
+        ).not.toBeInstanceOf(Error)
       })
       it('returns an Error when the JSON is invalid', () => {
         expect(
