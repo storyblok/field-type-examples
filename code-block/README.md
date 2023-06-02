@@ -20,7 +20,7 @@ If you want to deploy your field plugin to Storyblok, you can do so by using our
 
 # App Description
 
-The Code Block extension for is a lightweight text editor tailored for developers and content creators. It provides a seamless solution for pasting code snippets into documentation sites or other platforms. With customizable titles, programming language options, line number offsets, and line highlighting, this user-friendly extension allows you to effortlessly manage and present code snippets with clarity and precision. Enhance your documentation workflow and make code sharing a breeze with the Code Block extension.
+The Code Block extension is a lightweight text editor tailored for developers and content creators. With customizable titles, programming language options, line number offsets, and line highlighting, this user-friendly extension allows you to effortlessly manage and present code snippets with clarity and precision. Enhance your documentation and make code sharing a breeze with the Code Block extension.
 
 ## How to set up
 
@@ -29,9 +29,20 @@ In the Block Library, select a block to edit. Add a new field, set the _Field Ty
 Configure the options:
 
 - `enableTitle`: (optional) if set to `true`, users can provide a title (`content.title`).
-- `languages`: (optional) a JSON array of strings. The strings are the languages that the user can choose between.
+- `languages`: (optional) a JSON array of strings. The strings are the languages that the user can choose between. For example:
   ```json
-  ["JavaScript", "TypeScript", "Elm", "Vue", "Rust", "JSON"]
+  [
+    "Ada",
+    "Bash",
+    "C",
+    "Dart",
+    "Elm",
+    "F#",
+    "Haskell",
+    "JavaScript",
+    "JSON",
+    "TypeScript"
+  ]
   ```
   If this option is omitted, the language select input is hidden.
 - `enableLineNumberStart`: (optional) if set to `true`, users can change the starting line numbers (`content.lineNumberStart`).
