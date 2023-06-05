@@ -3,11 +3,12 @@ import { CodeEditorContent } from './CodeEditorContent'
 import { CodeMirror } from '../CodeMirror'
 import { mix } from './mix'
 import { css } from '@emotion/react'
-import { CodeBlockOptions } from '../../Options'
+import { CodeBlockOptions, defaultHighlightStateOption } from '../../Options'
 import { colorFromHighlightState } from './colorFromHighlightState'
 import { CodeEditorHeader } from './CodeEditorHeader'
 import { onLineClickSetAction } from './onLineClickSetAction'
 import { onChangeSetAction } from './onChangeSetAction'
+import { sb_dark_blue } from '../../storyblok-design'
 
 /**
  * A simple code editor without syntax highlighting where the user can select rows in four states: default, highlight, add, remove,
@@ -79,8 +80,11 @@ export const CodeEditor: FunctionComponent<{
         css={css(
           props.content.highlightStates?.map(
             (state, index) =>
-              options.highlightStates && {
+              options.highlightStates &&
+              state !==
+                defaultHighlightStateOption(options.highlightStates).value && {
                 [`.cm-gutterElement:nth-of-type(${index + 2})`]: {
+                  color: sb_dark_blue,
                   backgroundColor: mix(
                     colorFromHighlightState(options.highlightStates, state),
                     'transparent',
