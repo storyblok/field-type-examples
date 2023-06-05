@@ -176,3 +176,7 @@ css(
 ```
 
 where `colorFromHighlightState` maps elements of the `content.highlightStates` array to HTML colors. The benefit with this approach is that your DOM nodes are unaltered and the styles can be rendered on the server.
+
+## Source Code
+
+You'll find the source code for this field plugin on GitHub: https://github.com/storyblok/field-type-examples/tree/main/code-block.
