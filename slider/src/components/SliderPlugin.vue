@@ -67,9 +67,6 @@ export default {
         (mark) => mark > this.minValue && mark < this.maxValue,
       )
     },
-    selectedValue() {
-      return this.value?.value ?? this.defaultValue
-    },
     defaultValue() {
       return numberFromString(this.options.defaultValue) ?? this.minValue
     },
@@ -87,9 +84,14 @@ export default {
         return undefined
       }
     },
+    selectedValue() {
+      return typeof this.value?.value === 'number'
+        ? this.value.value
+        : this.defaultValue
+    },
   },
   created() {
-    if (!this.value?.value) {
+    if (typeof this.value?.value !== 'number') {
       this.setValue({ value: this.defaultValue })
     }
   },
