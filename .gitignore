@@ -105,3 +105,6 @@ dist
 
 # IDE
 .idea
+
+#SO related files
+.DS_Store

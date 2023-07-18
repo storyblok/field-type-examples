@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+html {
+  overflow: hidden;
+}
+
+:root {
+  /*Storyblok colors*/
+  --sb_green: #00b3b0;
+  --sb_green_75: #40c6c4;
+  --sb_green_50: #7fd9d7;
+  --sb_green_25: #d9f4f3;
+  --sb_dark_blue: #1b243f;
+  --sb_dark_blue_75: #545b6f;
+  --sb_dark_blue_50: #8d919f;
+  --sb_dark_blue_25: #c6c8cf;
+  --green: #2db47d;
+  --green_75: #62c79e;
+  --green_50: #96d9be;
+  --green_25: #caecde;
+  --green_disabled: #004e4c;
+  --yellow: #fbce41;
+  --yellow_75: #fcdb71;
+  --yellow_50: #fde6a0;
+  --yellow_25: #fef3cf;
+  --blue: #395ece;
+  --blue_75: #6b87db;
+  --blue_50: #9caee6;
+  --blue_25: #cdd7f3;
+  --orange: #ffac00;
+  --orange_75: #ffc140;
+  --orange_50: #ffd57f;
+  --orange_25: #ffeabf;
+  --red: #ff6159;
+  --red_75: #ff8983;
+  --red_50: #ffb0ac;
+  --red_25: #ffd7d5;
+  --light: #dfe3e8;
+  --light_75: #e7eaee;
+  --light_50: #eff1f3;
+  --light_25: #f7f8f9;
+  --light_gray: #b1b5be;
+  --black: #101525;
+  --white: #fff;
+
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  line-height: 1.5;
+  font-weight: 400;
+  font-size: 1rem;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+#app {
+  width: 100%;
+}
+
+/*Element Styles*/
+body {
+  margin: 0;
+  display: flex;
+  box-sizing: border-box;
+}
