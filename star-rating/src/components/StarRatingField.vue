@@ -74,15 +74,6 @@ watch(model, (newValue) => {
   outline: none
 }
 
-.rate__icon {
-  max-width: none;
-  display: block;
-  color: inherit;
-  display: inline-block;
-  overflow: hidden;
-  line-height: 1
-}
-
 .rate__star {
   margin: 0;
   padding: 0;
@@ -113,11 +104,6 @@ watch(model, (newValue) => {
   transition: all .2s
 }
 
-.rate__star--checked {
-  color: #ffac00
-}
-
-.rate__star--focused,
 .rate__star:hover {
   -webkit-transform: scale(1.1);
   transform: scale(1.1)
