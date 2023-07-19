@@ -21,9 +21,7 @@ const getStarValue = (index: number) => {
 
   if (activeValue >= index) {
     starClass.push('rate__star--full');
-  }
-  
-  else if (activeValue >= index - 0.5) {
+  } else if (activeValue >= index - 0.5) {
     starClass.push('rate__star--half');
   }
 
