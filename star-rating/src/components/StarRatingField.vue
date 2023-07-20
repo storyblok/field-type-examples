@@ -10,8 +10,8 @@ const hoverValue = ref(0)
 const hoverActive = ref(false)
 const numberOfStars = ref(5)
 
-if (plugin.data.options.numberOfStars) {
-  numberOfStars.value = parseInt(plugin.data.options.numberOfStars, 10);
+if (plugin.data.options.amount) {
+  numberOfStars.value = parseInt(plugin.data.options.amount, 10);
 }
 
 const getStarValue = (index: number) => {

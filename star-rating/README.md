@@ -9,5 +9,5 @@ Star Rating | A field-type to display a star rating | [Lisi Linhart](https://git
 
 ## Amount of stars
 
-The default number of stars is 5.
-You can change the number of stars by passing an option with the name `numberOfStars` and the value should be the number of stars you want. 
+The default amount of stars is 5.
+You can change the amount of stars by passing an option with the name `amount` and the value should be the amount of stars you want.
