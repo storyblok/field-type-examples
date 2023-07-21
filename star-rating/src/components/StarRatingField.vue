@@ -15,7 +15,7 @@ const isAmountInvalid = ref(false)
 if (plugin.data.options.amount) {
   const amountOption = parseInt(plugin.data.options.amount, 10);
 
-  if (!isNaN(amountOption) && amountOption > 1) {
+  if (!isNaN(amountOption) && amountOption > 0) {
     amount.value = amountOption;
     isAmountInvalid.value = false;
   } else {

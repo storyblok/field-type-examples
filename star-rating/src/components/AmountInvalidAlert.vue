@@ -2,7 +2,7 @@
     <section class="invalid-box">
         <h1 class="invalid-box__heading">Invalid Option</h1>
         <p class="invalid-box__content">
-            The <code>amount</code> option should be greater than 1
+            The <code>amount</code> option should be greater than 0
         </p>
     </section>
 </template>
