@@ -9,14 +9,14 @@ const plugin = useFieldPlugin()
 const model = ref(0);
 const hoverValue = ref(0)
 const hoverActive = ref(false)
-const numberOfStars = ref(5)
+const amount = ref(5)
 const isAmountInvalid = ref(false)
 
 if (plugin.data.options.amount) {
-  const amount = parseInt(plugin.data.options.amount, 10);
+  const amountOption = parseInt(plugin.data.options.amount, 10);
 
-  if (!isNaN(amount) && amount > 1) {
-    numberOfStars.value = amount;
+  if (!isNaN(amountOption) && amountOption > 1) {
+    amount.value = amountOption;
     isAmountInvalid.value = false;
   } else {
     isAmountInvalid.value = true;
@@ -60,8 +60,8 @@ watch(model, (newValue) => {
 <template>
   <AmountInvalidAlert v-if="isAmountInvalid" />
   <ol v-else @mouseleave="onMouseLeave" role="radiogroup" class="rate">
-    <li :class="getStarValue(index)" v-for="index in numberOfStars" :key="index">
-      <div role="radio" :aria-checked="model > index" :aria-posinset="index + 1" :aria-setsize="numberOfStars"
+    <li :class="getStarValue(index)" v-for="index in amount" :key="index">
+      <div role="radio" :aria-checked="model > index" :aria-posinset="index + 1" :aria-setsize="amount"
         tabindex="0">
         <StarIcon class="rate__star--first" @click="onClick(index - 0.5)" @mousemove="onHover(index - 0.5)" />
         <StarIcon class="rate__star--second" @click="onClick(index)" @mousemove="onHover(index)" />
