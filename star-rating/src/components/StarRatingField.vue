@@ -59,7 +59,7 @@ watch(model, (newValue) => {
 
 <template>
   <AmountInvalidAlert v-if="isAmountInvalid" />
-  <ul v-else @mouseleave="onMouseLeave" role="radiogroup" class="rate">
+  <ol v-else @mouseleave="onMouseLeave" role="radiogroup" class="rate">
     <li :class="getStarValue(index)" v-for="index in numberOfStars" :key="index">
       <div role="radio" :aria-checked="model > index" :aria-posinset="index + 1" :aria-setsize="numberOfStars"
         tabindex="0">
@@ -67,7 +67,7 @@ watch(model, (newValue) => {
         <StarIcon class="rate__star--second" @click="onClick(index)" @mousemove="onHover(index)" />
       </div>
     </li>
-  </ul>
+  </ol>
 </template>
 
 <style scoped>
