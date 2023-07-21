@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useFieldPlugin } from '../useFieldPlugin'
 import StarIcon from './StarIcon.vue'
 import AmountInvalidAlert from './AmountInvalidAlert.vue'
@@ -9,19 +9,25 @@ const plugin = useFieldPlugin()
 const model = ref(0);
 const hoverValue = ref(0)
 const hoverActive = ref(false)
-const amount = ref(5)
-const isAmountInvalid = ref(false)
+const isAmountValid = ref(true)
 
-if (plugin.data.options.amount) {
-  const amountOption = parseInt(plugin.data.options.amount, 10);
+const amount = computed(() => {
+  const defaultAmount = 5;
 
-  if (!isNaN(amountOption) && amountOption > 0) {
-    amount.value = amountOption;
-    isAmountInvalid.value = false;
-  } else {
-    isAmountInvalid.value = true;
+  if (plugin.data.options.amount) {
+    const amountOption = parseInt(plugin.data.options.amount, 10);
+
+    isAmountValid.value = !isNaN(amountOption) && amountOption > 0
+
+    return isAmountValid.value ? amountOption : defaultAmount;
   }
-}
+
+  return defaultAmount;
+})
+
+watch(amount, () => {
+  model.value = 0;
+})
 
 const getStarValue = (index: number) => {
   const activeValue: number = hoverActive.value ? hoverValue.value : model.value;
@@ -58,11 +64,10 @@ watch(model, (newValue) => {
 </script>
 
 <template>
-  <AmountInvalidAlert v-if="isAmountInvalid" />
+  <AmountInvalidAlert v-if="!isAmountValid" />
   <ol v-else @mouseleave="onMouseLeave" role="radiogroup" class="rate">
     <li :class="getStarValue(index)" v-for="index in amount" :key="index">
-      <div role="radio" :aria-checked="model > index" :aria-posinset="index + 1" :aria-setsize="amount"
-        tabindex="0">
+      <div role="radio" :aria-checked="model > index" :aria-posinset="index + 1" :aria-setsize="amount" tabindex="0">
         <StarIcon class="rate__star--first" @click="onClick(index - 0.5)" @mousemove="onHover(index - 0.5)" />
         <StarIcon class="rate__star--second" @click="onClick(index)" @mousemove="onHover(index)" />
       </div>
