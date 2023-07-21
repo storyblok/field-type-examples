@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue';
 import { useFieldPlugin } from '../useFieldPlugin'
 import StarIcon from './StarIcon.vue'
+import AmountInvalidAlert from './AmountInvalidAlert.vue'
 
 const plugin = useFieldPlugin()
 
@@ -9,9 +10,17 @@ const model = ref(0);
 const hoverValue = ref(0)
 const hoverActive = ref(false)
 const numberOfStars = ref(5)
+const isAmountInvalid = ref(false)
 
 if (plugin.data.options.amount) {
-  numberOfStars.value = parseInt(plugin.data.options.amount, 10);
+  const amount = parseInt(plugin.data.options.amount, 10);
+
+  if (!isNaN(amount) && amount > 1) {
+    numberOfStars.value = amount;
+    isAmountInvalid.value = false;
+  } else {
+    isAmountInvalid.value = true;
+  }
 }
 
 const getStarValue = (index: number) => {
@@ -46,11 +55,11 @@ const onHover = (index: number) => {
 watch(model, (newValue) => {
   plugin.actions.setContent(newValue)
 })
-
 </script>
 
 <template>
-  <ul @mouseleave="onMouseLeave" role="radiogroup" class="rate">
+  <AmountInvalidAlert v-if="isAmountInvalid" />
+  <ul v-else @mouseleave="onMouseLeave" role="radiogroup" class="rate">
     <li :class="getStarValue(index)" v-for="index in numberOfStars" :key="index">
       <div role="radio" :aria-checked="model > index" :aria-posinset="index + 1" :aria-setsize="numberOfStars"
         tabindex="0">
