@@ -10,6 +10,8 @@ Tags Field Type
 
 A custom field-type for Storyblok that allow users to select multiple arbitrary options in a free-form way.
 
+![screenshot.gif](docs/screenshot.png)
+
 ![demo.gif](docs/demo.gif)
 
 ## How to use
@@ -33,7 +35,7 @@ yarn install
 yarn deploy
 ```
 
-4. `yarn deploy` will ask you for the place this plugin should be added (my plugin or Partner Portal) and also for its name. Please provide them.
+4. `yarn deploy` will ask you for the plugin's name and also the place this plugin should be added (My Plugins or Partner Portal). Please provide them in order to continue.
 
 5. Once the deploy is done successfully, you can continue its usage following the "Set up" section right below.
 
@@ -41,12 +43,12 @@ Ps: If you are facing some issue performing these steps, you could also check ou
 
 # App Description
 
-Select and display multiple arbitrary values as tags with the Tags field plugin. The tag is ideal when working with oraganized data structures such as categories and label, for example. However, it uses is unlimited.
+Select and display multiple arbitrary values as tags with this Tags field plugin. The tag is ideal when working with oraganized data structures such as categories and label, for example. However, it uses is unlimited.
 
 ## How to set up
 
 In the block library, select a block to edit. Add a new field, set the _Field Type_ to _Plugin_, and set the _Custom
-Type_ to `your-field-plugin-name`.
+Type_ to `your-field-plugin-name` (same used when performing `yarn deploy`).
 
 Configure the options:
 
