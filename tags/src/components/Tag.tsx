@@ -1,6 +1,11 @@
 import { FunctionComponent, useEffect, useState } from 'react'
-import { Autocomplete, Chip, TextField } from '@mui/material'
 import { useFieldPlugin } from '../useFieldPlugin'
+import {
+  Autocomplete,
+  AutocompleteGetTagProps,
+  Chip,
+  TextField,
+} from '@mui/material'
 
 const Tag: FunctionComponent = () => {
   const { data, actions } = useFieldPlugin()
@@ -23,17 +28,7 @@ const Tag: FunctionComponent = () => {
       onChange={(e, newValue: string[]) => setInitialValue(newValue)}
       freeSolo
       disableClearable
-      renderTags={(value: readonly string[], getTagProps) =>
-        value.map((option: string, index: number) => (
-          // eslint-disable-next-line react/jsx-key
-          <Chip
-            label={option}
-            color="primary"
-            variant="filled"
-            {...getTagProps({ index })}
-          />
-        ))
-      }
+      renderTags={renderTagItem}
       renderInput={(params) => (
         <TextField
           variant="outlined"
@@ -44,6 +39,20 @@ const Tag: FunctionComponent = () => {
     />
   )
 }
+
+const renderTagItem = (
+  value: readonly string[],
+  getTagProps: AutocompleteGetTagProps,
+) =>
+  value.map((option: string, index: number) => (
+    // eslint-disable-next-line react/jsx-key
+    <Chip
+      label={option}
+      color="primary"
+      variant="filled"
+      {...getTagProps({ index })}
+    />
+  ))
 
 const parseJsonValue = (jsonStr: string) => {
   try {
