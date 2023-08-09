@@ -48,7 +48,7 @@ const renderTagItem = (
     // eslint-disable-next-line react/jsx-key
     <Chip
       label={option}
-      color="primary"
+      color="default"
       variant="filled"
       {...getTagProps({ index })}
     />
