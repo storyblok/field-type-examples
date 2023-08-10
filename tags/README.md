@@ -48,7 +48,7 @@ Select and display multiple arbitrary values as tags with this Tags field plugin
 ## How to set up
 
 In the block library, select a block to edit. Add a new field, set the _Field Type_ to _Plugin_, and set the _Custom
-Type_ to `your-field-plugin-name` (same used when performing `yarn deploy`).
+Type_ to `storyblok-tags`.
 
 Configure the options:
 
