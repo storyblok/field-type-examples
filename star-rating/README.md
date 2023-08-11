@@ -14,7 +14,7 @@ A field-type to display a star rating.
 
 ![demo.gif](docs/demo.gif)
 
-## How to use
+## Getting Started
 
 To add this field type to a Storyblok space, you need to
 
@@ -51,10 +51,27 @@ Star Rating component that can be used in a variety of scenarios, such as:
 
 ## How to set up
 
-In the block library, select a block to edit. Add a new field, set the _Field Type_ to _Plugin_, and set the _Custom
-Type_ to `storyblok-star-rating-v2`.
+In the block library, select a block to edit:
 
-Configure the options:
+![setup-1.png](docs/setup-1.png)
+
+Add a new field, set the _Field Type_ to _Plugin_:
+
+![setup-2.png](docs/setup-2.png)
+
+![setup-3.png](docs/setup-3.png)
+
+Open the new created field:
+
+![setup-4.png](docs/setup-4.png)
+
+set the _Custom Type_ to `storyblok-star-rating-v2`:
+
+![setup-5.png](docs/setup-5.png)
+
+Configure the options and save:
+
+![setup-6.png](docs/setup-6.png)
 
 - `amount` (optional): change the amount of stars.
   Default: 5
