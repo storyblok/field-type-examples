@@ -43,11 +43,13 @@ Ps: If you are facing some issue performing these steps, you could also check ou
 
 # App Description
 
-Star Rating component that can be used in a variety of scenarios, such as:
+Have your audience share their opinion on any topic by giving it a meaningful score.
 
-- Rating movie
-- Rating some place
-- Rating some musician performance
+The star-rating plug-in grants you the ability to add a star-styled rating system to your content, allowing your audience to easily express their opinions and evaluations such as:
+
+- Rating a restaurant
+- Rating a movie
+- Rating a product/seller
 
 ## How to set up
 
