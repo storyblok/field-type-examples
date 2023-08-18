@@ -43,7 +43,7 @@ Ps: If you are facing some issue performing these steps, you could also check ou
 
 # App Description
 
-Select multiple arbitrary values with this tag-styled component.
+Create lists of strings with a simple interface.
 
 With this plugin, you have the ability to select and showcase a range of distinct labels. This plugin is especially useful for keeping things organized, such as grouping items into categories or assigning labels to them. For instance, if you're sorting different types of products on a website, you can use this plugin to attach tags like "electronics," "clothing," or "books" to each item.
 
