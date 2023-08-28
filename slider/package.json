@@ -1,4 +1,6 @@
 {
+  "name": "slider",
+  "version": "0.0.0",
   "description": "A Storyblok field-type that lets the user select a value from a range",
   "private": true,
   "license": "UNLICENSED",
