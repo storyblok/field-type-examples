@@ -12,7 +12,7 @@ A version of the hosted field plugin, has already been published and is free to 
 2. Add a new field to your **Blok Library** inside your story.
 3. Select **Field Type** as **Plugin**.
 4. In the **Custom Type** input, choose **sb-hosted-plugin**.
-5. Copy and paste the URL of your field plugin under Add options → `HOST_URL`.
+5. Copy and paste the URL of your field plugin under Add options → `HOST_URL`. (e.g. `http://localhost:8080`)
 
 ## Next Steps
 For detailed information on field plugins within Storyblok, check out the following articles:
