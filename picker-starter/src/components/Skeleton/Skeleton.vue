@@ -4,8 +4,8 @@
       variant === 'rectangle'
         ? 'plugin-skeleton--rectangle'
         : variant === 'text'
-        ? 'plugin-skeleton--text'
-        : ''
+          ? 'plugin-skeleton--text'
+          : ''
     }`"
   />
 </template>
