@@ -1,5 +1,0 @@
-export * from './BasketItem'
-export * from './compareName'
-export * from './basket'
-export * from './matchItem'
-export * from './e-commerce-platform'

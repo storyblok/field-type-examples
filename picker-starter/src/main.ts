@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import './style.css'
-import App from './components/App.vue'
+import App from './App.vue'
 
 if (!document.querySelector('#app')) {
   // In production, `#app` may or may not exist.

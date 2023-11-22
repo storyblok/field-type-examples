@@ -1,5 +1,6 @@
 import Joi from 'joi'
-import { EcommercePluginParams, StoryblokIcon } from './components/core'
+import { StoryblokIcon } from './components'
+import { PickerPluginParams } from './domain'
 
 type MockPluginOptions = {
   // The maximum number of items that can be added
@@ -23,10 +24,10 @@ const optionsExample: MockPluginOptions = {
   limit: '10',
 }
 
-export const mockPluginParams: EcommercePluginParams = {
+export const mockPluginParams: PickerPluginParams = {
   title: 'Picker Starter',
   icon: StoryblokIcon,
-  makeECommerceService: (props) => {
+  makeService: (props: unknown) => {
     const validationResult = optionsSchema.validate(props, {
       abortEarly: false,
     })
@@ -37,32 +38,54 @@ export const mockPluginParams: EcommercePluginParams = {
         }
       : {
           exampleOptions: optionsExample,
-          value: [
-            {
-              name: 'product',
-              label: 'Products',
-              query: () => ({
-                items: [],
-                pageInfo: {
-                  totalCount: 10,
-                },
-              }),
-              getOptions: () => ({
-                label: 'option 1',
-                value: 'value 1',
-              }),
-            },
-            {
-              name: 'category',
-              label: 'Categories',
-              query: () => ({
-                items: [],
-                pageInfo: {
-                  totalCount: 10,
-                },
-              }),
-            },
-          ],
+          value: {
+            itemServices: [
+              {
+                name: 'product',
+                label: 'Products',
+                query: async () => ({
+                  items: [],
+                  pageInfo: {
+                    totalCount: 10,
+                  },
+                }),
+                getOptions: async () => [
+                  {
+                    type: 'single',
+                    label: 'Category',
+                    options: [
+                      {
+                        label: 'Option 1',
+                        value: 'Value 1',
+                      },
+                    ],
+                    defaultValue: undefined,
+                    name: 'category',
+                  },
+                ],
+              },
+              {
+                name: 'variations',
+                label: 'Variations',
+                query: async () => ({
+                  items: [],
+                  pageInfo: {
+                    totalCount: 10,
+                  },
+                }),
+              },
+              {
+                name: 'category',
+                label: 'Categories',
+                query: async () => ({
+                  items: [],
+                  pageInfo: {
+                    totalCount: 10,
+                  },
+                }),
+              },
+            ],
+          },
         }
   },
 }

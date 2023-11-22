@@ -1,7 +1,0 @@
-export { default as EcommercePlugin } from './EcommercePlugin.vue'
-export * from './pluginPropsDef'
-export * from './WrapperPluginProps'
-export * from './ecommerce-options'
-export * from './options'
-export * from './ecommerce-plugin-params'
-export * from './validation-result'

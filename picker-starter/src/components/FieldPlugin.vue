@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { EcommercePlugin } from './core'
+import { Picker } from './Picker'
 import { mockPluginParams } from '../mock'
 import { useFieldPlugin } from '@storyblok/field-plugin/vue3'
+import { pluginName } from '../settings'
 
 const plugin = useFieldPlugin()
-
-const pluginName = 'sb-picker-starter'
 
 const content = computed(() => {
   const content = plugin.data.content
@@ -22,7 +21,7 @@ const setValue = (content: any) => {
 </script>
 
 <template>
-  <EcommercePlugin
+  <Picker
     v-if="plugin.type === 'loaded'"
     v-bind="mockPluginParams"
     :unvalidated-options="plugin.data.options"

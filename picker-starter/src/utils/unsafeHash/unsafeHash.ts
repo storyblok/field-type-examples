@@ -9,7 +9,7 @@ export const unsafeHash = (str: string): number => {
   for (let i = 0, len = str.length; i < len; i++) {
     const chr = str.charCodeAt(i)
     hash = (hash << 5) - hash + chr
-    hash |= 0 // Convert to 32bit integer
+    hash |= 0
   }
   return hash
 }
