@@ -1,5 +1,5 @@
 import { createBasket } from './basket'
-import { BasketItem } from '@storyblok/e-commerce'
+import { BasketItem } from '@/domain'
 
 const testBasket = (initialItems: BasketItem[] = []) => {
   let items = [...initialItems]
