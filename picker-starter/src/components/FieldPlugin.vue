@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Picker } from './Picker'
-import { mockPluginParams } from '../mock'
+import { servicePluginParams } from '../service'
 import { useFieldPlugin } from '@storyblok/field-plugin/vue3'
 import { pluginName } from '../settings'
 
@@ -23,7 +23,7 @@ const setValue = (content: any) => {
 <template>
   <Picker
     v-if="plugin.type === 'loaded'"
-    v-bind="mockPluginParams"
+    v-bind="servicePluginParams"
     :unvalidated-options="plugin.data.options"
     :is-modal-open="plugin.data.isModalOpen"
     :set-modal-open="plugin.actions.setModalOpen"

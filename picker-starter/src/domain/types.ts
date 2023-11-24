@@ -66,6 +66,10 @@ export type MultiOption = {
   options: Option[]
 }
 
+export type PickerPlatform<ServiceParams> = (
+  serviceParams: ServiceParams,
+) => PickerService
+
 export type ItemQuery = (
   params: ItemQueryParams,
 ) => Promise<QueryResponse<BasketItem>>

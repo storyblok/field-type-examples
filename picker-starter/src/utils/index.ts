@@ -1,3 +1,7 @@
+export * from './capitalizeWord'
+export * from './compareName'
+export * from './delayed'
+export * from './getPage'
 export * from './initials'
 export * from './hasKey'
 export * from './pseudoRandom'
