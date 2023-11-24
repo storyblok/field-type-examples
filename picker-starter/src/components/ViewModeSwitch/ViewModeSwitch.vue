@@ -34,6 +34,7 @@ export default {
       },
     },
   },
+  emits: ['update:modelValue'],
   methods: {
     handleSelectGrid() {
       this.$emit('update:modelValue', 'grid')

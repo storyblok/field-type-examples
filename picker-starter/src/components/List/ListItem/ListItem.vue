@@ -1,7 +1,7 @@
 <template>
   <li
-    @click="handleClick"
     class="plugin-list-item"
+    @click="handleClick"
   >
     <slot />
   </li>
@@ -10,6 +10,7 @@
 <script>
 export default {
   name: 'ListItem',
+  emits: ['click'],
   methods: {
     handleClick() {
       this.$emit('click')

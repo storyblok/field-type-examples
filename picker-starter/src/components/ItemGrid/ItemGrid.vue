@@ -15,8 +15,8 @@
           :item="item"
           :value="isSelected(item)"
           :disabled="!isSelected(item) && isLimitReached"
-          @click="() => onClick(item)"
           class="plugin-item-grid__card"
+          @click="() => onClick(item)"
         />
       </transition>
     </GridItem>

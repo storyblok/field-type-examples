@@ -33,6 +33,7 @@ export default {
       default: undefined,
     },
   },
+  emits: ['click'],
   methods: {
     handleClick(e) {
       this.$emit('click', e)

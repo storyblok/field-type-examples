@@ -36,6 +36,7 @@ export default {
       default: undefined,
     },
   },
+  emits: ['click'],
   computed: {
     label() {
       return addedItemsCountLabel(this.size, this.maxItems)

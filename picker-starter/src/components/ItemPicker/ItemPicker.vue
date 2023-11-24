@@ -3,7 +3,7 @@
     <SearchField
       :placeholder="`Search ${itemService.label}`"
       :model-value="queryState.query.search_term"
-      @update:modelValue="handleSearchTermChange"
+      @update:model-value="handleSearchTermChange"
     />
     <div class="plugin-toolbar">
       <div class="plugin-query-container">
@@ -11,8 +11,8 @@
           v-for="userOption in queryState.userOptions"
           :key="userOption.name"
           :user-option="userOption"
-          :modelValue="queryState.query.userOptions[userOption.name]"
-          @update:modelValue="
+          :model-value="queryState.query.userOptions[userOption.name]"
+          @update:model-value="
             (value) => handleUserOptionChange(userOption.name, value)
           "
         />
@@ -57,7 +57,7 @@
       :total="queryState.pageInfo.totalCount"
       carousel
       class="plugin-item-grid__pagination"
-      @update:modelValue="handlePageClick"
+      @update:model-value="handlePageClick"
     />
     <SbButton
       v-if="showCursorPagination"

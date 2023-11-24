@@ -7,7 +7,7 @@
     class="plugin-user-select"
     filterable
     clearable
-    @update:modelValue="input"
+    @update:model-value="input"
   />
 </template>
 
@@ -30,6 +30,7 @@ export default {
       default: undefined,
     },
   },
+  emits: ['update:modelValue'],
   methods: {
     input(value) {
       this.$emit('update:modelValue', value ?? undefined)

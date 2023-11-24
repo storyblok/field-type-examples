@@ -1,7 +1,7 @@
 <template>
   <div
-    @click="handleClick"
     class="plugin-card"
+    @click="handleClick"
   >
     <slot />
   </div>
@@ -13,6 +13,7 @@ export default {
   props: {
     value: Boolean,
   },
+  emits: ['click'],
   methods: {
     handleClick() {
       this.$emit('click')

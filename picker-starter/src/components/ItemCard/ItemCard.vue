@@ -74,6 +74,7 @@ export default {
       default: false,
     },
   },
+  emits: ['click'],
   methods: {
     handleClick() {
       if (this.disabled) {
