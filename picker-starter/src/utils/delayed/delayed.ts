@@ -7,3 +7,5 @@ export const delayed = <T>(
       resolve(promise)
     }, delayMs)
   })
+
+export const randomDelay = () => 250 + Math.random() * 500

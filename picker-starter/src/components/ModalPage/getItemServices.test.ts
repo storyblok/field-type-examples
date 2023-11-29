@@ -1,5 +1,5 @@
 import { getItemServices } from './getItemServices'
-import { PickerService, ItemService } from '../../domain'
+import { PickerService, ItemService } from '../../core'
 
 const mockItemService: ItemService = {
   query: () =>

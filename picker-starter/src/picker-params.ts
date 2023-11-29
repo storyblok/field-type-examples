@@ -1,7 +1,7 @@
 import { StoryblokIcon } from './components'
-import { PickerPluginParams } from '@/domain'
-import { platform } from './platform'
+import { PickerPluginParams } from '@/core'
 import { optionsExample, optionsSchema } from './options-schema'
+import { platform } from './plataform'
 
 export const servicePluginParams: PickerPluginParams = {
   title: 'Picker Starter',
@@ -10,6 +10,7 @@ export const servicePluginParams: PickerPluginParams = {
     const validationResult = optionsSchema.validate(props, {
       abortEarly: false,
     })
+
     return validationResult.error
       ? {
           exampleOptions: optionsExample,

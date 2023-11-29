@@ -73,6 +73,7 @@ export type PickerPlatform<ServiceParams> = (
 export type ItemQuery = (
   params: ItemQueryParams,
 ) => Promise<QueryResponse<BasketItem>>
+
 export type OptionsQuery = () => Promise<MultiOption[]>
 
 export type ItemService = {
@@ -91,3 +92,5 @@ export type PickerPluginParams = {
   icon?: Component
   makeService: (props: unknown) => PickerServiceValidationResult
 }
+
+export type OptionsParams = Record<string, string>

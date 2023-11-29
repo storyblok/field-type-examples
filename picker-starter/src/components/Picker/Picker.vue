@@ -33,7 +33,7 @@ import {
   ValidationError,
   NotificationProvider,
 } from '../'
-import { createBasket } from '@/domain'
+import { createBasket } from '@/core'
 import '@storyblok/design-system/dist/storyblok-design-system.css'
 import { pluginPropsDef } from './pluginPropsDef'
 import { numberFromString } from '@/utils'

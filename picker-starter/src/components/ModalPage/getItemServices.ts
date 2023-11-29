@@ -1,4 +1,4 @@
-import { PickerService, ItemService } from '@/domain'
+import { PickerService, ItemService } from '@/core'
 
 export const getItemServices = (
   pickerService: PickerService,

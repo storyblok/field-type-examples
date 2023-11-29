@@ -1,3 +1,6 @@
+import { CategoryItem, ItemQuery } from '@/core'
+import { compareName, delayed, randomDelay } from '@/utils'
+
 export type MockCategory = {
   name: string
   description?: string
@@ -38,3 +41,26 @@ export const categoryMockAssets: MockCategory[] = [
     description: 'Take care of yourself',
   },
 ]
+
+const allCategories: CategoryItem[] = categoryMockAssets
+  .map(
+    (it) =>
+      ({
+        type: 'category',
+        id: it.name,
+        description: undefined,
+        image: undefined,
+        ...it,
+      }) as CategoryItem,
+  )
+  .sort(compareName)
+
+export const queryCategories: ItemQuery = async () => {
+  const response = {
+    items: allCategories,
+    pageInfo: {
+      totalCount: allCategories.length,
+    },
+  }
+  return delayed(randomDelay(), response)
+}

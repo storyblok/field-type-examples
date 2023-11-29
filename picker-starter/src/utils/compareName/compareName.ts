@@ -1,4 +1,4 @@
-import { BasketItem } from '@/domain'
+import { BasketItem } from '@/core'
 
 export const compareName = <Item extends BasketItem>(
   a: Item,

@@ -1,5 +1,5 @@
 import { createBasket } from './basket'
-import { BasketItem } from '@/domain'
+import { BasketItem } from '@/core'
 
 const testBasket = (initialItems: BasketItem[] = []) => {
   let items = [...initialItems]

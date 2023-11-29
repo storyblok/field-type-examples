@@ -4,7 +4,7 @@ import {
   ItemQueryParams,
   MultiOption,
   PagePaginatedPageInfo,
-} from '@/domain'
+} from '@/core'
 
 export type State = {
   loadingState:

@@ -1,4 +1,4 @@
-import { BasketItem, MultiOption, QueryResponse } from '@/domain'
+import { BasketItem, MultiOption, QueryResponse } from '@/core'
 
 export type ReceiveItemsAction = {
   type: 'receiveItems'

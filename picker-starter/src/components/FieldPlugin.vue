@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Picker } from './Picker'
-import { servicePluginParams } from '../service'
+import { servicePluginParams } from '../picker-params'
 import { useFieldPlugin } from '@storyblok/field-plugin/vue3'
 import { pluginName } from '../settings'
 

@@ -1,5 +1,19 @@
-import { ProductItem } from '@/domain'
-import { compareName, capitalizeWord } from '@/utils'
+import {
+  ItemQuery,
+  MultiOption,
+  Option,
+  OptionsQuery,
+  ProductItem,
+  matchItem,
+} from '@/core'
+import {
+  compareName,
+  capitalizeWord,
+  getPage,
+  delayed,
+  randomDelay,
+} from '@/utils'
+import { categoryMockAssets } from './categories'
 
 export type TmpProduct = {
   id: number
@@ -641,3 +655,69 @@ export const products: MockProduct[] = tmpAssets
     } as MockProduct
   })
   .sort(compareName)
+
+export const getProductOptions: OptionsQuery = async () => {
+  const options: Option[] = categoryMockAssets.map<Option>((category) => {
+    return {
+      label: category.name,
+      value: category.name,
+    }
+  })
+
+  const response: MultiOption[] = [
+    {
+      type: 'single',
+      label: 'Category',
+      options: options,
+      defaultValue: undefined,
+      name: 'category',
+    },
+    {
+      type: 'multi',
+      options: options,
+      defaultValue: [],
+      label: 'Categories',
+      name: 'categoryMulti',
+    },
+  ]
+
+  return delayed(randomDelay(), response)
+}
+
+export const queryProducts: ItemQuery = async ({
+  search_term,
+  page,
+  per_page,
+  userOptions,
+}) => {
+  const matchCategory =
+    (categoryName: undefined | string) => (product: MockProduct) => {
+      if (typeof categoryName === 'undefined') {
+        return true
+      }
+      return product.category === categoryName
+    }
+  const matchCategories =
+    (categoryNames: string[]) => (product: MockProduct) => {
+      if (categoryNames.length === 0) {
+        return true
+      }
+      return categoryNames.some(
+        (categoryName) => product.category === categoryName,
+      )
+    }
+
+  const allSearchResults = products
+    .filter(matchCategory(userOptions['category'] as string | undefined))
+    .filter(matchCategories(userOptions['categoryMulti'] as string[]))
+    .filter(matchItem(search_term))
+
+  const paginatedResults = getPage(allSearchResults, page, per_page)
+  const response = {
+    items: paginatedResults,
+    pageInfo: {
+      totalCount: allSearchResults.length,
+    },
+  }
+  return delayed(randomDelay(), response)
+}

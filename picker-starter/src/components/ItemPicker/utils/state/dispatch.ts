@@ -4,7 +4,7 @@ import {
   ReceiveItemsAction,
   ReceiveUserOptionsAction,
 } from './types/Action'
-import { isCursorPaginatedResult, isPagePaginatedResult } from '@/domain'
+import { isCursorPaginatedResult, isPagePaginatedResult } from '@/core'
 import { defaultPerPage } from '@/settings'
 
 export const firstPagePagination = {
