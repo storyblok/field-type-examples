@@ -9,7 +9,7 @@ import { defaultPerPage } from '@/settings'
 
 export const firstPagePagination = {
   page: 1,
-  per_page: defaultPerPage,
+  perPage: defaultPerPage,
   cursor: undefined,
 }
 
@@ -77,7 +77,7 @@ export const dispatch: Dispatch = (state, action) => {
         query: {
           ...state.query,
           // New search string
-          search_term: action.searchTerm,
+          searchTerm: action.searchTerm,
           // Reset pagination
           ...firstPagePagination,
         },

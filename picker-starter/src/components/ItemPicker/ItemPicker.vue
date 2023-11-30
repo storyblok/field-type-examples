@@ -2,7 +2,7 @@
   <div class="plugin-item-grid">
     <SearchField
       :placeholder="`Search ${itemService.label}`"
-      :model-value="queryState.query.search_term"
+      :model-value="queryState.query.searchTerm"
       @update:model-value="handleSearchTermChange"
     />
     <div class="plugin-toolbar">
@@ -53,7 +53,7 @@
     <SbPagination
       v-if="showPagePagination"
       :model-value="queryState.query.page"
-      :per-page="queryState.query.per_page"
+      :per-page="queryState.query.perPage"
       :total="queryState.pageInfo.totalCount"
       carousel
       class="plugin-item-grid__pagination"

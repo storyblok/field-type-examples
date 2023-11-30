@@ -1,16 +1,16 @@
 import { BasketItem } from '../'
 
-const stringContains = (search_term: string) => (text: string | undefined) =>
-  typeof text === 'string' && new RegExp(search_term, 'gi').test(text)
+const stringContains = (searchTerm: string) => (text: string | undefined) =>
+  typeof text === 'string' && new RegExp(searchTerm, 'gi').test(text)
 
 /**
  * Searches an item for a text occurrence. Case-insensitive.
- * @param search_term
+ * @param searchTerm
  * @returns true if the item contains the text
  */
 export const matchItem =
-  (search_term: string) =>
+  (searchTerm: string) =>
   (item: BasketItem): boolean => {
-    const containsSearchTerm = stringContains(search_term)
+    const containsSearchTerm = stringContains(searchTerm)
     return containsSearchTerm(item.name) || containsSearchTerm(item.description)
   }

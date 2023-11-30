@@ -28,7 +28,7 @@ export type ReducerMixin = {
 const initialState: State = {
   loadingState: 'loadingOptions',
   query: {
-    search_term: '',
+    searchTerm: '',
     userOptions: {},
     ...firstPagePagination,
   },

@@ -685,9 +685,9 @@ export const getProductOptions: OptionsQuery = async () => {
 }
 
 export const queryProducts: ItemQuery = async ({
-  search_term,
+  searchTerm,
   page,
-  per_page,
+  perPage,
   userOptions,
 }) => {
   const matchCategory =
@@ -710,9 +710,9 @@ export const queryProducts: ItemQuery = async ({
   const allSearchResults = products
     .filter(matchCategory(userOptions['category'] as string | undefined))
     .filter(matchCategories(userOptions['categoryMulti'] as string[]))
-    .filter(matchItem(search_term))
+    .filter(matchItem(searchTerm))
 
-  const paginatedResults = getPage(allSearchResults, page, per_page)
+  const paginatedResults = getPage(allSearchResults, page, perPage)
   const response = {
     items: paginatedResults,
     pageInfo: {
