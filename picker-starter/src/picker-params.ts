@@ -1,7 +1,7 @@
 import { StoryblokIcon } from './components'
 import { PickerPluginParams } from '@/core'
 import { optionsExample, optionsSchema } from './options-schema'
-import { platform } from './plataform'
+import { platform } from './platform'
 
 export const servicePluginParams: PickerPluginParams = {
   title: 'Picker Starter',
