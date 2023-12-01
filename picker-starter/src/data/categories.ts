@@ -62,5 +62,7 @@ export const queryCategories: ItemQuery = async () => {
       totalCount: allCategories.length,
     },
   }
+
+  // It mimics an API call by adding a delay before return the data.
   return delayed(randomDelay(), response)
 }

@@ -681,6 +681,7 @@ export const getProductOptions: OptionsQuery = async () => {
     },
   ]
 
+  // It mimics an API call by adding a delay before return the data.
   return delayed(randomDelay(), response)
 }
 
@@ -719,5 +720,7 @@ export const queryProducts: ItemQuery = async ({
       totalCount: allSearchResults.length,
     },
   }
+
+  // It mimics an API call by adding a delay before return the data.
   return delayed(randomDelay(), response)
 }
