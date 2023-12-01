@@ -666,13 +666,6 @@ export const getProductOptions: OptionsQuery = async () => {
 
   const response: MultiOption[] = [
     {
-      type: 'single',
-      label: 'Category',
-      options: options,
-      defaultValue: undefined,
-      name: 'category',
-    },
-    {
       type: 'multi',
       options: options,
       defaultValue: [],
@@ -691,13 +684,6 @@ export const queryProducts: ItemQuery = async ({
   perPage,
   userOptions,
 }) => {
-  const matchCategory =
-    (categoryName: undefined | string) => (product: MockProduct) => {
-      if (typeof categoryName === 'undefined') {
-        return true
-      }
-      return product.category === categoryName
-    }
   const matchCategories =
     (categoryNames: string[]) => (product: MockProduct) => {
       if (categoryNames.length === 0) {
@@ -709,7 +695,6 @@ export const queryProducts: ItemQuery = async ({
     }
 
   const allSearchResults = products
-    .filter(matchCategory(userOptions['category'] as string | undefined))
     .filter(matchCategories(userOptions['categoryMulti'] as string[]))
     .filter(matchItem(searchTerm))
 
