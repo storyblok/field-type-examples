@@ -183,7 +183,7 @@ export default {
     },
     async queryUserOptions() {
       const queryUserOptions = () =>
-        this.itemService.getOptions?.() ?? Promise.resolve([])
+        this.itemService.getFilters?.() ?? Promise.resolve([])
       const res = await queryUserOptions().catch((error) => error)
       if (res instanceof Error) {
         // Silent notification; the application will still function, so do not show error to the user

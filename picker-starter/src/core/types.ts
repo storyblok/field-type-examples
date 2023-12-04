@@ -50,20 +50,22 @@ export type ItemQueryParams = {
   page: number
 }
 
-export type Option = {
-  value: string
-  label: string
-}
+export type FilterList = () => Promise<FilterItem[]>
 
 /**
  * Describes a select input field.
  */
-export type MultiOption = {
+export type FilterItem = {
   type: 'single' | 'multi'
   label: string
   name: string
   defaultValue: string | string[] | undefined
-  options: Option[]
+  options: FilterOption[]
+}
+
+export type FilterOption = {
+  value: string
+  label: string
 }
 
 export type PickerPlatform<ServiceParams> = (
@@ -74,13 +76,11 @@ export type ItemQuery = (
   params: ItemQueryParams,
 ) => Promise<QueryResponse<BasketItem>>
 
-export type OptionsQuery = () => Promise<MultiOption[]>
-
 export type ItemService = {
   name: string
   label: string
   query: ItemQuery // TODO rename propery
-  getOptions?: OptionsQuery
+  getFilters?: FilterList
 }
 
 export type PickerService = {

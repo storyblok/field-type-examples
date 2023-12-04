@@ -2,7 +2,7 @@ import {
   BasketItem,
   CursorPaginatedPageInfo,
   ItemQueryParams,
-  MultiOption,
+  FilterItem,
   PagePaginatedPageInfo,
 } from '@/core'
 
@@ -14,6 +14,6 @@ export type State = {
     | 'loadingMore' // Results will append current list of items
   query: ItemQueryParams
   items: BasketItem[]
-  userOptions: MultiOption[]
+  userOptions: FilterItem[]
   pageInfo: PagePaginatedPageInfo | CursorPaginatedPageInfo | undefined
 }

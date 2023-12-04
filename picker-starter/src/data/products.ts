@@ -1,8 +1,8 @@
 import {
   ItemQuery,
-  MultiOption,
-  Option,
-  OptionsQuery,
+  FilterList,
+  FilterItem,
+  FilterOption,
   ProductItem,
   matchItem,
 } from '@/core'
@@ -656,15 +656,17 @@ export const products: MockProduct[] = tmpAssets
   })
   .sort(compareName)
 
-export const getProductOptions: OptionsQuery = async () => {
-  const options: Option[] = categoryMockAssets.map<Option>((category) => {
-    return {
-      label: category.name,
-      value: category.name,
-    }
-  })
+export const getProductFilters: FilterList = async () => {
+  const options: FilterOption[] = categoryMockAssets.map<FilterOption>(
+    (category) => {
+      return {
+        label: category.name,
+        value: category.name,
+      }
+    },
+  )
 
-  const response: MultiOption[] = [
+  const response: FilterItem[] = [
     {
       type: 'single',
       label: 'Category',
