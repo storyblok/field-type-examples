@@ -1,5 +1,5 @@
 import { CategoryItem, ItemQuery } from '@/core'
-import { compareName, delayed, randomDelay } from '@/utils'
+import { compareName, delayed, getPage, randomDelay } from '@/utils'
 
 export type MockCategory = {
   name: string
@@ -55,9 +55,10 @@ const allCategories: CategoryItem[] = categoryMockAssets
   )
   .sort(compareName)
 
-export const queryCategories: ItemQuery = async () => {
+export const queryCategories: ItemQuery = async ({ page, perPage }) => {
+  const paginatedResults = getPage(allCategories, page, perPage)
   const response = {
-    items: allCategories,
+    items: paginatedResults,
     pageInfo: {
       totalCount: allCategories.length,
     },
