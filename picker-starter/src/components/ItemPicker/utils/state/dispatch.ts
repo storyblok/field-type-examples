@@ -97,7 +97,7 @@ const dispatchReceiveFilterAction = (
   state: State,
   action: ReceiveFiltersAction,
 ): State => {
-  const filterSelectionValues = initFilterSelectionValues(action)
+  const initialFilterSelectionValues = initFilterSelectionValues(action)
 
   return {
     ...state,
@@ -105,7 +105,7 @@ const dispatchReceiveFilterAction = (
     filterList: action.filterList,
     query: {
       ...state.query,
-      filterSelection: filterSelectionValues,
+      filterSelection: initialFilterSelectionValues,
     },
   }
 }
