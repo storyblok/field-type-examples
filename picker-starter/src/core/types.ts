@@ -44,9 +44,8 @@ export type PickerServiceValidationResult =
 export type ItemQueryParams = {
   perPage: number
   searchTerm: string
-  userOptions: Record<string, string | string[]> // TODO in generic argument\
+  filterSelection: Record<string, string | string[]>
   cursor: string | undefined
-  // TODO can be undefined(?)
   page: number
 }
 

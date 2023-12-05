@@ -691,7 +691,7 @@ export const queryProducts: ItemQuery = async ({
   searchTerm,
   page,
   perPage,
-  userOptions,
+  filterSelection,
 }) => {
   const matchCategory =
     (categoryName: undefined | string) => (product: MockProduct) => {
@@ -711,8 +711,8 @@ export const queryProducts: ItemQuery = async ({
     }
 
   const allSearchResults = products
-    .filter(matchCategory(userOptions['category'] as string | undefined))
-    .filter(matchCategories(userOptions['categoryMulti'] as string[]))
+    .filter(matchCategory(filterSelection['category'] as string | undefined))
+    .filter(matchCategories(filterSelection['categoryMulti'] as string[]))
     .filter(matchItem(searchTerm))
 
   const paginatedResults = getPage(allSearchResults, page, perPage)

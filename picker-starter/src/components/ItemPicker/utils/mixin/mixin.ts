@@ -26,14 +26,14 @@ export type ReducerMixin = {
 }
 
 const initialState: State = {
-  loadingState: 'loadingOptions',
+  loadingState: 'loadingFilters',
   query: {
     searchTerm: '',
-    userOptions: {},
+    filterSelection: {},
     ...firstPagePagination,
   },
   items: [],
-  userOptions: [],
+  filterList: [],
   pageInfo: undefined,
 }
 

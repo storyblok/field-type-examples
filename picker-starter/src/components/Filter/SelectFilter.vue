@@ -1,8 +1,8 @@
 <template>
   <SbSelect
-    :multiple="userOption.type === 'multi'"
-    :label="userOption.label"
-    :options="userOption.options"
+    :multiple="filterItem.type === 'multi'"
+    :label="filterItem.label"
+    :options="filterItem.options"
     :model-value="modelValue"
     class="plugin-user-select"
     filterable
@@ -15,12 +15,12 @@
 import { SbSelect } from '@storyblok/design-system'
 
 export default {
-  name: 'UserOption',
+  name: 'SelectFilter',
   components: {
     SbSelect,
   },
   props: {
-    userOption: {
+    filterItem: {
       type: Object,
       required: true,
     },

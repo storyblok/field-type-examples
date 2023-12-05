@@ -2,7 +2,7 @@ import { State } from './types/State'
 import {
   Action,
   ReceiveItemsAction,
-  ReceiveUserOptionsAction,
+  ReceiveFiltersAction,
 } from './types/Action'
 import { isCursorPaginatedResult, isPagePaginatedResult } from '@/core'
 import { defaultPerPage } from '@/settings'
@@ -16,13 +16,13 @@ export const firstPagePagination = {
 export type Dispatch = (state: State, action: Action) => State
 export const dispatch: Dispatch = (state, action) => {
   switch (action.type) {
-    case 'requestUserOptions':
+    case 'requestFilters':
       return {
         ...state,
-        loadingState: 'loadingOptions',
+        loadingState: 'loadingFilters',
       }
-    case 'receiveUserOptions':
-      return dispatchReceiveUserOptions(state, action)
+    case 'receiveFilters':
+      return dispatchReceiveFilterAction(state, action)
     case 'receiveItems':
       return dispatchReceiveItems(state, action)
     case 'receiveError':
@@ -56,14 +56,14 @@ export const dispatch: Dispatch = (state, action) => {
           page: action.page,
         },
       }
-    case 'setUserOption':
+    case 'setFilterSelection':
       return {
         ...state,
         loadingState: 'loadingNewPage',
         query: {
           ...state.query,
-          userOptions: {
-            ...state.query.userOptions,
+          filterSelection: {
+            ...state.query.filterSelection,
             [action.name]: action.value,
           },
           // Reset pagination
@@ -84,30 +84,32 @@ export const dispatch: Dispatch = (state, action) => {
       }
   }
 }
-const dispatchReceiveUserOptions = (
+
+const initFilterSelectionValues = (action: ReceiveFiltersAction) =>
+  action.filterList.reduce((previousValue, currentValue) => {
+    return {
+      ...previousValue,
+      [currentValue.name]: currentValue.defaultValue,
+    }
+  }, {})
+
+const dispatchReceiveFilterAction = (
   state: State,
-  action: ReceiveUserOptionsAction,
+  action: ReceiveFiltersAction,
 ): State => {
-  // Set the default values
-  const defaultUserOptionValues = action.userOptions.reduce(
-    (previousValue, currentValue) => {
-      return {
-        ...previousValue,
-        [currentValue.name]: currentValue.defaultValue,
-      }
-    },
-    {},
-  )
+  const filterSelectionValues = initFilterSelectionValues(action)
+
   return {
     ...state,
     loadingState: 'loadingNewPage',
-    userOptions: action.userOptions,
+    filterList: action.filterList,
     query: {
       ...state.query,
-      userOptions: defaultUserOptionValues,
+      filterSelection: filterSelectionValues,
     },
   }
 }
+
 const dispatchReceiveItems = (
   state: State,
   action: ReceiveItemsAction,
