@@ -1,5 +1,9 @@
 import { BasketItem, FilterItem, QueryResponse } from '@/core'
 
+export type RequestFiltersAction = {
+  type: 'requestFilters'
+}
+
 export type ReceiveItemsAction = {
   type: 'receiveItems'
   response: QueryResponse<BasketItem>
@@ -10,8 +14,18 @@ export type ReceiveFiltersAction = {
   filterList: FilterItem[]
 }
 
-export type RequestFiltersAction = {
-  type: 'requestFilters'
+export type ReceiveErrorAction = {
+  type: 'receiveError'
+  error: Error
+}
+
+export type LoadMoreAction = {
+  type: 'loadMore'
+}
+
+export type LoadPageAction = {
+  type: 'loadPage'
+  page: number
 }
 
 export type SetUserSelectionAction = {
@@ -20,23 +34,17 @@ export type SetUserSelectionAction = {
   value: string | string[]
 }
 
+export type SetSearchTermAction = {
+  type: 'setSearchTerm'
+  searchTerm: string
+}
+
 export type Action =
   | RequestFiltersAction
   | ReceiveFiltersAction
   | ReceiveItemsAction
-  | {
-      type: 'receiveError'
-      error: Error
-    }
+  | ReceiveErrorAction
   | SetUserSelectionAction
-  | {
-      type: 'loadMore'
-    }
-  | {
-      type: 'loadPage'
-      page: number
-    }
-  | {
-      type: 'setSearchTerm'
-      searchTerm: string
-    }
+  | LoadMoreAction
+  | LoadPageAction
+  | SetSearchTermAction
