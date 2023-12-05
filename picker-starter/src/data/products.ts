@@ -1,8 +1,8 @@
 import {
   ItemQuery,
-  MultiOption,
-  Option,
-  OptionsQuery,
+  FilterList,
+  FilterItem,
+  FilterOption,
   ProductItem,
   matchItem,
 } from '@/core'
@@ -656,15 +656,17 @@ export const products: MockProduct[] = tmpAssets
   })
   .sort(compareName)
 
-export const getProductOptions: OptionsQuery = async () => {
-  const options: Option[] = categoryMockAssets.map<Option>((category) => {
-    return {
-      label: category.name,
-      value: category.name,
-    }
-  })
+export const getProductFilters: FilterList = async () => {
+  const options: FilterOption[] = categoryMockAssets.map<FilterOption>(
+    (category) => {
+      return {
+        label: category.name,
+        value: category.name,
+      }
+    },
+  )
 
-  const response: MultiOption[] = [
+  const response: FilterItem[] = [
     {
       type: 'multi',
       options: options,
@@ -682,7 +684,7 @@ export const queryProducts: ItemQuery = async ({
   searchTerm,
   page,
   perPage,
-  userOptions,
+  filterSelection,
 }) => {
   const matchCategories =
     (categoryNames: string[]) => (product: MockProduct) => {
@@ -695,7 +697,7 @@ export const queryProducts: ItemQuery = async ({
     }
 
   const allSearchResults = products
-    .filter(matchCategories(userOptions['categoryMulti'] as string[]))
+    .filter(matchCategories(filterSelection['categoryMulti'] as string[]))
     .filter(matchItem(searchTerm))
 
   const paginatedResults = getPage(allSearchResults, page, perPage)

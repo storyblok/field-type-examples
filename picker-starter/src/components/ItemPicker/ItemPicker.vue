@@ -7,13 +7,13 @@
     />
     <div class="plugin-toolbar">
       <div class="plugin-query-container">
-        <UserOption
-          v-for="userOption in queryState.userOptions"
-          :key="userOption.name"
-          :user-option="userOption"
-          :model-value="queryState.query.userOptions[userOption.name]"
+        <SelectFilter
+          v-for="filterItem in queryState.filterList"
+          :key="filterItem.name"
+          :filter-item="filterItem"
+          :model-value="queryState.query.filterSelection[filterItem.name]"
           @update:model-value="
-            (value) => handleUserOptionChange(userOption.name, value)
+            (value) => handleFilterSelectionChange(filterItem.name, value)
           "
         />
       </div>
@@ -71,14 +71,13 @@
 </template>
 
 <script>
-import { SearchField } from '../SearchField'
 import { ItemGrid } from '../ItemGrid'
 import { ItemList } from '../ItemList'
 import { SbPagination, SbButton } from '@storyblok/design-system'
 import debounce from 'debounce'
 import EmptyScreen from '../EmptyScreen/EmptyScreen.vue'
 import ViewModeSwitch from '../ViewModeSwitch/ViewModeSwitch.vue'
-import { UserOption } from '../UserOption'
+import { SearchField, SelectFilter } from '../Filter'
 import { EmptySearchIcon } from '../Icons'
 import { reducerMixin } from '../ItemPicker/utils/mixin/mixin.ts'
 import { throttleMs } from '@/settings'
@@ -93,7 +92,7 @@ export default {
     ItemGrid,
     SbButton,
     ItemList,
-    UserOption,
+    SelectFilter,
   },
   mixins: [reducerMixin],
   inject: {
@@ -141,9 +140,9 @@ export default {
       })
       this.queryItems()
     },
-    handleUserOptionChange(name, value) {
+    handleFilterSelectionChange(name, value) {
       this.dispatch({
-        type: 'setUserOption',
+        type: 'setFilterSelection',
         name,
         value,
       })
@@ -181,25 +180,27 @@ export default {
         response: res,
       })
     },
-    async queryUserOptions() {
-      const queryUserOptions = () =>
-        this.itemService.getOptions?.() ?? Promise.resolve([])
-      const res = await queryUserOptions().catch((error) => error)
+    async queryFilters() {
+      const getFilters = () =>
+        this.itemService.getFilters?.() ?? Promise.resolve([])
+
+      const res = await getFilters().catch((error) => error)
+
       if (res instanceof Error) {
         // Silent notification; the application will still function, so do not show error to the user
         console.error('Failed to Fetch Filters', res)
       }
-      const userOptions = res
+
       this.dispatch({
-        type: 'receiveUserOptions',
-        userOptions,
+        type: 'receiveFilters',
+        filterList: res,
       })
     },
     async init() {
       this.dispatch({
-        type: 'requestUserOptions',
+        type: 'requestFilters',
       })
-      await this.queryUserOptions()
+      await this.queryFilters()
       await this.queryItems()
     },
   },

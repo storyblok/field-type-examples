@@ -2,18 +2,18 @@ import {
   BasketItem,
   CursorPaginatedPageInfo,
   ItemQueryParams,
-  MultiOption,
   PagePaginatedPageInfo,
+  FilterItem,
 } from '@/core'
 
 export type State = {
   loadingState:
     | 'notLoading'
-    | 'loadingOptions'
+    | 'loadingFilters'
     | 'loadingNewPage' // Results will replace current list of items
     | 'loadingMore' // Results will append current list of items
   query: ItemQueryParams
   items: BasketItem[]
-  userOptions: MultiOption[]
+  filterList: FilterItem[]
   pageInfo: PagePaginatedPageInfo | CursorPaginatedPageInfo | undefined
 }

@@ -1,6 +1,6 @@
 import {} from './dispatch'
 describe('ItemPicker Actions', () => {
-  describe('setUserOption', () => {
+  describe('setFilterSelection', () => {
     it.todo('should reset the page')
   })
   describe('setSearchTerm', () => {

@@ -1,36 +1,50 @@
-import { BasketItem, MultiOption, QueryResponse } from '@/core'
+import { BasketItem, FilterItem, QueryResponse } from '@/core'
+
+export type RequestFiltersAction = {
+  type: 'requestFilters'
+}
 
 export type ReceiveItemsAction = {
   type: 'receiveItems'
   response: QueryResponse<BasketItem>
 }
-export type ReceiveUserOptionsAction = {
-  type: 'receiveUserOptions'
-  userOptions: MultiOption[]
+
+export type ReceiveFiltersAction = {
+  type: 'receiveFilters'
+  filterList: FilterItem[]
 }
+
+export type ReceiveErrorAction = {
+  type: 'receiveError'
+  error: Error
+}
+
+export type LoadMoreAction = {
+  type: 'loadMore'
+}
+
+export type LoadPageAction = {
+  type: 'loadPage'
+  page: number
+}
+
+export type SetUserSelectionAction = {
+  type: 'setFilterSelection'
+  name: string
+  value: string | string[]
+}
+
+export type SetSearchTermAction = {
+  type: 'setSearchTerm'
+  searchTerm: string
+}
+
 export type Action =
-  | {
-      type: 'requestUserOptions'
-    }
-  | ReceiveUserOptionsAction
+  | RequestFiltersAction
+  | ReceiveFiltersAction
   | ReceiveItemsAction
-  | {
-      type: 'receiveError'
-      error: Error
-    }
-  | {
-      type: 'setUserOption'
-      name: string
-      value: string | string[]
-    }
-  | {
-      type: 'loadMore'
-    }
-  | {
-      type: 'loadPage'
-      page: number
-    }
-  | {
-      type: 'setSearchTerm'
-      searchTerm: string
-    }
+  | ReceiveErrorAction
+  | SetUserSelectionAction
+  | LoadMoreAction
+  | LoadPageAction
+  | SetSearchTermAction

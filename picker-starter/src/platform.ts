@@ -1,5 +1,5 @@
 import { OptionsParams, PickerPlatform } from './core'
-import { getProductOptions, queryCategories, queryProducts } from './data'
+import { getProductFilters, queryCategories, queryProducts } from './data'
 
 export const platform: PickerPlatform<OptionsParams> = (options) => ({
   itemServices: [
@@ -7,7 +7,7 @@ export const platform: PickerPlatform<OptionsParams> = (options) => ({
       name: 'product',
       label: 'Products',
       query: queryProducts,
-      getOptions: getProductOptions,
+      getFilters: getProductFilters,
     },
     {
       name: 'category',
