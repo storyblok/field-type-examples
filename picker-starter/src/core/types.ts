@@ -31,13 +31,13 @@ export type CursorPaginatedResult<Item> = {
 
 export type PickerServiceValidationResult =
   | {
-      exampleOptions: Record<string, string>
+      exampleOptions?: Record<string, string>
       value: undefined
       error: string
     }
   | {
-      exampleOptions: Record<string, string>
-      value: PickerService
+      exampleOptions?: Record<string, string>
+      value: unknown
       error: undefined
     }
 

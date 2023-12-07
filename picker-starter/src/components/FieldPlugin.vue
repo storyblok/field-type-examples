@@ -19,7 +19,9 @@ const setValue = (content: any) => {
   })
 }
 
-const servicePluginParams = setup(plugin.data.options)
+const servicePluginParams = computed(() => {
+  return setup(plugin.data.options)
+})
 </script>
 
 <template>

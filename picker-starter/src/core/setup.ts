@@ -4,12 +4,12 @@ import { OptionsParams, PickerPluginParams, TabItem } from './types'
 export type PickerConfig = {
   title?: string
   icon?: Component
-  options: PickerConfigOptions
+  options?: PickerConfigOptions
   tabs: TabItem[]
 }
 
 export type PickerConfigOptions = {
-  example: OptionsParams
+  example?: OptionsParams
   validate: () => ValidationResult
 }
 
@@ -18,33 +18,33 @@ export type ValidationResult = {
   error: string | undefined
 }
 
-export type PickerConfigFn = (options: OptionsParams) => PickerConfig
+export type PickerConfigFn = (optionsParams: OptionsParams) => PickerConfig
 
-export type PickerBuilderFn = (options: OptionsParams) => PickerPluginParams
+export type PickerBuilderFn = (
+  optionsParams: OptionsParams,
+) => PickerPluginParams
 
 export const defineConfig =
   (fn: PickerConfigFn): PickerBuilderFn =>
-  (options: OptionsParams): PickerPluginParams => {
-    const config: PickerConfig = fn(options)
+  (optionsParams: OptionsParams): PickerPluginParams => {
+    const { title, icon, options, tabs } = fn(optionsParams)
 
     return {
-      title: config.title,
-      icon: config.icon,
+      title,
+      icon,
       makeService: () => {
-        const { options } = config
+        const validation = options?.validate()
 
-        const validation = options.validate()
-
-        if (!validation.isValid) {
+        if (validation?.isValid === false) {
           return {
-            exampleOptions: options.example,
+            exampleOptions: options?.example,
             error: validation.error,
           }
         }
 
         return {
-          exampleOptions: options.example,
-          value: { tabs: config.tabs },
+          exampleOptions: options?.example,
+          value: { tabs },
         }
       },
     }
