@@ -1,24 +1,25 @@
 import { StoryblokIcon } from './components'
-import { PickerPluginParams } from '@/core'
-import { optionsExample, optionsSchema } from './options-schema'
-import { platform } from './platform'
+import { OptionsParams, PickerPluginParams } from '@/core'
+import config from './picker.config'
 
 export const servicePluginParams: PickerPluginParams = {
   title: 'Picker Starter',
   icon: StoryblokIcon,
-  makeService: (props: unknown) => {
-    const validationResult = optionsSchema.validate(props, {
-      abortEarly: false,
-    })
+  makeService: (pluginOptions: unknown) => {
+    const { options, tabs } = config(pluginOptions as OptionsParams)
 
-    return validationResult.error
-      ? {
-          exampleOptions: optionsExample,
-          error: validationResult.error.message,
-        }
-      : {
-          exampleOptions: optionsExample,
-          value: platform(validationResult.value),
-        }
+    const validation = options.validate()
+
+    if (!validation.isValid) {
+      return {
+        exampleOptions: options.example,
+        error: validation.error,
+      }
+    }
+
+    return {
+      exampleOptions: options.example,
+      value: { tabs },
+    }
   },
 }

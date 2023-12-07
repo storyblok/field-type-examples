@@ -1,7 +1,7 @@
-import { getItemServices } from './getItemServices'
-import { PickerService, ItemService } from '../../core'
+import { getTabs } from './getTabs'
+import { PickerService, TabItem } from '../../core'
 
-const mockItemService: ItemService = {
+const mockItemService: TabItem = {
   query: () =>
     Promise.resolve({
       pageInfo: undefined,
@@ -11,19 +11,19 @@ const mockItemService: ItemService = {
   name: 'mockProducts',
 }
 const stub: PickerService = {
-  itemServices: [mockItemService],
+  tabs: [mockItemService],
 }
-describe('getItemServices', () => {
+describe('getTabs', () => {
   it('returns all item services when selectOnly is undefined', () => {
-    expect(getItemServices(stub, undefined)).toBe(stub.itemServices)
+    expect(getTabs(stub, undefined)).toBe(stub.tabs)
   })
   it('returns all item services when selectOnly is an empty string', () => {
-    expect(getItemServices(stub, '')).toBe(stub.itemServices)
+    expect(getTabs(stub, '')).toBe(stub.tabs)
   })
   it('returns empty string when selectOnly does not match any item service', () => {
-    expect(getItemServices(stub, 'willNotMathc')).toEqual([])
+    expect(getTabs(stub, 'willNotMathc')).toEqual([])
   })
   it('returns an array with the item service that matched', () => {
-    expect(getItemServices(stub, 'mockProducts')).toEqual([mockItemService])
+    expect(getTabs(stub, 'mockProducts')).toEqual([mockItemService])
   })
 })

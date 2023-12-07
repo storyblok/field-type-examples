@@ -22,7 +22,7 @@ As you can see in the example below, the default `platform` example function ret
 
 ```js
 export const platform: PickerPlatform<OptionsParams> = (options) => ({
-  itemServices: [
+  tabs: [
     {
       name: 'product',
       label: 'Products',
@@ -58,7 +58,7 @@ So, suppose you are working in a `Spotify Song Picker` and you don't want to lis
 
 ```js
 export const platform: PickerPlatform<OptionsParams> = (options) => ({
-  itemServices: [
+  tabs: [
     {
       name: 'songs',
       label: 'Songs',

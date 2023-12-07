@@ -20,8 +20,3 @@ const optionsSchemaMixin: Joi.StrictSchemaMap<MockPluginOptions> = {
 export const optionsSchema = Joi.object<MockPluginOptions, true>({
   ...optionsSchemaMixin,
 }).unknown(true)
-
-export const optionsExample: MockPluginOptions = {
-  limit: '10',
-  selectOnly: 'product',
-}

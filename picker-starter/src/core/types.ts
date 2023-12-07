@@ -75,7 +75,7 @@ export type ItemQuery = (
   params: ItemQueryParams,
 ) => Promise<QueryResponse<BasketItem>>
 
-export type ItemService = {
+export type TabItem = {
   name: string
   label: string
   query: ItemQuery // TODO rename propery
@@ -83,7 +83,7 @@ export type ItemService = {
 }
 
 export type PickerService = {
-  itemServices: ItemService[]
+  tabs: TabItem[]
 }
 
 export type PickerPluginParams = {
