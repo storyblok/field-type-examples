@@ -1,7 +1,6 @@
 import { getProductFilters, queryCategories, queryProducts } from '@/data'
 import { defineConfig } from '@/core'
 import { StoryblokIcon } from './components'
-import { optionsSchema } from './options-schema'
 
 export default defineConfig((options) => {
   return {
@@ -13,13 +12,19 @@ export default defineConfig((options) => {
         selectOnly: 'product',
       },
       validate: () => {
-        const validationResult = optionsSchema.validate(options, {
-          abortEarly: false,
-        })
+        const { limit } = options
+
+        const isLimitOptionValid = limit === undefined || Number(limit) > 0
+
+        if (!isLimitOptionValid) {
+          return {
+            isValid: false,
+            error: `The 'limit' option must be an integer greater than 0`,
+          }
+        }
 
         return {
-          isValid: !validationResult.error,
-          error: validationResult.error?.message,
+          isValid: true,
         }
       },
     },

@@ -15,7 +15,7 @@ export type PickerConfigOptions = {
 
 export type ValidationResult = {
   isValid: boolean
-  error: string | undefined
+  error?: string
 }
 
 export type PickerConfigFn = (optionsParams: OptionsParams) => PickerConfig

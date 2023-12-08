@@ -37,7 +37,7 @@ export type PickerServiceValidationResult =
     }
   | {
       exampleOptions?: Record<string, string>
-      value: unknown
+      value: PickerService
       error: undefined
     }
 
