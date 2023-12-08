@@ -32,7 +32,7 @@ export const defineConfig =
 
         if (validation?.isValid === false) {
           return {
-            error: validation.error,
+            error: validation.error || 'Unknown error',
           }
         }
 
