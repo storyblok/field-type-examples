@@ -88,7 +88,6 @@ import { ItemPicker } from '../ItemPicker'
 import { CartList } from '../CartList'
 import { EmptyScreen } from '../EmptyScreen'
 import { NonItemsAddedIcon } from '../Icons'
-import { getTabs } from '../ModalPage/getTabs'
 
 export default {
   name: 'ModalPage',
@@ -126,10 +125,6 @@ export default {
       type: Object,
       default: undefined,
     },
-    selectOnly: {
-      type: String,
-      default: undefined,
-    },
     maxItems: {
       type: Number,
       default: undefined,
@@ -146,7 +141,7 @@ export default {
       return NonItemsAddedIcon
     },
     tabs() {
-      return getTabs(this.pickerService, this.selectOnly)
+      return this.pickerService.tabs
     },
     isLimitReached() {
       return this.maxItems <= this.basket.size()
@@ -154,7 +149,7 @@ export default {
   },
   methods: {
     initialActiveTab() {
-      return getTabs(this.pickerService, this.selectOnly)?.[0]?.name
+      return this.pickerService.tabs[0]?.name
     },
   },
 }

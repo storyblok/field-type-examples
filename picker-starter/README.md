@@ -44,7 +44,6 @@ This file is responsible for handling all [options](https://www.storyblok.com/do
 In this starter example, we accept two options by default, they are:
 
 - `limit`: how many items this starter can select
-- `selectOnly`: which service/tab we want to show. By default, as we have two services (products and categories), you're able to pass `product` or `category` as value.
 
 See below how to test these options using our Sandbox:
 
