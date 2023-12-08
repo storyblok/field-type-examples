@@ -4,7 +4,7 @@ import { OptionsParams, PickerPluginParams, TabItem } from './types'
 export type PickerConfig = {
   title?: string
   icon?: Component
-  validateOptions: () => ValidationResult
+  validateOptions?: () => ValidationResult
   tabs: TabItem[]
 }
 
@@ -28,7 +28,7 @@ export const defineConfig =
       title,
       icon,
       makeService: () => {
-        const validation = validateOptions()
+        const validation = validateOptions?.()
 
         if (validation?.isValid === false) {
           return {
