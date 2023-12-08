@@ -4,13 +4,8 @@ import { OptionsParams, PickerPluginParams, TabItem } from './types'
 export type PickerConfig = {
   title?: string
   icon?: Component
-  options?: PickerConfigOptions
+  validateOptions: () => ValidationResult
   tabs: TabItem[]
-}
-
-export type PickerConfigOptions = {
-  example?: OptionsParams
-  validate: () => ValidationResult
 }
 
 export type ValidationResult = {
@@ -27,23 +22,21 @@ export type PickerBuilderFn = (
 export const defineConfig =
   (fn: PickerConfigFn): PickerBuilderFn =>
   (optionsParams: OptionsParams): PickerPluginParams => {
-    const { title, icon, options, tabs } = fn(optionsParams)
+    const { title, icon, tabs, validateOptions } = fn(optionsParams)
 
     return {
       title,
       icon,
       makeService: () => {
-        const validation = options?.validate()
+        const validation = validateOptions()
 
         if (validation?.isValid === false) {
           return {
-            exampleOptions: options?.example,
             error: validation.error,
           }
         }
 
         return {
-          exampleOptions: options?.example,
           value: { tabs },
         }
       },

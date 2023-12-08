@@ -11,12 +11,6 @@
         <p class="plugin-validation-error__details">
           {{ validationResult.error }}
         </p>
-        <div v-if="validationResult.exampleOptions">
-          <p>Example of valid options:</p>
-          <div class="plugin-validation-error__example">
-            {{ validationResult.exampleOptions }}
-          </div>
-        </div>
       </div>
     </div>
   </div>
