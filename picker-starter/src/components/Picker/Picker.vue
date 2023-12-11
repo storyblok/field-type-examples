@@ -13,7 +13,6 @@
         :basket="basket"
         :picker-service="pickerService"
         :close-modal="closeModal"
-        :select-only="selectOnly"
         :max-items="maxItems"
       />
       <NonModalPage
@@ -67,9 +66,6 @@ export default {
     ...pluginPropsDef,
   },
   computed: {
-    selectOnly() {
-      return this.unvalidatedOptions.selectOnly
-    },
     maxItems() {
       return this.unvalidatedOptions.limit === ''
         ? undefined

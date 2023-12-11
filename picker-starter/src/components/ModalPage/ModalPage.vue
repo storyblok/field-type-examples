@@ -36,21 +36,21 @@
         :type="null"
       >
         <SbTab
-          v-for="itemService in itemServices"
-          :key="itemService.name"
-          :label="itemService.label"
-          :name="itemService.name"
+          v-for="tab in tabs"
+          :key="tab.name"
+          :label="tab.label"
+          :name="tab.name"
         />
       </SbTabs>
       <div class="sb-tab-panels">
         <SbTabPanels v-model="activeTab">
           <SbTabPanel
-            v-for="itemService in itemServices"
-            :key="itemService.name"
-            :name="itemService.name"
+            v-for="tab in tabs"
+            :key="tab.name"
+            :name="tab.name"
           >
             <ItemPicker
-              :item-service="itemService"
+              :item-service="tab"
               :basket="basket"
               :is-limit-reached="isLimitReached"
             />
@@ -88,7 +88,6 @@ import { ItemPicker } from '../ItemPicker'
 import { CartList } from '../CartList'
 import { EmptyScreen } from '../EmptyScreen'
 import { NonItemsAddedIcon } from '../Icons'
-import { getItemServices } from '../ModalPage/getItemServices'
 
 export default {
   name: 'ModalPage',
@@ -126,10 +125,6 @@ export default {
       type: Object,
       default: undefined,
     },
-    selectOnly: {
-      type: String,
-      default: undefined,
-    },
     maxItems: {
       type: Number,
       default: undefined,
@@ -145,8 +140,8 @@ export default {
     NoItemsIcon() {
       return NonItemsAddedIcon
     },
-    itemServices() {
-      return getItemServices(this.pickerService, this.selectOnly)
+    tabs() {
+      return this.pickerService.tabs
     },
     isLimitReached() {
       return this.maxItems <= this.basket.size()
@@ -154,7 +149,7 @@ export default {
   },
   methods: {
     initialActiveTab() {
-      return getItemServices(this.pickerService, this.selectOnly)?.[0]?.name
+      return this.pickerService.tabs[0]?.name
     },
   },
 }

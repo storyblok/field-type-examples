@@ -18,14 +18,12 @@
     "@storyblok/design-system": "^3.19.3",
     "@storyblok/field-plugin": "1.0.0",
     "debounce": "^1.2.1",
-    "joi": "^17.11.0",
     "vue": "^3.2.47",
     "vue-draggable-next": "^2.2.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.4",
     "@types/debounce": "^1.2.4",
-    "@types/joi": "^17.2.3",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "@vitejs/plugin-vue": "^4.1.0",

@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Picker } from './Picker'
-import { servicePluginParams } from '../picker-params'
 import { useFieldPlugin } from '@storyblok/field-plugin/vue3'
 import { pluginName } from '../settings'
+import setup from '../picker.config'
 
 const plugin = useFieldPlugin()
 
@@ -18,6 +18,10 @@ const setValue = (content: any) => {
     ...content,
   })
 }
+
+const servicePluginParams = computed(() => {
+  return setup(plugin.data.options)
+})
 </script>
 
 <template>

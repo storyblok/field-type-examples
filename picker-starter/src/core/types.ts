@@ -31,12 +31,10 @@ export type CursorPaginatedResult<Item> = {
 
 export type PickerServiceValidationResult =
   | {
-      exampleOptions: Record<string, string>
       value: undefined
       error: string
     }
   | {
-      exampleOptions: Record<string, string>
       value: PickerService
       error: undefined
     }
@@ -75,7 +73,7 @@ export type ItemQuery = (
   params: ItemQueryParams,
 ) => Promise<QueryResponse<BasketItem>>
 
-export type ItemService = {
+export type TabItem = {
   name: string
   label: string
   query: ItemQuery // TODO rename propery
@@ -83,7 +81,7 @@ export type ItemService = {
 }
 
 export type PickerService = {
-  itemServices: ItemService[]
+  tabs: TabItem[]
 }
 
 export type PickerPluginParams = {
