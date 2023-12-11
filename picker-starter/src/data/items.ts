@@ -3,8 +3,8 @@ import {
   FilterList,
   FilterItem,
   FilterOption,
-  ProductItem,
   matchItem,
+  BasketItem,
 } from '@/core'
 import {
   compareName,
@@ -15,7 +15,7 @@ import {
 } from '@/utils'
 import { categoryMockAssets } from './categories'
 
-export type TmpProduct = {
+export type TempItem = {
   id: number
   filename: string | undefined
   description?: string
@@ -23,7 +23,7 @@ export type TmpProduct = {
 }
 
 // Temporary object, just so that we can save some lines of code
-export const tmpAssets: TmpProduct[] = [
+export const tmpAssets: TempItem[] = [
   {
     id: 4997256,
     filename:
@@ -635,28 +635,32 @@ const getNameFromImage = (filename: string): string | undefined => {
   return imageName?.split('.')?.[0]?.split('-')?.map(capitalizeWord)?.join(' ')
 }
 
-export type MockProduct = ProductItem & {
+export type Item = BasketItem<'item'> & {
+  sku: string | undefined
+}
+
+export type MockItem = Item & {
   category: string | undefined
 }
 
-export const products: MockProduct[] = tmpAssets
-  .map((mockProduct) => {
-    const { filename, id, description } = mockProduct
+export const items: MockItem[] = tmpAssets
+  .map((mockItems) => {
+    const { filename, id, description } = mockItems
     const name = filename && getNameFromImage(filename)
 
     return {
-      type: 'product',
+      type: 'item',
       id: `${id}`,
       name: name ?? 'Without image',
       image: filename && getImage(filename),
       sku: `sku-${id}`,
       description,
-      category: mockProduct.category,
-    } as MockProduct
+      category: mockItems.category,
+    } as MockItem
   })
   .sort(compareName)
 
-export const getProductFilters: FilterList = async () => {
+export const getItemFilters: FilterList = async () => {
   const options: FilterOption[] = categoryMockAssets.map<FilterOption>(
     (category) => {
       return {
@@ -680,23 +684,20 @@ export const getProductFilters: FilterList = async () => {
   return delayed(randomDelay(), response)
 }
 
-export const queryProducts: ItemQuery = async ({
+export const queryItems: ItemQuery = async ({
   searchTerm,
   page,
   perPage,
   filterSelection,
 }) => {
-  const matchCategories =
-    (categoryNames: string[]) => (product: MockProduct) => {
-      if (categoryNames.length === 0) {
-        return true
-      }
-      return categoryNames.some(
-        (categoryName) => product.category === categoryName,
-      )
+  const matchCategories = (categoryNames: string[]) => (items: MockItem) => {
+    if (categoryNames.length === 0) {
+      return true
     }
+    return categoryNames.some((categoryName) => items.category === categoryName)
+  }
 
-  const allSearchResults = products
+  const allSearchResults = items
     .filter(matchCategories(filterSelection['categoryMulti'] as string[]))
     .filter(matchItem(searchTerm))
 
