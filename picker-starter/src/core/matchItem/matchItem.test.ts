@@ -2,7 +2,7 @@ import { matchItem } from './matchItem'
 import { BasketItem } from '../'
 
 const templateItem: BasketItem = {
-  type: 'product',
+  type: 'item',
   id: '123',
   description: undefined,
   image: undefined,

@@ -6,8 +6,4 @@ export type BasketItem<Type extends string = string> = {
   description: string | undefined
 }
 
-export type ProductItem = BasketItem<'product'> & {
-  sku: string | undefined
-}
-
 export type CategoryItem = BasketItem<'category'>

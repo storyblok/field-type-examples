@@ -1,4 +1,4 @@
-import { getProductFilters, queryCategories, queryProducts } from '@/data'
+import { getItemFilters, queryCategories, queryItems } from '@/data'
 import { defineConfig } from '@/core'
 import { StoryblokIcon } from './components'
 
@@ -24,10 +24,10 @@ export default defineConfig((options) => {
     },
     tabs: [
       {
-        name: 'product',
-        label: 'Products',
-        query: queryProducts,
-        getFilters: getProductFilters,
+        name: 'items',
+        label: 'Items',
+        query: queryItems,
+        getFilters: getItemFilters,
       },
       {
         name: 'category',

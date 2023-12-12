@@ -163,10 +163,11 @@ export default {
       const res = await this.itemService
         .query(this.queryState.query)
         .catch((error) => error)
+
       if (res instanceof Error) {
         this.notify({
-          title: 'Failed to fetch Products',
-          description: 'Something went wrong when fetching products.',
+          title: `Failed to fetch ${this.itemService.label}`,
+          description: `Something went wrong when fetching ${this.itemService.label}.`,
           error: new Error(res),
         })
         this.dispatch({
