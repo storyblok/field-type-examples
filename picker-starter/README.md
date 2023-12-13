@@ -6,7 +6,7 @@ A starter project for building e-commerce [field plugins](https://www.storyblok.
 
 The primary goal of this starter is to provide developers with a clear blueprint for creating their own `pickers` just by making small changes to it.
 
-## The picker.config.ts
+## `picker.config.ts`
 
 The [`picker.config.ts`](./src/picker.config.ts) is the most important, mandatory, and powerful file here. It's responsible to definitions such as: the title, icon, tabs, filters, methods to perform queries, and also a method to validate the expected [plugin options](https://www.storyblok.com/docs/plugins/field-plugins/introduction#options) of the Picker.
 
