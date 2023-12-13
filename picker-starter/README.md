@@ -8,7 +8,7 @@ The primary goal of this starter is to provide developers with a clear blueprint
 
 ## `picker.config.ts`
 
-The [`picker.config.ts`](./src/picker.config.ts) is the most important, mandatory, and powerful file here. It's responsible to definitions such as: the title, icon, tabs, filters, methods to perform queries, and also a method to validate the expected [plugin options](https://www.storyblok.com/docs/plugins/field-plugins/introduction#options) of the Picker.
+The [`picker.config.ts`](./src/picker.config.ts) is a configuration file where you can customize the title, icon, tabs, filters, methods to perform queries, and also a method to validate the expected [plugin options](https://www.storyblok.com/docs/plugins/field-plugins/introduction#options).
 
 In the example below you can have a glimpse of what this file looks like and its responsibilities:
 
