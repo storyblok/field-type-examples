@@ -1,16 +1,19 @@
 import FieldPlugin from './components/FieldPlugin'
 import { FunctionComponent } from 'react'
-import { FieldPluginProvider } from '@storyblok/field-plugin/react'
+import { useFieldPlugin } from '@storyblok/field-plugin/react'
 
 import { CssBaseline, GlobalStyles, ThemeProvider } from '@mui/material'
 import { lightTheme } from '@storyblok/mui'
 
 const App: FunctionComponent = () => {
-  return (
-    <FieldPluginProvider
-      Loading={Loading}
-      Error={Error}
-    >
+  const { type, error } = useFieldPlugin()
+  
+  if (type === 'loading') {
+    return <Loading />
+  } else if (type === 'error') {
+    return <Error error={error} />
+  } else {
+    return (
       <ThemeProvider theme={lightTheme}>
         <CssBaseline />
         <GlobalStyles
@@ -20,8 +23,8 @@ const App: FunctionComponent = () => {
         />
         <FieldPlugin />
       </ThemeProvider>
-    </FieldPluginProvider>
-  )
+    )
+  }
 }
 
 const Loading: FunctionComponent = () => <p>Loading...</p>

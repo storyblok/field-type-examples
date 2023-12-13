@@ -29,8 +29,9 @@ const StyledListBox = styled(Box)(() => ({
 }))
 const FieldPlugin = () => {
   const {
+    type,
     data,
-    actions: { setContent },
+    actions
   } = useFieldPlugin()
 
   const [folders, setFolders] = useState([])
@@ -39,13 +40,13 @@ const FieldPlugin = () => {
   // Intial content of the plugin
   const isArrayOfObjects = (value) =>
     Array.isArray(value) && value.every((it) => typeof it === 'object')
-  const content = isArrayOfObjects(data.content) ? data.content : []
+  const content = isArrayOfObjects(data?.content) ? data?.content : []
   // Extracting starts_with from options
-  const startsWith = data.options.starts_with ?? ''
+  const startsWith = data?.options.starts_with ?? ''
   // Using space token
-  const token = data.token
+  const token = data?.token
 
-  const maximum = Number(data.options.maximum)
+  const maximum = Number(data?.options.maximum)
 
   useEffect(() => {
     getFolders(token, startsWith).then(setFolders)
@@ -54,6 +55,9 @@ const FieldPlugin = () => {
   const foldersInContent = folders.filter((folder) =>
     content.some((c) => c.id === folder.id),
   )
+  if (type !== 'loaded') {
+    return null
+  }
 
   return (
     <StyledAutocomplete
@@ -83,7 +87,7 @@ const FieldPlugin = () => {
       open={selectOpen}
       onOpen={() => setSelectOpen(true)}
       onClose={() => setSelectOpen(false)}
-      onChange={(event, value) => setContent(value)}
+      onChange={(event, value) => actions.setContent(value)}
       renderOption={(props, option, { selected }) => (
         <MenuItem
           {...props}

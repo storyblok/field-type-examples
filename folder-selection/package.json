@@ -13,7 +13,7 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.7",
-    "@storyblok/field-plugin": "0.0.1-beta.4",
+    "@storyblok/field-plugin": "1.0.1",
     "@storyblok/mui": "0.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
