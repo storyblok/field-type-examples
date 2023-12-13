@@ -5,10 +5,10 @@
 
 <h1>
 <img src="assets/icon.svg" height="26px">
-Folder Selection Field Type
+Folder Selection Field Plugin
 </h1>
 
-A custom field-type for Storyblok that allow users to select folders from the space using a dropdown.
+A custom field-plugin for Storyblok that allow users to select folders from the space using a dropdown.
 
 ![screenshot.gif](docs/screenshot.png)
 
@@ -16,7 +16,7 @@ A custom field-type for Storyblok that allow users to select folders from the sp
 
 ## How to use
 
-To add this field type to a Storyblok space, you need to
+To add this field plugin to a Storyblok space, you need to
 
 1. Rename the .env.local.example file to .env.local
 2. Open the .env.local file and update the `STORYBLOK_PERSONAL_ACCESS_TOKEN` (can be found here: [management api token](https://app.storyblok.com/#/me/account?tab=token))
