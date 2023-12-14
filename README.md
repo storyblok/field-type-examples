@@ -23,6 +23,7 @@ Each example contains a `README.md` with an explanation about the field-type.
 <!-- AUTO-GENERATED-CONTENT:START (EXAMPLE_TABLE)  -->
 | Example  | Author |
 |:-------|:------:|
+| **[Folder Selection ](https://github.com/storyblok/field-type-examples/tree/main/folder-selection)** <br/>  Select folders from the space using a dropdown  |  [Chakit Arora](https://github.com/arorachakit) |
 | **[Annotated Image ](https://github.com/storyblok/field-type-examples/tree/main/annotated-image)** <br/>  Simple Image Maps for tutorials  |  [Christian Zoppi](https://github.com/christianzoppi) |
 | **[Material Icon Selector ](https://github.com/storyblok/field-type-examples/tree/main/material-icon-selector)** <br/>  Allows users to select any material icon  |  [Riley MacIsaac](https://github.com/rileymacisaac) |
 | **[Star Rating ](https://github.com/storyblok/field-type-examples/tree/main/star-rating)** <br/>  A field-type to display a star rating  |  [Lisi Linhart](https://github.com/lisilinhart/) |
