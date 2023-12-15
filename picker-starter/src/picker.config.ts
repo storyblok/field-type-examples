@@ -1,4 +1,4 @@
-import { getItemFilters, queryCategories, queryItems } from '@/data'
+import { getItemFilters, queryItems } from '@/data'
 import { defineConfig } from '@/core'
 import { StoryblokIcon } from './components'
 
@@ -28,11 +28,6 @@ export default defineConfig((options) => {
         label: 'Items',
         query: queryItems,
         getFilters: getItemFilters,
-      },
-      {
-        name: 'category',
-        label: 'Categories',
-        query: queryCategories,
       },
     ],
   }

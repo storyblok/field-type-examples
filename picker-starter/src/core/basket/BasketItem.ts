@@ -5,5 +5,3 @@ export type BasketItem<Type extends string = string> = {
   image: string | undefined
   description: string | undefined
 }
-
-export type CategoryItem = BasketItem<'category'>

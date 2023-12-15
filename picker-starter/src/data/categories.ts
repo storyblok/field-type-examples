@@ -1,6 +1,3 @@
-import { CategoryItem, ItemQuery } from '@/core'
-import { compareName, delayed, getPage, randomDelay } from '@/utils'
-
 export type MockCategory = {
   name: string
   description?: string
@@ -41,29 +38,3 @@ export const categoryMockAssets: MockCategory[] = [
     description: 'Take care of yourself',
   },
 ]
-
-const allCategories: CategoryItem[] = categoryMockAssets
-  .map(
-    (it) =>
-      ({
-        type: 'category',
-        id: it.name,
-        description: undefined,
-        image: undefined,
-        ...it,
-      }) as CategoryItem,
-  )
-  .sort(compareName)
-
-export const queryCategories: ItemQuery = async ({ page, perPage }) => {
-  const paginatedResults = getPage(allCategories, page, perPage)
-  const response = {
-    items: paginatedResults,
-    pageInfo: {
-      totalCount: allCategories.length,
-    },
-  }
-
-  // It mimics an API call by adding a delay before return the data.
-  return delayed(randomDelay(), response)
-}
