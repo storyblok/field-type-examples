@@ -56,14 +56,20 @@ export default defineConfig((options) => {
 
 ## Local Development
 
-To start the project locally, from the **repository`s root folder**, run:
+To start using this starter locally in your project, just run:
 
 ```sh
+# copy this starter into your cwd
+npx giget@latest gh:storyblok/field-type-examples/picker-starter YOUR-PROJECT-NAME
+
+# open it
+cd YOUR-PROJECT-NAME
+
 # install all required dependencies
 yarn install
 
-# serve the field plugin
-yarn workspace picker-starter dev
+# then, serve the field plugin
+yarn dev
 ```
 
 Now open the Sandbox URL printed in your terminal:
@@ -75,10 +81,11 @@ You should see this:
 
 ## Deploy
 
-Deploy the field plugin with the [CLI](https://www.npmjs.com/package/@storyblok/field-plugin-cli). Issue a [personal access token](https://app.storyblok.com/#/me/account?tab=token), rename `.env.local.example` to `.env.example`, open the file, set the value `STORYBLOK_PERSONAL_ACCESS_TOKEN`, and run
-
-From the **repository's root folder**, run the following command:
+Deploy your field plugin with the [CLI](https://www.npmjs.com/package/@storyblok/field-plugin-cli). Issue a [personal access token](https://app.storyblok.com/#/me/account?tab=token), rename `.env.local.example` to `.env.example`, open the file, set the value `STORYBLOK_PERSONAL_ACCESS_TOKEN`, and from the **plugin's root folder**, run the following command:
 
 ```shell
-yarn workspace picker-starter deploy
+yarn build
+
+# Deploy it using the CLI
+npx @storyblok/field-plugin-cli@latest deploy
 ```
