@@ -84,8 +84,5 @@ You should see this:
 Deploy your field plugin with the [CLI](https://www.npmjs.com/package/@storyblok/field-plugin-cli). Issue a [personal access token](https://app.storyblok.com/#/me/account?tab=token), rename `.env.local.example` to `.env.example`, open the file, set the value `STORYBLOK_PERSONAL_ACCESS_TOKEN`, and from the **plugin's root folder**, run the following command:
 
 ```shell
-yarn build
-
-# Deploy it using the CLI
-npx @storyblok/field-plugin-cli@latest deploy
+yarn deploy
 ```
