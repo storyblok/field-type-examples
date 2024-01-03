@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "check:types": "vue-tsc --noEmit",
     "preview": "vite preview",
-    "deploy": "npm run build && npx @storyblok/field-plugin-cli@latest deploy --name sb-picker-starter --scope partner-portal"
+    "deploy": "npm run build && npx @storyblok/field-plugin-cli@latest deploy"
   },
   "dependencies": {
     "@storyblok/design-system": "^3.19.3",
