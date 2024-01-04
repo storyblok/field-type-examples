@@ -1,34 +1,55 @@
-import { getItemFilters, queryItems } from '@/data'
-import { defineConfig } from '@/core'
+import { categoryMockAssets, items } from '@/data'
+import { defineConfig, matchCategories, matchItem } from '@/core'
 import { StoryblokIcon } from './components'
+import { getPage } from './utils'
 
-export default defineConfig((options) => {
-  return {
-    title: 'Picker Starter',
-    icon: StoryblokIcon,
-    validateOptions: () => {
-      const { limit } = options
+export default defineConfig((options) => ({
+  title: 'Picker Starter',
+  icon: StoryblokIcon,
+  validateOptions: () => {
+    const { limit } = options
 
-      const isLimitOptionValid = limit === undefined || Number(limit) > 0
+    const isLimitOptionValid = limit === undefined || Number(limit) > 0
 
-      if (!isLimitOptionValid) {
-        return {
-          isValid: false,
-          error: `The 'limit' option must be an integer greater than 0`,
-        }
-      }
-
+    if (!isLimitOptionValid) {
       return {
-        isValid: true,
+        isValid: false,
+        error: `The 'limit' option must be an integer greater than 0`,
       }
-    },
-    tabs: [
-      {
-        name: 'items',
-        label: 'Items',
-        query: queryItems,
-        getFilters: getItemFilters,
+    }
+
+    return {
+      isValid: true,
+    }
+  },
+  tabs: [
+    {
+      name: 'items',
+      label: 'Items',
+      query: async ({ searchTerm, page, perPage, filterSelection }) => {
+        const filteredItems = items
+          .filter(matchCategories(filterSelection['categoryMulti'] as string[]))
+          .filter(matchItem(searchTerm))
+
+        return {
+          items: getPage(filteredItems, page, perPage),
+          pageInfo: {
+            totalCount: filteredItems.length,
+          },
+        }
       },
-    ],
-  }
-})
+      getFilters: async () => [
+        {
+          type: 'multi',
+          label: 'Categories',
+          name: 'categoryMulti',
+          defaultValue: [],
+          options: categoryMockAssets.map((category) => ({
+            label: category.name,
+            value: category.name,
+          })),
+        },
+      ],
+    },
+  ],
+}))

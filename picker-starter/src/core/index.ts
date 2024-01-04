@@ -1,5 +1,6 @@
 export * from './basket/BasketItem'
 export * from './basket'
+export * from './matchCategories'
 export * from './matchItem'
 export * from './service'
 export * from './types'
