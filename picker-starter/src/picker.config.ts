@@ -1,5 +1,5 @@
 import { categoryMockAssets, items } from '@/data'
-import { defineConfig, matchCategories, matchItem } from '@/core'
+import { defineConfig, matchCategories, matchSearchTerm } from '@/core'
 import { StoryblokIcon } from './components'
 import { getPage } from './utils'
 
@@ -29,7 +29,7 @@ export default defineConfig((options) => ({
       query: async ({ searchTerm, page, perPage, filterSelection }) => {
         const filteredItems = items
           .filter(matchCategories(filterSelection['categoryMulti'] as string[]))
-          .filter(matchItem(searchTerm))
+          .filter(matchSearchTerm(searchTerm))
 
         return {
           items: getPage(filteredItems, page, perPage),
