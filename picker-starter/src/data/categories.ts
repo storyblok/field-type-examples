@@ -2,8 +2,7 @@ export type MockCategory = {
   name: string
 }
 
-// TODO this should become a tree
-export const categoryMockAssets: MockCategory[] = [
+export const categories: MockCategory[] = [
   {
     name: 'Kitchen',
   },

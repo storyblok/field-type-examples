@@ -1,4 +1,4 @@
-import { categoryMockAssets, items } from '@/data'
+import { categories, items } from '@/data'
 import { defineConfig, matchCategories, matchSearchTerm } from '@/core'
 import { StoryblokIcon } from './components'
 import { getPage } from './utils'
@@ -44,7 +44,7 @@ export default defineConfig((options) => ({
           label: 'Categories',
           name: 'categoryMulti',
           defaultValue: [],
-          options: categoryMockAssets.map((category) => ({
+          options: categories.map((category) => ({
             label: category.name,
             value: category.name,
           })),
