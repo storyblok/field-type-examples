@@ -1,19 +1,5 @@
-import {
-  ItemQuery,
-  FilterList,
-  FilterItem,
-  FilterOption,
-  matchItem,
-  BasketItem,
-} from '@/core'
-import {
-  compareName,
-  capitalizeWord,
-  getPage,
-  delayed,
-  randomDelay,
-} from '@/utils'
-import { categoryMockAssets } from './categories'
+import { BasketItem } from '@/core'
+import { compareName, capitalizeWord } from '@/utils'
 
 export type TempItem = {
   id: number
@@ -659,56 +645,3 @@ export const items: MockItem[] = tmpAssets
     } as MockItem
   })
   .sort(compareName)
-
-export const getItemFilters: FilterList = async () => {
-  const options: FilterOption[] = categoryMockAssets.map<FilterOption>(
-    (category) => {
-      return {
-        label: category.name,
-        value: category.name,
-      }
-    },
-  )
-
-  const response: FilterItem[] = [
-    {
-      type: 'multi',
-      options: options,
-      defaultValue: [],
-      label: 'Categories',
-      name: 'categoryMulti',
-    },
-  ]
-
-  // It mimics an API call by adding a delay before return the data.
-  return delayed(randomDelay(), response)
-}
-
-export const queryItems: ItemQuery = async ({
-  searchTerm,
-  page,
-  perPage,
-  filterSelection,
-}) => {
-  const matchCategories = (categoryNames: string[]) => (items: MockItem) => {
-    if (categoryNames.length === 0) {
-      return true
-    }
-    return categoryNames.some((categoryName) => items.category === categoryName)
-  }
-
-  const allSearchResults = items
-    .filter(matchCategories(filterSelection['categoryMulti'] as string[]))
-    .filter(matchItem(searchTerm))
-
-  const paginatedResults = getPage(allSearchResults, page, perPage)
-  const response = {
-    items: paginatedResults,
-    pageInfo: {
-      totalCount: allSearchResults.length,
-    },
-  }
-
-  // It mimics an API call by adding a delay before return the data.
-  return delayed(randomDelay(), response)
-}

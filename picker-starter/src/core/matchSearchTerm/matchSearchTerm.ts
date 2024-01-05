@@ -8,7 +8,7 @@ const stringContains = (searchTerm: string) => (text: string | undefined) =>
  * @param searchTerm
  * @returns true if the item contains the text
  */
-export const matchItem =
+export const matchSearchTerm =
   (searchTerm: string) =>
   (item: BasketItem): boolean => {
     const containsSearchTerm = stringContains(searchTerm)

@@ -1,4 +1,4 @@
-import { matchItem } from './matchItem'
+import { matchSearchTerm } from './matchSearchTerm'
 import { BasketItem } from '../'
 
 const templateItem: BasketItem = {
@@ -9,10 +9,10 @@ const templateItem: BasketItem = {
   name: '',
 }
 
-describe('matchItem', () => {
+describe('matchSearchTerm', () => {
   it('should search the name', () => {
     expect(
-      matchItem('gorilla')({
+      matchSearchTerm('gorilla')({
         ...templateItem,
         name: 'gorilla',
       }),
@@ -20,7 +20,7 @@ describe('matchItem', () => {
   })
   it('should search the description', () => {
     expect(
-      matchItem('gorilla')({
+      matchSearchTerm('gorilla')({
         ...templateItem,
         description: 'gorilla',
       }),
@@ -28,7 +28,7 @@ describe('matchItem', () => {
   })
   it('should be case insensitive', () => {
     expect(
-      matchItem('gorilla')({
+      matchSearchTerm('gorilla')({
         ...templateItem,
         name: 'Gorilla',
       }),
@@ -36,14 +36,14 @@ describe('matchItem', () => {
   })
   it('should not match', () => {
     expect(
-      matchItem('gorilla')({
+      matchSearchTerm('gorilla')({
         ...templateItem,
       }),
     ).toBeFalsy()
   })
   test('that empty strings match all', () => {
     expect(
-      matchItem('')({
+      matchSearchTerm('')({
         ...templateItem,
       }),
     ).toBeTruthy()
