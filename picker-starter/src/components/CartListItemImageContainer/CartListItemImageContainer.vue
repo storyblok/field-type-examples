@@ -18,8 +18,9 @@ export default {
   overflow: hidden;
   align-items: center;
   background-color: #eff1f3;
-  height: 80px;
-  min-width: 106px;
+  border: 1px solid #eff1f3;
+  max-height: 80px;
+  max-width: 106px;
   border-radius: 5px;
 }
 </style>

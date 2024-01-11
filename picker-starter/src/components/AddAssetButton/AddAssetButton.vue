@@ -3,7 +3,7 @@
     class="plugin-add-item-big-button"
     @click.prevent="handleClick"
   >
-    <CartListItemImageContainer>
+    <CartListItemImageContainer class="plugin-add-item-big-button__container">
       <SbIcon name="block-image" />
     </CartListItemImageContainer>
     <span class="plugin-add-item-big-button__label">
@@ -69,5 +69,10 @@ export default {
   color: #1b243f;
   font-size: 1.4rem;
   font-weight: 500;
+}
+
+.plugin-add-item-big-button__container {
+  height: 80px;
+  min-width: 106px;
 }
 </style>
