@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && npx @storyblok/field-plugin-cli@beta deploy"
+    "deploy": "npm run build && npx @storyblok/field-plugin-cli@latest deploy"
   },
   "dependencies": {
     "@storyblok/field-plugin": "0.0.1-beta.4",
