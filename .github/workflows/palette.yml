@@ -10,7 +10,8 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     defaults:
-      run: ./palette
+      run:
+        working-directory: ./palette
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
