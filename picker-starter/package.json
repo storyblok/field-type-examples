@@ -15,7 +15,7 @@
     "deploy": "npm run build && npx @storyblok/field-plugin-cli@latest deploy"
   },
   "dependencies": {
-    "@storyblok/design-system": "^3.19.3",
+    "@storyblok/design-system": "3.19.3",
     "@storyblok/field-plugin": "1.0.0",
     "debounce": "^1.2.1",
     "vue": "^3.2.47",
