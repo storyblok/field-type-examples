@@ -1416,10 +1416,10 @@
   resolved "https://registry.yarnpkg.com/@storyblok/field-plugin/-/field-plugin-0.0.1-beta.2.tgz#b2f2640912e42fa740ffb480ccaefd46eaad2182"
   integrity sha512-MwxLJnE9nNvTiw5xWKdh53buAKWIrHbUW+fwyz18C3jY2fZR7WL6m0p3Wgxx2ASKb7gfQXuHt3JjZXwWjXNOYQ==
 
-"@storyblok/field-plugin@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@storyblok/field-plugin/-/field-plugin-1.0.0.tgz#6fafcc5e55f83fc1dd8402d192f38e2031c0ea9a"
-  integrity sha512-g7do7KqCP8LYLMCnQSAwSLgP0i0xjzifity23BmZrmVda1jIy4p+CwFsIeFIDZ/OYt13SICHhawf6tfUeWiVrg==
+"@storyblok/field-plugin@^1.4.0":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@storyblok/field-plugin/-/field-plugin-1.4.1.tgz#032c33024101b1583610d8a41f5a3fcbfaaa538a"
+  integrity sha512-q4LMhtoBdSivv8NrRFhMhp3+SmN2VpFbz8RHcLzcWxhZ0JX3l/CFEFuiWilrUt1cHQvasj5IhFMRvnD+1ym0jg==
 
 "@storyblok/mui@^0.2.0":
   version "0.2.0"
