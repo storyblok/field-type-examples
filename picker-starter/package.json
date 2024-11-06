@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@storyblok/design-system": "3.19.3",
-    "@storyblok/field-plugin": "1.0.0",
+    "@storyblok/field-plugin": "^1.4.0",
     "debounce": "^1.2.1",
     "vue": "^3.2.47",
     "vue-draggable-next": "^2.2.1"
