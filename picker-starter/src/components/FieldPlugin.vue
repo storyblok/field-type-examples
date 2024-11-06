@@ -8,19 +8,19 @@ import setup from '../picker.config'
 const plugin = useFieldPlugin()
 
 const content = computed(() => {
-  const content = plugin.data.content
+  const content = plugin.data?.content
   return typeof content === 'object' ? content : { name: pluginName }
 })
 
 const setValue = (content: any) => {
-  plugin.actions.setContent({
+  plugin.actions?.setContent({
     plugin: pluginName,
     ...content,
   })
 }
 
 const servicePluginParams = computed(() => {
-  return setup(plugin.data.options)
+  return setup(plugin.data?.options || {})
 })
 </script>
 
