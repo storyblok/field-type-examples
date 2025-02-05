@@ -10,11 +10,11 @@ import {
 const Tag: FunctionComponent = () => {
   const { data, actions } = useFieldPlugin()
 
-  const [initialValue, setInitialValue] = useState<string[]>([])
-
-  useEffect(() => {
-    setInitialValue(parseJsonValue(data.options.initialValue))
-  }, [data.options.initialValue])
+  const [initialValue, setInitialValue] = useState<string[]>(
+    Array.isArray(data.content)
+      ? data.content
+      : parseJsonValue(data.options.initialValue)
+  )
 
   useEffect(() => {
     actions.setContent(initialValue)
@@ -33,6 +33,7 @@ const Tag: FunctionComponent = () => {
         <TextField
           variant="outlined"
           placeholder={data.options.placeholder}
+          sx={{ background: '#fff' }}
           {...params}
         />
       )}
