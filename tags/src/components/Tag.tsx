@@ -10,14 +10,19 @@ import {
 const Tag: FunctionComponent = () => {
   const { data, actions } = useFieldPlugin()
 
+  const contentValue = (data.content as { value: string[] }).value
+
   const [initialValue, setInitialValue] = useState<string[]>(
-    Array.isArray(data.content)
-      ? data.content
-      : parseJsonValue(data.options.initialValue)
+    Array.isArray(contentValue)
+      ? contentValue
+      : parseJsonValue(data.options.initialValue),
   )
 
   useEffect(() => {
-    actions.setContent(initialValue)
+    actions.setContent({
+      value: initialValue,
+      plugin: "storyblok-tags",
+    })
   }, [initialValue])
 
   return (
