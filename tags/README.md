@@ -66,6 +66,9 @@ Example output:
 
 ```json
 {
-  "fieldname": ["AUS", "BRA", "FRA", "SWE", "ITA"]
+  "fieldname": {
+    "value": ["AUS", "BRA", "FRA", "SWE", "ITA"],
+    "plugin": "storyblok-tags"
+  }
 }
 ```
