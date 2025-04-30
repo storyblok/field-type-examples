@@ -45,9 +45,7 @@
 </template>
 
 <script>
-import Card from '../Card/Card.vue'
-import CardFooter from '../Card/CardFooter/CardFooter.vue'
-import CardContent from '../Card/CardContent/CardContent.vue'
+import { Card, CardContent, CardFooter } from '@/components'
 import ItemImage from '../ItemImage/ItemImage.vue'
 import { SbIcon } from '@storyblok/design-system'
 

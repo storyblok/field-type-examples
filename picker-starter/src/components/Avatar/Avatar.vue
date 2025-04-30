@@ -15,43 +15,36 @@
       <span
         class="plugin-item-image__fallback-text sb-typography font-size-lg font-weight-medium"
       >
-        {{ initials }}
+        {{ renderedInitials }}
       </span>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
 import { pseudoRandomColor } from '@/utils'
 import { initials } from '@/utils'
 
-export default {
-  name: 'Avatar',
-  props: {
-    label: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    imageSrc: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
+const props = defineProps({
+  label: {
+    type: String,
+    required: false,
+    default: '',
   },
-  computed: {
-    initials() {
-      return initials(this.label)
-    },
-    backgroundColor() {
-      return pseudoRandomColor(this.label)
-    },
+  imageSrc: {
+    type: String,
+    required: false,
+    default: undefined,
   },
-}
+})
+
+const renderedInitials = computed(() => initials(props.label))
+const backgroundColor = computed(() => pseudoRandomColor(props.label))
 </script>
 
 <style scoped lang="scss">
-@import '../styles';
+@import '@/components/styles';
 
 .plugin-avatar {
   vertical-align: middle;
@@ -70,14 +63,17 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-x: hidden;
 
   width: $avatar-height;
   height: $avatar-height;
-  color: white;
 
   border-radius: 5px;
 }
 
 .plugin-item-image__fallback-text {
+  color: var(--sb-color-neutral-white);
+  font-size: 14px;
+  font-weight: 500;
 }
 </style>

@@ -7,10 +7,44 @@ html {
   width: 100%;
 }
 
-/*Element Styles*/
+/*
+** Element Styles
+*/
 body {
   margin: 0;
   display: flex;
   box-sizing: border-box;
   overflow: hidden;
+}
+
+/*
+** Main Design Token variables
+*/
+:root {
+  --sb-color-base-50: #f6f7f8;
+  --sb-color-base-700: #5f616e;
+
+  --sb-color-primary-700: #05807f;
+
+  --sb-color-secondary-100: #dde3ee;
+  --sb-color-secondary-950: #1b243f;
+
+  --sb-color-neutral-white: #ffffff;
+
+  --sb-color-success-100: #d7f4e3;
+  --sb-color-success-800: #13523b;
+
+  --sb-color-danger-600: #e5271d;
+}
+
+/*
+** Design System styles
+*/
+
+// -- SbHeader
+.sb-header .sb-header__title {
+  font-size: 20px;
+}
+.sb-header .sb-header__subtitle {
+  margin: 0;
 }

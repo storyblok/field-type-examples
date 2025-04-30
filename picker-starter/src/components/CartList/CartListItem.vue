@@ -4,19 +4,19 @@
       class="plugin-cart-list-item__handle"
       name="handle"
       size="normal"
-      color="light-gray"
+      color="dark-blue"
     />
     <CartListItemImage :item="item" />
     <div class="plugin-cart-list-item__text">
-      <div class="plugin-cart-list-item__name">
+      <p class="plugin-cart-list-item__name">
         {{ item.name }}
-      </div>
-      <div
+      </p>
+      <p
         v-if="item.description"
         class="plugin-cart-list-item__description"
       >
         {{ item.description }}
-      </div>
+      </p>
     </div>
     <SbButton
       class="plugin-cart-list-item__remove"
@@ -29,64 +29,33 @@
   </ListItem>
 </template>
 
-<script>
+<script setup>
 import { SbButton, SbIcon } from '@storyblok/design-system'
-import { ListItem } from '../../List'
-import { CartListItemImage } from '../../CartListItemImage'
+import { ListItem, CartListItemImage } from '@/components'
 
-export default {
-  name: 'CartListItem',
-  components: {
-    ListItem,
-    SbButton,
-    SbIcon,
-    CartListItemImage,
+defineProps({
+  item: {
+    type: Object,
+    required: true,
   },
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-    // Replace this prop with onRemove
-    basket: {
-      type: Object,
-      required: true,
-    },
+  // Replace this prop with onRemove
+  basket: {
+    type: Object,
+    required: true,
   },
-}
+})
 </script>
 
 <style scoped lang="scss">
-@import '../../styles.scss';
-
-.plugin-cart-list-item__handle {
-  min-width: 2.4rem;
-}
-
-.plugin-cart-list-item__text {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.plugin-cart-list-item__name {
-  @include typography-title;
-}
-
-.plugin-cart-list-item__description {
-  @include typography-description;
-  @include max-lines(3);
-}
+@import '@/components/styles.scss';
 
 .plugin-cart-list-item {
   justify-self: flex-end;
   position: relative;
   @include transition(background-color);
-  background-color: #ffffff;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
+  background-color: var(--sb-color-neutral-white);
+  padding: 6px 8px;
+  border-radius: 5px;
 
   &:hover {
     background-color: #f7f8f9;
@@ -97,14 +66,43 @@ export default {
   }
 }
 
+.plugin-cart-list-item__handle {
+  min-width: 2.4rem;
+}
+
+.plugin-cart-list-item__text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 5px;
+
+  > p {
+    margin: 0;
+  }
+}
+
+.plugin-cart-list-item__name {
+  @include typography-title;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.plugin-cart-list-item__description {
+  @include typography-description;
+  font-size: 10px;
+  @include max-lines(3);
+}
+
 .plugin-cart-list-item__remove {
   position: absolute;
   right: 10px;
   top: 10px;
 
   @media (hover: hover) and (pointer: fine) {
-    color: #b1b5be;
+    color: var(--sb-color-secondary-950);
+    background-color: var(--sb-color-neutral-white);
     opacity: 0;
+
     &:hover {
       color: inherit;
       background-color: #eff1f3;

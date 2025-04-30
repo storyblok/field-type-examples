@@ -14,7 +14,7 @@
 
 <script>
 import { Skeleton } from '../Skeleton'
-import { Card, CardFooter, CardContent } from '../Card'
+import { Card, CardFooter, CardContent } from '@/components'
 
 export default {
   name: 'SkeletonCard',

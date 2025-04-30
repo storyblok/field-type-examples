@@ -58,7 +58,7 @@
           <SbTabPanel name="basket">
             <EmptyScreen
               v-if="basket.isEmpty()"
-              :icon="NoItemsIcon"
+              icon="package-minus"
               title="No items added"
               description="Added items will be listed here"
             />
@@ -87,7 +87,6 @@ import {
 import { ItemPicker } from '../ItemPicker'
 import { CartList } from '../CartList'
 import { EmptyScreen } from '../EmptyScreen'
-import { NonItemsAddedIcon } from '../Icons'
 
 export default {
   name: 'ModalPage',
@@ -137,9 +136,6 @@ export default {
   },
 
   computed: {
-    NoItemsIcon() {
-      return NonItemsAddedIcon
-    },
     tabs() {
       return this.pickerService.tabs
     },

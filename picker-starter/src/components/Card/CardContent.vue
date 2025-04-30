@@ -4,14 +4,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CardContent',
-}
-</script>
-
 <style scoped lang="scss">
-@import '../../styles.scss';
+@import '@/components/styles.scss';
 
 .plugin-card-content {
   display: flex;

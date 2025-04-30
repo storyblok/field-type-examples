@@ -24,7 +24,6 @@
     </div>
     <EmptyScreen
       v-if="isPageEmpty"
-      :icon="EmptySearchIcon"
       :description="`We could not find any ${itemService.label}.`"
       title="No results found"
     />
@@ -78,7 +77,6 @@ import debounce from 'debounce'
 import EmptyScreen from '../EmptyScreen/EmptyScreen.vue'
 import ViewModeSwitch from '../ViewModeSwitch/ViewModeSwitch.vue'
 import { SearchField, SelectFilter } from '../Filter'
-import { EmptySearchIcon } from '../Icons'
 import { reducerMixin } from '../ItemPicker/utils/mixin/mixin.ts'
 import { throttleMs } from '@/settings'
 
@@ -117,11 +115,6 @@ export default {
       // Presentational
       itemView: 'grid',
     }
-  },
-  computed: {
-    EmptySearchIcon() {
-      return EmptySearchIcon
-    },
   },
   created() {
     this.init()

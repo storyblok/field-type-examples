@@ -4,12 +4,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CardFooter',
-}
-</script>
-
 <style scoped>
 .plugin-card-footer {
   padding: 20px;
