@@ -1,10 +1,7 @@
 <template>
   <ModalContainer>
     <template #header>
-      <ModalHeader
-        :title="title"
-        :close-modal="closeModal"
-      >
+      <ModalHeader :title="title">
         <template
           v-if="icon"
           #icon

@@ -12,11 +12,6 @@ defineProps({
     required: false,
     default: undefined,
   },
-  closeModal: {
-    type: Function,
-    required: false,
-    default: () => {},
-  },
 })
 </script>
 
