@@ -22,7 +22,7 @@
     </GridItem>
     <template v-if="loading && appendSkeletons">
       <GridItem
-        v-for="n in parseInt(12)"
+        v-for="n in 12"
         :key="n"
         transition="fade"
       >

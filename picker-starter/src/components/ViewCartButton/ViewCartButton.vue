@@ -33,7 +33,7 @@ const props = defineProps({
   },
 })
 
-const emit = defineEmits(['click'])
+defineEmits(['click'])
 
 const label = computed(() => {
   return addedItemsCountLabel(props.size, props.maxItems)

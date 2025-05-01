@@ -40,12 +40,12 @@ body {
 /*
 ** Design System styles
 */
-// -- SbButton
+/* -- SbButton */
 .sb-button.sb-button--primary {
   background-color: var(--sb-color-primary-700);
 }
 
-// -- SbCheckbox
+/* -- SbCheckbox */
 .sb-checkbox .sb-checkbox__native:checked + .sb-checkbox__input {
   background-color: var(--sb-color-primary-700);
 }
@@ -53,7 +53,7 @@ body {
   border-color: var(--sb-color-primary-700);
 }
 
-// -- SbHeader
+/* -- SbHeader */
 .sb-header .sb-header__title {
   font-size: 20px;
 }
