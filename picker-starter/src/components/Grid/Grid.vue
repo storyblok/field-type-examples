@@ -4,12 +4,6 @@
   </ol>
 </template>
 
-<script>
-export default {
-  name: 'Grid',
-}
-</script>
-
 <style scoped>
 .plugin-grid {
   display: grid;

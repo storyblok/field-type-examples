@@ -12,36 +12,25 @@
   />
 </template>
 
-<script>
+<script lang="ts" setup>
 import { SbTextField } from '@storyblok/design-system'
 
-export default {
-  name: 'SearchField',
-  components: {
-    SbTextField,
+defineProps({
+  placeholder: {
+    type: String,
+    required: false,
+    default: undefined,
   },
-  props: {
-    placeholder: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    modelValue: {
-      type: String,
-      required: false,
-      default: '',
-    },
+  modelValue: {
+    type: String,
+    required: false,
+    default: '',
   },
-  emits: ['update:modelValue'],
-  watch: {
-    value(newValue) {
-      this.$emit('update:modelValue', newValue)
-    },
-  },
-  methods: {
-    handleInput(value) {
-      this.$emit('update:modelValue', value || '')
-    },
-  },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const handleInput = (value: string) => {
+  emit('update:modelValue', value || '')
 }
 </script>

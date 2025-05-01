@@ -37,59 +37,33 @@
   </List>
 </template>
 
-<script>
-import List from '../List/List.vue'
-import ItemListItem from '../ItemListItem/ItemListItem.vue'
-import ListItem from '../List/ListItem/ListItem.vue'
-import SkeletonListItem from '../SkeletonListItem/SkeletonListItem.vue'
+<script setup lang="ts">
+import type { BasketItem } from '@/core'
+import { List, ListItem, ItemListItem, SkeletonListItem } from '@/components'
 
-export default {
-  name: 'ItemList',
-  components: {
-    SkeletonListItem,
-    ListItem,
-    ItemListItem,
-    List,
-  },
-  props: {
-    items: {
-      type: Array,
-      required: true,
-    },
-    selectedItems: {
-      type: Array,
-      required: true,
-    },
-    loading: Boolean,
-    appendSkeletons: {
-      type: Boolean,
-      default: false,
-    },
-    isLimitReached: Boolean,
-    onAdd: {
-      type: Function,
-      required: true,
-    },
-    onRemove: {
-      type: Function,
-      required: true,
-    },
-  },
-  methods: {
-    onClick(item) {
-      return this.isSelected(item) ? this.onRemove(item) : this.onAdd(item)
-    },
-    isSelected(item) {
-      return this.selectedItems.some(
-        (selectedItem) => selectedItem.id === item.id,
-      )
-    },
-  },
+interface Props {
+  items: BasketItem[]
+  selectedItems: BasketItem[]
+  loading?: boolean
+  appendSkeletons?: boolean
+  isLimitReached?: boolean
+  onAdd: (item: BasketItem) => void
+  onRemove: (item: BasketItem) => void
+}
+const props = withDefaults(defineProps<Props>(), {
+  appendSkeletons: false,
+})
+
+const isSelected = (item: BasketItem) => {
+  return props.selectedItems.some((selectedItem) => selectedItem.id === item.id)
+}
+const onClick = (item: BasketItem) => {
+  isSelected(item) ? props.onRemove(item) : props.onAdd(item)
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../styles.scss';
+@import '@/components/styles.scss';
 
 .plugin-item-grid__card {
   flex: 1;

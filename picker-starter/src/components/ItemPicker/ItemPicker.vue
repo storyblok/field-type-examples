@@ -17,10 +17,7 @@
           "
         />
       </div>
-      <ViewModeSwitch
-        v-model="itemView"
-        class="plugin-view-mode-switch"
-      />
+      <ViewModeSwitch v-model="itemView" />
     </div>
     <EmptyScreen
       v-if="isPageEmpty"
@@ -70,15 +67,14 @@
 </template>
 
 <script>
-import { ItemGrid } from '../ItemGrid'
-import { ItemList } from '../ItemList'
-import { SbPagination, SbButton } from '@storyblok/design-system'
 import debounce from 'debounce'
-import EmptyScreen from '../EmptyScreen/EmptyScreen.vue'
-import ViewModeSwitch from '../ViewModeSwitch/ViewModeSwitch.vue'
-import { SearchField, SelectFilter } from '../Filter'
-import { reducerMixin } from '../ItemPicker/utils/mixin/mixin.ts'
 import { throttleMs } from '@/settings'
+import { reducerMixin } from '../ItemPicker/utils/mixin/mixin.ts'
+
+import { SbPagination, SbButton } from '@storyblok/design-system'
+import { ItemGrid, ItemList, EmptyScreen, SelectFilter } from '@/components'
+import { SearchField } from '../Filter'
+import { ViewModeSwitch } from '../ViewModeSwitch'
 
 export default {
   name: 'ItemPicker',
@@ -202,6 +198,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/components/styles.scss';
+
 .plugin-item-grid {
   display: flex;
   flex-direction: column;
@@ -221,10 +219,6 @@ export default {
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 10px;
-}
-
-.plugin-view-mode-switch {
-  align-self: flex-start;
 }
 
 .plugin-item-grid__pagination {

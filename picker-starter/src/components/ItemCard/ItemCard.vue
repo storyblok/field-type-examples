@@ -30,70 +30,60 @@
         />
       </CardContent>
       <CardFooter>
-        <div class="plugin-item-card__footer-name">
+        <p class="plugin-item-card__footer-name">
           {{ item.name }}
-        </div>
-        <div
+        </p>
+        <p
           v-if="item.description"
           class="plugin-item-card__footer-description"
         >
           {{ item.description }}
-        </div>
+        </p>
       </CardFooter>
     </Card>
   </label>
 </template>
 
-<script>
-import { Card, CardContent, CardFooter } from '@/components'
-import ItemImage from '../ItemImage/ItemImage.vue'
+<script setup>
+import { Card, CardContent, CardFooter, ItemImage } from '@/components'
 import { SbIcon } from '@storyblok/design-system'
 
-export default {
-  name: 'ItemCard',
-  components: {
-    ItemImage,
-    CardContent,
-    CardFooter,
-    Card,
-    SbIcon,
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
   },
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-    value: {
-      type: Boolean,
-      default: false,
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
+  value: {
+    type: Boolean,
+    default: false,
   },
-  emits: ['click'],
-  methods: {
-    handleClick() {
-      if (this.disabled) {
-        return
-      }
-      this.$emit('click')
-    },
+  disabled: {
+    type: Boolean,
+    default: false,
   },
+})
+
+const emit = defineEmits(['click'])
+
+const handleClick = () => {
+  if (props.disabled) {
+    return
+  }
+  emit('click')
 }
 </script>
 
 <style scoped lang="scss">
-@import '../styles';
+@import '@/components/styles';
 
 .plugin-item-card {
-  border: 1px solid transparent;
+  gap: 10px;
+  border: 2px solid transparent;
   @include transition(background-color, border-color, box-shadow, opacity);
 }
 
 .plugin-checkbox {
-  color: white;
+  color: var(--sb-color-neutral-white);
   border-radius: 3px;
   background-color: transparent;
   @include transition(background-color);
@@ -104,21 +94,25 @@ export default {
   top: 10px;
   left: 10px;
   padding: 5px;
-  background-color: white;
+  background-color: var(--sb-color-neutral-white);
   border-radius: 5px;
 }
 
 .plugin-checkbox__icon {
   border-radius: 3px;
-  border: 1px solid #dfe3e8;
+  border: 1px solid var(--sb-color-secondary-100);
   @include transition(background-color, border-width, border-color);
 }
 
 .plugin-item-card__content {
-  background-color: #eff1f3;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.plugin-item-card__footer-name,
+.plugin-item-card__footer-description {
+  margin: 0;
 }
 
 .plugin-item-card__footer-name {
@@ -131,11 +125,11 @@ export default {
 }
 
 .plugin-item-card--checked {
-  background-color: #f9f9f9;
-  border-color: #00b3b0;
+  background-color: var(--sb-color-base-50);
+  border-color: var(--sb-color-primary-700);
 
   .plugin-checkbox__icon {
-    background-color: #00b3b0;
+    background-color: var(--sb-color-primary-700);
     border-color: transparent;
   }
 }
@@ -148,7 +142,7 @@ input[type='checkbox'] {
   &:hover {
     + .plugin-item-card {
       cursor: pointer;
-      background-color: rgba(0, 0, 0, 0.03);
+      background-color: var(--sb-color-base-50);
     }
   }
 
@@ -162,7 +156,7 @@ input[type='checkbox'] {
 
   &:focus {
     + .plugin-item-card {
-      box-shadow: 0 0 0 3px #d9f4f3;
+      background-color: var(--sb-color-base-50);
     }
   }
 }
