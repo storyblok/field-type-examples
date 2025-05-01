@@ -74,6 +74,8 @@ const pickItemsLabel = computed(() => addItemsLabel(props.maxItems))
   }
 
   &__list {
+    background-color: var(--sb-color-neutral-white);
+    padding: 10px;
     max-height: calc(3.5 * #{$card-height});
     overflow-y: auto;
   }

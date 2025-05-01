@@ -5,7 +5,9 @@ import { useFieldPlugin } from '@storyblok/field-plugin/vue3'
 import { pluginName } from '../settings'
 import setup from '../picker.config'
 
-const plugin = useFieldPlugin()
+const plugin = useFieldPlugin({
+  enablePortalModal: true,
+})
 
 const content = computed(() => {
   const content = plugin.data?.content

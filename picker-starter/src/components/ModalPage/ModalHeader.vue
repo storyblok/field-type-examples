@@ -16,30 +16,15 @@
     </div>
     <div style="flex: 1" />
     <slot name="actions" />
-    <SbButton
-      class="plugin-modal-layout__close-button"
-      size="small"
-      variant="tertiary"
-      icon="x"
-      has-icon-only
-      @click.prevent="closeModal"
-    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { SbButton } from '@storyblok/design-system'
-
 defineProps({
   title: {
     type: String,
     required: false,
     default: undefined,
-  },
-  closeModal: {
-    type: Function,
-    required: false,
-    default: () => {},
   },
 })
 </script>
