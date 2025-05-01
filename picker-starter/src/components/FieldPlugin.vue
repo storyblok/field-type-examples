@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, shallowRef, watch } from 'vue'
 import { Picker } from './Picker'
 import { useFieldPlugin } from '@storyblok/field-plugin/vue3'
 import { pluginName } from '../settings'
 import setup from '../picker.config'
+import { PickerPluginParams } from '@/core'
 
 const plugin = useFieldPlugin({
   enablePortalModal: true,
@@ -21,14 +22,22 @@ const setValue = (content: any) => {
   })
 }
 
-const servicePluginParams = computed(() => {
-  return setup(plugin.data?.options || {})
-})
+// `shallowRef` instead of `ref` to avoid unnecessary re-renders
+const servicePluginParams = shallowRef<PickerPluginParams>()
+
+watch(
+  () => plugin.type,
+  async () => {
+    if (plugin.type === 'loaded') {
+      servicePluginParams.value = await setup(plugin)
+    }
+  },
+)
 </script>
 
 <template>
   <Picker
-    v-if="plugin.type === 'loaded'"
+    v-if="plugin.type === 'loaded' && servicePluginParams"
     v-bind="servicePluginParams"
     :unvalidated-options="plugin.data.options"
     :is-modal-open="plugin.data.isModalOpen"
