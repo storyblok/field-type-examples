@@ -26,44 +26,33 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
 import { SbButton } from '@storyblok/design-system'
-import { CartList } from '../CartList'
-import { AddAssetButton } from '../AddAssetButton'
+import { AddAssetButton, CartList } from '@/components'
 import { addItemsLabel } from './add-items-label'
 
-export default {
-  name: 'NonModal',
-  components: {
-    CartList,
-    SbButton,
-    AddAssetButton,
+const props = defineProps({
+  openModal: {
+    type: Function,
+    required: false,
+    default: () => undefined,
   },
-  props: {
-    openModal: {
-      type: Function,
-      required: false,
-      default: () => undefined,
-    },
-    basket: {
-      type: Object,
-      required: true,
-    },
-    maxItems: {
-      type: Number,
-      default: undefined,
-    },
+  basket: {
+    type: Object,
+    required: true,
   },
-  computed: {
-    pickItemsLabel() {
-      return addItemsLabel(this.maxItems)
-    },
+  maxItems: {
+    type: Number,
+    default: undefined,
   },
-}
+})
+
+const pickItemsLabel = computed(() => addItemsLabel(props.maxItems))
 </script>
 
 <style scoped lang="scss">
-@import '../styles.scss';
+@import '@/components/styles.scss';
 
 .plugin-non-modal-page {
   display: flex;
@@ -82,11 +71,6 @@ export default {
   &__add-button {
     border-radius: 0 0 5px 5px;
     @include transition(background-color, color);
-
-    &:not(:hover) {
-      color: #1b243f;
-      background-color: #f7f8f9;
-    }
   }
 
   &__list {

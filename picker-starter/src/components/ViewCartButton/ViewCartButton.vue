@@ -10,39 +10,34 @@
   </SbButton>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { computed } from 'vue'
 import { SbButton } from '@storyblok/design-system'
 import { addedItemsCountLabel } from './added-items-count-label'
 
-export default {
-  name: 'ViewCartButton',
-  components: {
-    SbButton,
+const props = defineProps({
+  size: {
+    type: Number,
+    required: false,
+    default: 0,
   },
-  props: {
-    size: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
-    disabled: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    maxItems: {
-      type: Number,
-      require: false,
-      default: undefined,
-    },
+  disabled: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-  emits: ['click'],
-  computed: {
-    label() {
-      return addedItemsCountLabel(this.size, this.maxItems)
-    },
+  maxItems: {
+    type: Number,
+    require: false,
+    default: undefined,
   },
-}
+})
+
+const emit = defineEmits(['click'])
+
+const label = computed(() => {
+  return addedItemsCountLabel(props.size, props.maxItems)
+})
 </script>
 
 <style scoped lang="scss">

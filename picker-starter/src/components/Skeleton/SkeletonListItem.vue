@@ -7,19 +7,12 @@
   </div>
 </template>
 
-<script>
-import { Skeleton } from '../Skeleton'
-
-export default {
-  name: 'SkeletonListItem',
-  components: {
-    Skeleton,
-  },
-}
+<script setup lang="ts">
+import { Skeleton } from '@/components'
 </script>
 
 <style scoped lang="scss">
-@import '../styles.scss';
+@import '@/components/styles.scss';
 
 .plugin-skeleton-list-item {
   padding: 15px 10px;

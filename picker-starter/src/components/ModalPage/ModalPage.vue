@@ -73,10 +73,8 @@
   </ModalContainer>
 </template>
 
-<script>
-import { ModalHeader } from '../ModalHeader'
-import { ModalContainer } from '../ModalContainer'
-import { ViewCartButton } from '../ViewCartButton'
+<script setup>
+import { ref, computed } from 'vue'
 import {
   SbTab,
   SbTabs,
@@ -84,69 +82,45 @@ import {
   SbTabPanels,
   SbButton,
 } from '@storyblok/design-system'
-import { ItemPicker } from '../ItemPicker'
-import { CartList } from '../CartList'
-import { EmptyScreen } from '../EmptyScreen'
 
-export default {
-  name: 'ModalPage',
-  components: {
-    SbButton,
-    CartList,
-    ViewCartButton,
-    ModalHeader,
-    ModalContainer,
-    SbTab,
-    SbTabs,
-    SbTabPanel,
-    SbTabPanels,
-    EmptyScreen,
-    ItemPicker,
-  },
-  props: {
-    basket: {
-      type: Object,
-      required: true,
-    },
-    pickerService: {
-      type: Object,
-      required: true,
-    },
-    closeModal: {
-      type: Function,
-      default: () => undefined,
-    },
-    title: {
-      type: String,
-      default: undefined,
-    },
-    icon: {
-      type: Object,
-      default: undefined,
-    },
-    maxItems: {
-      type: Number,
-      default: undefined,
-    },
-  },
-  data() {
-    return {
-      activeTab: this.initialActiveTab(),
-    }
-  },
+import {
+  ModalContainer,
+  ModalHeader,
+  CartList,
+  ViewCartButton,
+  EmptyScreen,
+  ItemPicker,
+} from '@/components'
 
-  computed: {
-    tabs() {
-      return this.pickerService.tabs
-    },
-    isLimitReached() {
-      return this.maxItems <= this.basket.size()
-    },
+const props = defineProps({
+  basket: {
+    type: Object,
+    required: true,
   },
-  methods: {
-    initialActiveTab() {
-      return this.pickerService.tabs[0]?.name
-    },
+  pickerService: {
+    type: Object,
+    required: true,
   },
-}
+  closeModal: {
+    type: Function,
+    default: () => undefined,
+  },
+  title: {
+    type: String,
+    default: undefined,
+  },
+  icon: {
+    type: Object,
+    default: undefined,
+  },
+  maxItems: {
+    type: Number,
+    default: undefined,
+  },
+})
+
+const activeTab = ref(props.pickerService.tabs[0]?.name)
+
+const tabs = computed(() => props.pickerService.tabs)
+const isLimitReached = computed(() => props.maxItems <= props.basket.size())
 </script>

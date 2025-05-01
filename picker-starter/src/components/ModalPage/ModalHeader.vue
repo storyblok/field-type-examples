@@ -27,36 +27,31 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { SbButton } from '@storyblok/design-system'
 
-export default {
-  name: 'ModalLayout',
-  components: {
-    SbButton,
+defineProps({
+  title: {
+    type: String,
+    required: false,
+    default: undefined,
   },
-  props: {
-    title: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    closeModal: {
-      type: Function,
-      required: false,
-      default: () => {},
-    },
+  closeModal: {
+    type: Function,
+    required: false,
+    default: () => {},
   },
-}
+})
 </script>
 
 <style scoped lang="scss">
-@import '../styles.scss';
+@import '@/components/styles.scss';
 
 .plugin-modal-layout__title {
   display: inline-flex;
   gap: 10px;
   align-items: center;
+
   @media only screen and (max-width: 300px) {
     display: none;
   }

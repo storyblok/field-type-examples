@@ -12,19 +12,8 @@
   </Card>
 </template>
 
-<script>
-import { Skeleton } from '../Skeleton'
-import { Card, CardFooter, CardContent } from '@/components'
-
-export default {
-  name: 'SkeletonCard',
-  components: {
-    Card,
-    CardFooter,
-    CardContent,
-    Skeleton,
-  },
-}
+<script lang="ts" setup>
+import { Card, CardFooter, CardContent, Skeleton } from '@/components'
 </script>
 
 <style scoped>

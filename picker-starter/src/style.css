@@ -40,6 +40,18 @@ body {
 /*
 ** Design System styles
 */
+// -- SbButton
+.sb-button.sb-button--primary {
+  background-color: var(--sb-color-primary-700);
+}
+
+// -- SbCheckbox
+.sb-checkbox .sb-checkbox__native:checked + .sb-checkbox__input {
+  background-color: var(--sb-color-primary-700);
+}
+.sb-checkbox .sb-checkbox__native:checked + .sb-checkbox__input {
+  border-color: var(--sb-color-primary-700);
+}
 
 // -- SbHeader
 .sb-header .sb-header__title {

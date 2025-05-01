@@ -16,18 +16,15 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
 import { SbIcon } from '@storyblok/design-system'
-export default {
-  name: 'ValidationError',
-  components: { SbIcon },
-  props: {
-    validationResult: {
-      type: Object,
-      required: true,
-    },
+
+defineProps({
+  validationResult: {
+    type: Object,
+    required: true,
   },
-}
+})
 </script>
 
 <style scoped lang="scss">
@@ -62,7 +59,7 @@ export default {
   overflow: hidden;
   vertical-align: middle;
   width: 75%;
-  color: #1b243f;
+  color: var(--sb-color-secondary-950);
   font-size: 1.6rem;
   font-weight: 500;
   text-overflow: ellipsis;
@@ -73,7 +70,7 @@ export default {
 .plugin-validation-error__body {
   display: block;
   overflow: hidden;
-  color: #1b243f;
+  color: var(--sb-color-secondary-950);
   font-size: 1.4rem;
   font-weight: 400;
   line-height: 1.2;
