@@ -29,7 +29,7 @@ watch(
   () => plugin.type,
   async () => {
     if (plugin.type === 'loaded') {
-      servicePluginParams.value = await setup(plugin)
+      servicePluginParams.value = setup(plugin.data?.options || {})
     }
   },
 )
