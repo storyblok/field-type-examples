@@ -43,7 +43,7 @@ defineProps({
   gap: 10px;
   padding: 15px;
   border-radius: 5px;
-  background-color: #ffe2e1;
+  background: var(--sb-color-red-100);
 }
 
 .error-notification__message {
@@ -58,7 +58,7 @@ defineProps({
   overflow: hidden;
   vertical-align: middle;
   width: 75%;
-  color: #1b243f;
+  color: var(--sb-color-secondary-950);
   font-size: 1.6rem;
   font-weight: 500;
   text-overflow: ellipsis;
@@ -68,7 +68,7 @@ defineProps({
 .error-notification__body {
   display: block;
   overflow: hidden;
-  color: #1b243f;
+  color: var(--sb-color-secondary-950);
   font-size: 1.4rem;
   font-weight: 400;
   line-height: 1.2;
