@@ -27,6 +27,17 @@
       </ModalHeader>
     </template>
     <template #main>
+      <ErrorNotification
+        v-if="errorNotification && errorNotification.location === 'modal'"
+        :title="errorNotification.title"
+        :message="errorNotification.message"
+      >
+        <component
+          :is="errorNotification.component"
+          v-bind="errorNotification.props"
+          v-if="errorNotification.component"
+        />
+      </ErrorNotification>
       <SbTabs
         v-model="activeTab"
         :show-add-button="false"
@@ -86,8 +97,11 @@ import {
   CartList,
   ViewCartButton,
   EmptyScreen,
+  ErrorNotification,
   ItemPicker,
 } from '@/components'
+
+import { useErrorNotification } from '@/composables'
 
 const props = defineProps({
   basket: {
@@ -115,6 +129,8 @@ const props = defineProps({
     default: undefined,
   },
 })
+
+const { errorNotification } = useErrorNotification()
 
 const activeTab = ref(props.pickerService.tabs[0]?.name)
 

@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { Tooltip } from '@storyblok/design-system/src/directives'
 import './style.css'
 import App from './App.vue'
 
@@ -8,7 +9,11 @@ if (!document.querySelector('#app')) {
   rootElement.id = 'app'
   document.body.appendChild(rootElement)
 }
-createApp(App).mount('#app')
+
+const app = createApp(App)
+app.directive('tooltip', Tooltip)
+
+app.mount('#app')
 
 // This error replaces another error which message is harder to understand and impossible to avoid util the issue https://github.com/storyblok/field-plugin/issues/107 has been resolved.
 throw new Error(

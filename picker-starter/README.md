@@ -14,11 +14,16 @@ In the example below you can have a glimpse of what this file looks like and its
 
 ```js
 export default defineConfig((options) => {
-  return {
+  const config: PickerConfig = {
     title: 'Picker Starter', //(1) modal's title
     icon: StoryblokIcon, //(2) modal's icon
-    validateOptions: () => {
-      //(3) optional function responsible for validating the plugin's options and showing a warning box in case of failure.
+  }
+
+  const { setErrorNotification } = useErrorNotification()
+
+  try {
+    //(3) optional function responsible for validating the plugin's options and showing a warning in case of failure.
+    config.validateOptions = () => {
       const { limit } = options
 
       const isLimitOptionValid = limit === undefined || Number(limit) > 0
@@ -31,23 +36,33 @@ export default defineConfig((options) => {
         }
       }
 
-      //If all the options are valid (in case it relies on options)
-      //the returned object will look like this
+      // If all the options are valid (in case it relies on options)
+      // the returned object will look like this
       return {
         isValid: true,
       }
-    },
-    tabs: [
-      //(4) All of your Picker's tabs.
-      //You can have as many as your picker needs.
+    }
+
+    //(4) All of your Picker's tabs. You can have as many as your picker needs.
+    config.tabs = [
       {
         name: 'items', //mandatory field used to identify this tab
         label: 'Items', //(5) displayed in the modal
         query: queryItems, //(6) it fetches, sorts, and filter all the data for this tab
         getFilters: getItemFilters, //(7) select input acting like filters to the data
+        onError: errorHandler, // An optional hook that is triggered whenever an error occurs during data fetching or filter creation
       },
-    ],
+    ]
+  } catch (err) {
+    // whenever a generic error occurs and we want to display it on the main page
+    setErrorNotification({
+      location: 'main',
+      title: 'Plugin could not be initialized',
+    })
   }
+
+  // it must always return a config, no matter if an error has occurred or not.
+  return config
 })
 ```
 
