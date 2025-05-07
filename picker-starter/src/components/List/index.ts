@@ -1,2 +1,2 @@
 export { default as List } from './List.vue'
-export * from './ListItem'
+export { default as ListItem } from './ListItem.vue'

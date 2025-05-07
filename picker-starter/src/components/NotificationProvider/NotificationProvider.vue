@@ -51,7 +51,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../styles.scss';
+@import '@/components/styles.scss';
 
 .plugin-notification {
   position: absolute;

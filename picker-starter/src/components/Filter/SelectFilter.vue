@@ -11,31 +11,25 @@
   />
 </template>
 
-<script>
+<script lang="ts" setup>
 import { SbSelect } from '@storyblok/design-system'
 
-export default {
-  name: 'SelectFilter',
-  components: {
-    SbSelect,
+defineProps({
+  filterItem: {
+    type: Object,
+    required: true,
   },
-  props: {
-    filterItem: {
-      type: Object,
-      required: true,
-    },
-    modelValue: {
-      type: [String, Array],
-      required: false,
-      default: undefined,
-    },
+  modelValue: {
+    type: [String, Array],
+    required: false,
+    default: undefined,
   },
-  emits: ['update:modelValue'],
-  methods: {
-    input(value) {
-      this.$emit('update:modelValue', value ?? undefined)
-    },
-  },
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+const input = (value?: string | string[]) => {
+  emit('update:modelValue', value ?? undefined)
 }
 </script>
 

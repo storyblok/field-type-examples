@@ -7,18 +7,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Card',
-  props: {
-    value: Boolean,
-  },
-  emits: ['click'],
-  methods: {
-    handleClick() {
-      this.$emit('click')
-    },
-  },
+<script setup>
+defineProps({
+  value: Boolean,
+})
+
+const emit = defineEmits(['click'])
+
+const handleClick = () => {
+  emit('click')
 }
 </script>
 
@@ -34,6 +31,6 @@ export default {
   position: relative;
   padding: 10px;
 
-  background-color: #ffffff;
+  background-color: var(--sb-color-neutral-white);
 }
 </style>

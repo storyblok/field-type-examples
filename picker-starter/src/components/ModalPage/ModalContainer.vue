@@ -5,22 +5,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ModalContainer',
-  props: {
-    title: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    closeModal: {
-      type: Function,
-      required: false,
-      default: () => {},
-    },
+<script lang="ts" setup>
+defineProps({
+  title: {
+    type: String,
+    required: false,
+    default: undefined,
   },
-}
+})
 </script>
 
 <style scoped lang="scss">

@@ -14,27 +14,21 @@
   </div>
 </template>
 
-<script>
-import { Avatar } from '../Avatar'
+<script setup>
+import { Avatar } from '@/components'
 
-export default {
-  name: 'ItemImage',
-  components: {
-    Avatar,
+defineProps({
+  label: {
+    type: String,
+    required: false,
+    default: '',
   },
-  props: {
-    label: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    imageSrc: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
+  imageSrc: {
+    type: String,
+    required: false,
+    default: undefined,
   },
-}
+})
 </script>
 
 <style scoped>

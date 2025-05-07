@@ -10,18 +10,14 @@
   />
 </template>
 
-<script>
-export default {
-  name: 'Skeleton',
-  props: {
-    variant: {
-      validator(value) {
-        return value === 'text' || value === 'rectangle'
-      },
-      default: 'text',
-    },
+<script lang="ts" setup>
+defineProps({
+  variant: {
+    type: String,
+    default: 'text',
+    validator: (value: string) => value === 'text' || value === 'rectangle',
   },
-}
+})
 </script>
 
 <style scoped lang="scss">

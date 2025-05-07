@@ -19,47 +19,27 @@
   </Draggable>
 </template>
 
-<script>
-import { CartListItem } from '../CartList/CartListItem'
+<script setup>
+import { CartListItem } from '@/components'
 import { VueDraggableNext as Draggable } from 'vue-draggable-next'
 import { move } from './move'
 
-export default {
-  name: 'CartList',
-  components: {
-    CartListItem,
-    Draggable,
+const props = defineProps({
+  basket: {
+    type: Object,
+    required: true,
   },
-  props: {
-    basket: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {
-    dragOptions() {
-      return {
-        animation: 150,
-        mode: 'out-in',
-        name: 'flip-list',
-      }
-    },
-    currentView() {
-      return Draggable
-    },
-  },
-  methods: {
-    handleDrop(dropEvent) {
-      this.basket.set(
-        move(this.basket.items, dropEvent.oldIndex, dropEvent.newIndex),
-      )
-    },
-  },
+})
+
+const handleDrop = (dropEvent) => {
+  props.basket.set(
+    move(props.basket.items, dropEvent.oldIndex, dropEvent.newIndex),
+  )
 }
 </script>
 
 <style scoped lang="scss">
-@import '../styles.scss';
+@import '@/components/styles.scss';
 
 .plugin-cart-list {
   display: flex;

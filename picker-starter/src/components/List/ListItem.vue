@@ -7,16 +7,9 @@
   </li>
 </template>
 
-<script>
-export default {
-  name: 'ListItem',
-  emits: ['click'],
-  methods: {
-    handleClick() {
-      this.$emit('click')
-    },
-  },
-}
+<script lang="ts" setup>
+const emit = defineEmits(['click'])
+const handleClick = () => emit('click')
 </script>
 
 <style scoped>

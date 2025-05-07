@@ -5,78 +5,60 @@
     appear
   >
     <div class="plugin-empty-container">
-      <component
-        :is="icon"
-        v-if="icon"
+      <SbIcon
+        :name="icon"
         class="plugin-empty-layout__icon"
+        size="large"
+        color="warning"
+        background-color="warning"
+        :stroke-width="1"
       />
-      <h3
-        v-if="title"
-        class="plugin-empty-layout__title"
-      >
-        {{ title }}
-      </h3>
-      <p
-        v-if="description"
-        class="plugin-empty-layout__text"
-      >
-        {{ description }}
-      </p>
+      <SbHeader
+        :title="title"
+        :subtitle-text="description"
+      />
     </div>
   </transition>
 </template>
 
-<script>
-export default {
-  name: 'EmptyScreen',
-  props: {
-    title: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    description: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-    icon: {
-      type: Object,
-      required: false,
-      default: undefined,
-    },
+<script setup>
+import { SbIcon, SbHeader } from '@storyblok/design-system'
+
+defineProps({
+  title: {
+    type: String,
+    required: false,
+    default: undefined,
   },
-}
+  description: {
+    type: String,
+    required: false,
+    default: undefined,
+  },
+  icon: {
+    type: String,
+    required: false,
+    default: 'package-search',
+  },
+})
 </script>
 
-<style scoped lang="scss">
-@import '../styles.scss';
-
+<style lang="scss">
 .plugin-empty-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 50px 0px;
-  gap: 10px;
   justify-content: center;
-  flex: 1 1;
-  background-color: rgb(245, 245, 245);
-  border-radius: 10px;
-}
+  align-items: center;
+  gap: 2rem;
 
-.plugin-empty-layout__icon {
-  width: 110px;
-  margin: 16px 0 32px 0;
-}
+  width: 100%;
+  height: 70vh;
+  max-width: 469px;
+  margin: 0 auto;
+  text-align: center;
 
-.plugin-empty-layout__title {
-  font-size: 2.1rem;
-}
-
-.plugin-empty-layout__text {
-  max-width: 390px;
-  margin: 0 0 16px;
-  color: #8d919f;
-  font-size: 1.6rem;
+  p {
+    width: 100%;
+  }
 }
 </style>

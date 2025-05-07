@@ -21,9 +21,9 @@ $card-height: calc(#{$card-padding-y * 2 + $card-image-height-small});
 }
 
 @mixin typography-title {
-  color: #1b243f;
+  color: var(--sb-color-secondary-950);
   font-family: Roboto, sans-serif;
-  font-size: 1.6rem;
+  font-size: 14px;
   font-weight: 500;
   display: block;
   overflow: hidden;
@@ -33,8 +33,8 @@ $card-height: calc(#{$card-padding-y * 2 + $card-image-height-small});
 
 @mixin typography-description {
   padding-left: 0;
-  color: #8d919f;
-  font-size: 1.3rem;
+  color: var(--sb-color-base-700);
+  font-size: 12px;
   background-color: inherit;
   font-family: Roboto, sans-serif;
   text-overflow: ellipsis;

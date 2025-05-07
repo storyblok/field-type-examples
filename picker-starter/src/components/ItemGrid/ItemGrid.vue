@@ -22,7 +22,7 @@
     </GridItem>
     <template v-if="loading && appendSkeletons">
       <GridItem
-        v-for="n in parseInt(12)"
+        v-for="n in 12"
         :key="n"
         transition="fade"
       >
@@ -32,60 +32,34 @@
   </Grid>
 </template>
 
-<script>
-import { ItemCard } from '../ItemCard'
-import Grid from '../Grid/Grid.vue'
-import GridItem from '../Grid/GridItem/GridItem.vue'
-import SkeletonCard from '../SkeletonCard/SkeletonCard.vue'
+<script lang="ts" setup>
+import type { BasketItem } from '@/core'
+import { Grid, GridItem, ItemCard, SkeletonCard } from '@/components'
 
 // TODO prop for number of skeletons; pageSize
-export default {
-  name: 'ItemGrid',
-  components: {
-    SkeletonCard,
-    ItemCard,
-    Grid,
-    GridItem,
-  },
-  props: {
-    items: {
-      type: Array,
-      required: true,
-    },
-    selectedItems: {
-      type: Array,
-      required: true,
-    },
-    loading: Boolean,
-    appendSkeletons: {
-      type: Boolean,
-      default: false,
-    },
-    isLimitReached: Boolean,
-    onAdd: {
-      type: Function,
-      required: true,
-    },
-    onRemove: {
-      type: Function,
-      required: true,
-    },
-  },
-  methods: {
-    onClick(item) {
-      this.isSelected(item) ? this.onRemove(item) : this.onAdd(item)
-    },
-    isSelected(item) {
-      return this.selectedItems.some(
-        (selectedItem) => selectedItem.id === item.id,
-      )
-    },
-  },
+interface Props {
+  items: BasketItem[]
+  selectedItems: BasketItem[]
+  loading?: boolean
+  appendSkeletons?: boolean
+  isLimitReached?: boolean
+  onAdd: (item: BasketItem) => void
+  onRemove: (item: BasketItem) => void
+}
+const props = withDefaults(defineProps<Props>(), {
+  appendSkeletons: false,
+})
+
+const isSelected = (item: BasketItem) => {
+  return props.selectedItems.some((selectedItem) => selectedItem.id === item.id)
+}
+const onClick = (item: BasketItem) => {
+  isSelected(item) ? props.onRemove(item) : props.onAdd(item)
 }
 </script>
 
 <style lang="scss" scoped>
-@import '../styles.scss';
+@import '@/components/styles.scss';
 
 .plugin-item-grid__card {
   flex: 1;

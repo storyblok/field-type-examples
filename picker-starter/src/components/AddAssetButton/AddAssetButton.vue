@@ -4,75 +4,70 @@
     @click.prevent="handleClick"
   >
     <CartListItemImageContainer class="plugin-add-item-big-button__container">
-      <SbIcon name="block-image" />
+      <SbIcon name="shopping-cart" />
     </CartListItemImageContainer>
     <span class="plugin-add-item-big-button__label">
       <SbIcon
         name="plus"
         size="small"
+        :stroke-width="3"
       />
       {{ label }}
     </span>
   </button>
 </template>
 
-<script>
+<script setup>
 import { SbIcon } from '@storyblok/design-system'
-import { CartListItemImageContainer } from '../CartListItemImageContainer'
+import { CartListItemImageContainer } from '@/components'
 
-export default {
-  name: 'AddAssetButton',
-  components: {
-    CartListItemImageContainer,
-    SbIcon,
+defineProps({
+  label: {
+    type: String,
+    required: false,
+    default: undefined,
   },
-  props: {
-    label: {
-      type: String,
-      required: false,
-      default: undefined,
-    },
-  },
-  emits: ['click'],
-  methods: {
-    handleClick(e) {
-      this.$emit('click', e)
-    },
-  },
+})
+
+const emit = defineEmits(['click'])
+
+const handleClick = (e) => {
+  emit('click', e)
 }
 </script>
 
 <style scoped lang="scss">
-@import '../styles.scss';
+@import '@/components/styles.scss';
 
 .plugin-add-item-big-button {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 15px;
+  padding: 10px;
   cursor: pointer;
-  border: 1px solid #dfe3e8;
+  border: 1px solid var(--sb-color-secondary-100);
   border-radius: 5px;
-
-  background-color: #ffffff;
+  background-color: var(--sb-color-neutral-white);
 
   @include transition(background-color);
 
-  &:hover {
-    background-color: #f7f8f9;
+  &:hover,
+  &:focus {
+    outline: none;
+    border-color: var(--sb-color-primary-700);
   }
-}
 
-.plugin-add-item-big-button__label {
-  display: inline-flex;
-  align-items: center;
-  color: #1b243f;
-  font-size: 1.4rem;
-  font-weight: 500;
-}
+  .plugin-add-item-big-button__container {
+    height: 80px;
+    min-width: 106px;
+  }
 
-.plugin-add-item-big-button__container {
-  height: 80px;
-  min-width: 106px;
+  .plugin-add-item-big-button__label {
+    display: inline-flex;
+    align-items: center;
+    color: var(--sb-color-secondary-950);
+    font-size: 1.4rem;
+    font-weight: 500;
+  }
 }
 </style>

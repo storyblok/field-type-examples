@@ -1,2 +1,2 @@
 export { default as Grid } from './Grid.vue'
-export * from './GridItem'
+export { default as GridItem } from './GridItem.vue'

@@ -4,12 +4,6 @@
   </ol>
 </template>
 
-<script>
-export default {
-  name: 'List',
-}
-</script>
-
 <style scoped>
 .plugin-list {
   display: flex;

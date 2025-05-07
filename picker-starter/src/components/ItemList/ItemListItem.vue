@@ -1,5 +1,8 @@
 <template>
-  <label :class="`plugin-category-picker-list-item`">
+  <label
+    class="plugin-category-picker-list-item"
+    tabindex="0"
+  >
     <input
       :aria-checked="!!value"
       :disabled="disabled"
@@ -7,17 +10,17 @@
       @change="handleClick"
     />
     <span
-      :class="`plugin-category-picker-list-item__label ${
-        value ? 'plugin-category-picker-list-item__label--checked' : ''
-      }`"
+      class="plugin-category-picker-list-item__label"
+      :class="{ checked: value }"
     >
       <span class="plugin-checkbox">
-        <SbIcon
-          v-if="value"
-          name="check-mark"
-          class="plugin-checkbox__icon"
-          size="small"
-        />
+        <span class="plugin-checkbox__selectable">
+          <SbIcon
+            name="check"
+            class="plugin-checkbox__icon"
+            size="small"
+          />
+        </span>
       </span>
 
       <Avatar
@@ -39,66 +42,62 @@
     </span>
   </label>
 </template>
-<script>
-import { Avatar } from '../Avatar/index.ts'
+
+<script setup>
+import { Avatar } from '@/components'
 import { SbIcon } from '@storyblok/design-system'
 
 //TODO: check accessibility on the checkboxes
-export default {
-  name: 'ItemListItem',
-  components: {
-    Avatar,
-    SbIcon,
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
   },
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-    value: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    disabled: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+  value: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
-  emits: ['click'],
-  methods: {
-    handleClick() {
-      if (this.disabled) {
-        return
-      }
-      this.$emit('click')
-    },
+  disabled: {
+    type: Boolean,
+    required: false,
+    default: false,
   },
+})
+
+const emit = defineEmits(['click'])
+
+const handleClick = () => {
+  if (props.disabled) {
+    return
+  }
+  emit('click')
 }
 </script>
 
 <style scoped lang="scss">
-@import '../styles';
+@import '@/components/styles';
 
 .plugin-list-item {
   padding: 0;
 }
 
 .plugin-checkbox {
-  min-width: 16px;
-  width: 16px;
-  height: 16px;
-  border-radius: 3px;
-  background-color: white;
-  border: 1px solid #dfe3e8;
-  @include transition(background-color);
+  padding: 5px;
+  background-color: var(--sb-color-neutral-white);
+  border-radius: 5px;
 
-  &__icon {
+  .plugin-checkbox__selectable {
     color: white;
     border-radius: 3px;
-    border: 1px solid #dfe3e8;
-    @include transition(background-color, border-width, border-color);
+    background-color: transparent;
+    @include transition(background-color);
+
+    .plugin-checkbox__icon {
+      border-radius: 3px;
+      border: 1px solid var(--sb-color-secondary-100);
+      @include transition(background-color, border-width, border-color);
+    }
   }
 }
 
@@ -117,26 +116,22 @@ input[type='checkbox'] {
 
       .plugin-checkbox {
         background-color: #f5f5f5;
-        border: 1px solid #dfe3e8;
+        border: 1px solid var(--sb-color-secondary-100);
       }
-    }
-  }
-
-  &:focus {
-    + .plugin-category-picker-list-item__label {
-      border: 2px solid #d9f4f3;
     }
   }
 }
 
 .plugin-category-picker-list-item {
-  border-bottom: 1px solid #dfe3e8;
+  border-bottom: 1px solid var(--sb-color-secondary-100);
   position: relative;
   @include transition(background-color);
   flex: 1;
+  width: 100%;
 
-  label {
-    width: 100%;
+  &:focus {
+    outline: none;
+    background-color: #f7f8f9;
   }
 
   &__text {
@@ -156,30 +151,21 @@ input[type='checkbox'] {
   }
 
   &__label {
-    border: 2px solid transparent;
-    padding: 15px 10px 10px 15px;
+    padding: 12px 15px;
     display: flex;
     align-items: center;
     flex: 1;
     gap: 10px;
     cursor: pointer;
 
-    &--checked {
-      background-color: #f7f8f9;
-
-      .plugin-checkbox {
+    &.checked {
+      .plugin-checkbox__selectable {
         border: none;
 
-        &__icon {
-          background-color: #00b3b0;
-          border-width: 0;
+        .plugin-checkbox__icon {
+          background-color: var(--sb-color-primary-700);
           border-color: transparent;
         }
-      }
-
-      &:hover {
-        background-color: #e7eaee;
-        cursor: pointer;
       }
     }
 
