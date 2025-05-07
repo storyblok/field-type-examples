@@ -20,7 +20,6 @@
 </template>
 
 <script setup>
-// import { computed } from 'vue'
 import { CartListItem } from '@/components'
 import { VueDraggableNext as Draggable } from 'vue-draggable-next'
 import { move } from './move'
@@ -31,13 +30,6 @@ const props = defineProps({
     required: true,
   },
 })
-
-// const dragOptions = computed(() => ({
-//   animation: 150,
-//   mode: 'out-in',
-//   name: 'flip-list',
-// }))
-// const currentView = computed(() => Draggable)
 
 const handleDrop = (dropEvent) => {
   props.basket.set(
