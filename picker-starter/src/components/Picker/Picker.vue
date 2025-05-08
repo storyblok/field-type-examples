@@ -69,9 +69,11 @@ export default {
     },
     ...pluginPropsDef,
   },
-  data() {
+  setup() {
+    const { errorNotification } = useErrorNotification()
+
     return {
-      errorNotification: null,
+      errorNotification,
     }
   },
   computed: {
@@ -98,10 +100,6 @@ export default {
         this.setItems(getItems(this.items)),
       )
     },
-  },
-  created() {
-    const { errorNotification } = useErrorNotification()
-    this.errorNotification = errorNotification
   },
   methods: {
     setItems(items) {
