@@ -4,6 +4,7 @@
       v-if="validationResult.error"
       :validation-result="validationResult"
     />
+    <ErrorNotification v-else-if="errorNotification?.location === 'main'" />
     <template v-else>
       <ModalPage
         v-if="isModalOpen"
@@ -31,11 +32,13 @@ import {
   NonModalPage,
   ValidationError,
   NotificationProvider,
+  ErrorNotification,
 } from '../'
 import { createBasket } from '@/core'
 import '@storyblok/design-system/dist/storyblok-design-system.css'
 import { pluginPropsDef } from './pluginPropsDef'
 import { numberFromString } from '@/utils'
+import { useErrorNotification } from '@/composables'
 
 export default {
   name: 'Picker',
@@ -44,6 +47,7 @@ export default {
     NonModalPage,
     ModalPage,
     NotificationProvider,
+    ErrorNotification,
   },
   props: {
     icon: {
@@ -64,6 +68,13 @@ export default {
       required: true,
     },
     ...pluginPropsDef,
+  },
+  setup() {
+    const { errorNotification } = useErrorNotification()
+
+    return {
+      errorNotification,
+    }
   },
   computed: {
     maxItems() {

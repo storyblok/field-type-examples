@@ -1,4 +1,4 @@
-import { ComponentObjectPropsOptions, PropType } from 'vue'
+import { ComponentPropsOptions, PropType } from 'vue'
 
 export type WrapperPluginProps = {
   name: string
@@ -11,7 +11,7 @@ export type WrapperPluginProps = {
   token: string | null
 }
 
-export const pluginPropsDef: ComponentObjectPropsOptions<WrapperPluginProps> = {
+export const pluginPropsDef: ComponentPropsOptions<WrapperPluginProps> = {
   isModalOpen: {
     type: Boolean,
     required: true,

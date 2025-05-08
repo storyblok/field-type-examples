@@ -73,11 +73,21 @@ export type ItemQuery = (
   params: ItemQueryParams,
 ) => Promise<QueryResponse<BasketItem>>
 
+export type TabItemError = {
+  type: 'queryError' | 'filterError'
+  tabName: string
+  tabLabel: string
+  error?: Error
+}
+
+export type TabItemOnError = (err: TabItemError) => void | boolean
+
 export type TabItem = {
   name: string
   label: string
   query: ItemQuery // TODO rename propery
   getFilters?: FilterList
+  onError?: TabItemOnError
 }
 
 export type PickerService = {
@@ -91,3 +101,11 @@ export type PickerPluginParams = {
 }
 
 export type OptionsParams = Record<string, string>
+
+export type NotificationError = {
+  location: 'main' | 'modal'
+  title?: string
+  message?: string
+  component?: Component | null
+  props?: Record<string, unknown>
+}

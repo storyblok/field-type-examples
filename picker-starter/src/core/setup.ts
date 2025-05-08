@@ -5,7 +5,7 @@ export type PickerConfig = {
   title?: string
   icon?: Component
   validateOptions?: () => ValidationResult
-  tabs: TabItem[]
+  tabs?: TabItem[]
 }
 
 export type ValidationResult = {
@@ -37,7 +37,7 @@ export const defineConfig =
         }
 
         return {
-          value: { tabs },
+          value: { tabs: tabs || [] },
         }
       },
     }

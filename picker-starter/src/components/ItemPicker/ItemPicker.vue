@@ -154,17 +154,31 @@ export default {
         .catch((error) => error)
 
       if (res instanceof Error) {
+        const onErrorResult = this.itemService?.onError?.({
+          type: 'queryError',
+          tabName: this.itemService.name,
+          tabLabel: this.itemService.label,
+          error: res,
+        })
+
+        this.dispatch({
+          type: 'receiveError',
+          error: res,
+        })
+
+        if (onErrorResult === false) {
+          return
+        }
+
         this.notify({
           title: `Failed to fetch ${this.itemService.label}`,
           description: `Something went wrong when fetching ${this.itemService.label}.`,
           error: new Error(res),
         })
-        this.dispatch({
-          type: 'receiveError',
-          error: res,
-        })
+
         return
       }
+
       this.dispatch({
         type: 'receiveItems',
         response: res,
@@ -178,7 +192,14 @@ export default {
 
       if (res instanceof Error) {
         // Silent notification; the application will still function, so do not show error to the user
-        console.error('Failed to Fetch Filters', res)
+        console.error('Failed to fetch filters', res)
+
+        this.itemService?.onError?.({
+          type: 'filterError',
+          tabName: this.itemService.name,
+          tabLabel: this.itemService.label,
+          error: res,
+        })
       }
 
       this.dispatch({
