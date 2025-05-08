@@ -12,7 +12,7 @@ The [`picker.config.ts`](./src/picker.config.ts) is a configuration file where y
 
 In the example below you can have a glimpse of what this file looks like and its responsibilities:
 
-```js
+```ts
 export default defineConfig((options) => {
   const config: PickerConfig = {
     title: 'Picker Starter', //(1) modal's title
