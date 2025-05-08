@@ -43,6 +43,14 @@ body {
 /*
 ** Design System styles
 */
+/* -- SbNotification */
+.sb-notification.sb-notification--full {
+  padding: 12px;
+}
+.sb-notification.sb-notification--negative {
+  border: 1px solid var(--sb-color-danger-600);
+}
+
 /* -- SbButton */
 .sb-button.sb-button--primary {
   background-color: var(--sb-color-primary-700);

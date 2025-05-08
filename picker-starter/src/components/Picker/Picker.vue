@@ -4,17 +4,7 @@
       v-if="validationResult.error"
       :validation-result="validationResult"
     />
-    <ErrorNotification
-      v-else-if="errorNotification && errorNotification.location === 'main'"
-      :title="errorNotification.title"
-      :message="errorNotification.message"
-    >
-      <component
-        :is="errorNotification.component"
-        v-bind="errorNotification.props"
-        v-if="errorNotification.component"
-      />
-    </ErrorNotification>
+    <ErrorNotification v-else-if="errorNotification?.location === 'main'" />
     <template v-else>
       <ModalPage
         v-if="isModalOpen"

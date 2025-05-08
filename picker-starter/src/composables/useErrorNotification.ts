@@ -4,7 +4,7 @@ import { NotificationError } from '@/core'
 const errorNotification = ref<NotificationError>()
 
 export const useErrorNotification = () => {
-  const setErrorNotification = (err: NotificationError) => {
+  const setErrorNotification = (err?: NotificationError) => {
     errorNotification.value = err
   }
 

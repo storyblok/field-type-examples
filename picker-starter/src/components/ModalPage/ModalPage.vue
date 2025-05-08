@@ -27,17 +27,7 @@
       </ModalHeader>
     </template>
     <template #main>
-      <ErrorNotification
-        v-if="errorNotification && errorNotification.location === 'modal'"
-        :title="errorNotification.title"
-        :message="errorNotification.message"
-      >
-        <component
-          :is="errorNotification.component"
-          v-bind="errorNotification.props"
-          v-if="errorNotification.component"
-        />
-      </ErrorNotification>
+      <ErrorNotification v-if="errorNotification?.location === 'modal'" />
       <SbTabs
         v-model="activeTab"
         :show-add-button="false"

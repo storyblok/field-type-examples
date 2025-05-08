@@ -69,6 +69,102 @@ export default defineConfig((options) => {
 ![mapping 1 picker.config.ts](./docs/picker.config-1.png)
 ![mapping 2 picker.config.ts](./docs/picker.config-2.png)
 
+### Error Handling
+
+Handling errors in your application can be approached in many different ways, and this starter doesn't enforce a specific method. However, it does provide tools to help you catch and display errors more easily.
+
+Errors can be caught either globally or by listening for errors that occur in your service (tab) during `query` or `getFilters` calls.
+
+#### Handle errors globally
+
+Sometimes, you may want your application to catch all kinds of errors, regardless of their origin or type.
+
+In such cases, you can achieve this by wrapping the entire `defineConfig` implementation in a try/catch block.
+
+This allows you to handle unexpected errors—whether by displaying a message to the user or logging the issue to a service like Sentry.
+
+**Example:**
+
+```ts
+export default defineConfig(() => {
+  const config: PickerConfig = {...}
+
+  try {
+    config.tabs = [...]
+  } catch (err) {
+    // Display the error to the user
+    // Console log the error
+    // Send the error to Sentry
+  }
+
+  return config
+})
+```
+
+> [!NOTE]
+> The `defineConfig` function must always return a valid config object—even if an error occurs.  
+> Failing to do so will prevent the plugin from rendering correctly.
+
+#### Services (Tabs) errors
+
+If your application needs to handle errors from a specific service (tab) that occur during `query` or `getFilters` calls, you can do so by implementing the `onError` hook for that service.
+
+**Example:**
+
+```ts
+export default defineConfig(() => {
+  const config: PickerConfig = {...}
+
+  try {
+    config.tabs = [
+      {
+        name: '...',
+        label: '...',
+        query: () => {...},
+        getFilters: () => {...},
+        onError: (tabItemError: TabItemError) => {
+          // Here your plugin can check (tabItemError.type) if the error was thrown during `query` or `getFilters` call
+          // It can also display the error to the user, for example.
+
+          // When false, it will prevent the error from being displayed to the user using the default behavior.
+          return false
+        }
+      },
+    ]
+  } catch (err) {
+    // ...
+  }
+
+  return config
+})
+```
+
+#### Displaying errors
+
+Your plugin can display errors on both `modal` and `main` (non-modal view) level by just using the `useErrorNotification` composable and its `setErrorNotification` method.
+
+If you want to capture any kind of error globally and display it to the user, for example, you could do something like the following:
+
+```ts
+export default defineConfig(() => {
+  const config: PickerConfig = {...}
+
+  try {
+    // some error is thrown here
+  } catch (err) {
+    // errors are captured here and displayed to the user using the composable.
+    const { setErrorNotification } = useErrorNotification()
+
+    setErrorNotification({
+      location: 'main', // `modal` or `main` (non-modal) are valid values.
+      title: 'Ops! Something bad happened!',
+    })
+  }
+
+  return config
+})
+```
+
 ## Local Development
 
 To start using this starter locally in your project, just run:
