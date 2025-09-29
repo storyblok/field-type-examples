@@ -3,6 +3,11 @@
 
 # Field-type Examples
 
+> ⚠️ **DEPRECATION NOTICE**: Moved to monorepo ⚠️
+>
+> This package has been moved to the new [pluginsblok](https://github.com/storyblok/pluginsblok) monorepo to the [apps/field-plugins](https://github.com/storyblok/pluginsblok/tree/main/apps/field-plugins). For any new Issues or Pull Requests, go to the new repository and add the label `field-types-examples`.
+>
+
 A collection of field-types for Storyblok created by the community. Read more about creating field-types [here](https://www.storyblok.com/docs/plugins/field-type)
 
 <!-- AUTO-GENERATED-CONTENT:START (TOC:collapse=true&collapseText=Table of Content) -->
